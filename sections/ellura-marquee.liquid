@@ -1,0 +1,221 @@
+{% comment %}
+  Section contract:
+  ellura-marquee renders the infinite scrolling trust badges ribbon with rotating icon accents,
+  smooth continuous movement, and interactive velocity acceleration via GSAP.
+{% endcomment %}
+
+<div
+  id="marquee-{{ section.id }}"
+  class="marquee-section"
+  style="--marquee-bg: {{ section.settings.bg_color }}; --marquee-color: {{ section.settings.text_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; overflow: hidden; max-width: 100%; width: 100%;"
+  {{ section.shopify_attributes }}
+>
+  <div class="marquee strip" style="background: var(--marquee-bg); color: var(--marquee-color); overflow: hidden; max-width: 100%; width: 100%;">
+    <div class="marquee__track">
+      {% for i in (1..2) %}
+        {% for block in section.blocks %}
+          <span class="marquee__item" {% if i == 2 %}aria-hidden="true"{% endif %} {{ block.shopify_attributes }}>
+            <span class="strip__item">
+              <i style="background: {{ block.settings.icon_bg }};">
+                {% case block.settings.icon %}
+                  {% when 'flask' %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.31L4.1 19.5A2 2 0 0 0 5.8 22h12.4a2 2 0 0 0 1.7-2.5L14 9.31V2M8.5 2h7M7 16h10"/></svg>
+                  {% when 'drop' %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                  {% when 'leaf' %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                  {% when 'wheat' %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 22 10-10M16 8l-2 2M18 6l-2 2M20 4l-2 2M14 10l-2 2M12 12l-2 2M10 14l-2 2M8 16l-2 2M6 18l-2 2M18 10a4 4 0 0 0-4-4M14 14a4 4 0 0 0-4-4M10 18a4 4 0 0 0-4-4"/></svg>
+                  {% when 'dna' %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c6.667-6 13.333 0 20-6M9 22c1.798-1.998 2.518-3.995 2.807-5.993M15 2c-1.798 1.998-2.518 3.995-2.807 5.993M17 6l-2.5-2.5M14 8l-1-1M7 18l2.5 2.5M10 16l1 1M2 9c6.667 6 13.333 0 20 6"/></svg>
+                  {% when 'cube' %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 16-9 5-9-5V8l9-5 9 5v8zM3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg>
+                  {% when 'capsule' %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                  {% when 'shield' %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  {% else %}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                {% endcase %}
+              </i>
+              {{ block.settings.text | escape }}
+            </span>
+            <span class="strip__gap" aria-hidden="true"></span>
+          </span>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initMarqueeGSAP() {
+      if (typeof gsap === 'undefined') return;
+      var root = document.getElementById('marquee-{{ section.id }}');
+      if (!root) return;
+
+      var track = root.querySelector('.marquee__track');
+      if (!track) return;
+
+      var halfWidth = track.scrollWidth / 2;
+      var speed = {{ section.settings.speed | default: 60 }};
+      var duration = halfWidth / speed;
+
+      var tween = gsap.fromTo(track,
+        { x: 0 },
+        {
+          x: -halfWidth,
+          duration: duration,
+          ease: 'none',
+          repeat: -1
+        }
+      );
+
+      {% if section.settings.pause_on_hover %}
+        root.addEventListener('mouseenter', function () {
+          gsap.to(tween, { timeScale: 0.15, duration: 0.4 });
+        });
+        root.addEventListener('mouseleave', function () {
+          gsap.to(tween, { timeScale: 1, duration: 0.4 });
+        });
+      {% endif %}
+
+      if (typeof ScrollTrigger !== 'undefined') {
+        var dir = 1;
+        ScrollTrigger.create({
+          trigger: root,
+          start: 'top bottom',
+          end: 'bottom top',
+          onUpdate: function (self) {
+            if (self.direction !== dir) dir = self.direction;
+            var velocityFactor = Math.min(3.5, 1 + Math.abs(self.getVelocity()) / 900);
+            gsap.to(tween, { timeScale: velocityFactor * dir, duration: 0.3, overwrite: 'auto' });
+            gsap.to(tween, { timeScale: dir, duration: 1.2, delay: 0.3, overwrite: false });
+          }
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMarqueeGSAP);
+    } else {
+      initMarqueeGSAP();
+    }
+
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}') {
+        initMarqueeGSAP();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Ellura Marquee Ribbon",
+  "tag": "section",
+  "class": "section-ellura-marquee",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "rgba(234, 211, 238, 0.4)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#26141f"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Scroll speed",
+      "default": 60
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Slow down on hover",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge_item",
+      "name": "Marquee Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "flask", "label": "Flask (36 mg PACs)" },
+            { "value": "drop", "label": "Drop (100% Juice)" },
+            { "value": "leaf", "label": "Leaf (Vegan)" },
+            { "value": "wheat", "label": "Wheat (Gluten-free)" },
+            { "value": "dna", "label": "DNA (Non-GMO)" },
+            { "value": "cube", "label": "Cube (Sugar-free)" },
+            { "value": "capsule", "label": "Capsule (One a day)" },
+            { "value": "shield", "label": "Shield (cGMP facility)" }
+          ],
+          "default": "flask"
+        },
+        {
+          "type": "color",
+          "id": "icon_bg",
+          "label": "Icon circle background",
+          "default": "#ead3ee"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge text",
+          "default": "36 mg soluble A-type PACs"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ellura Marquee Ribbon",
+      "blocks": [
+        { "type": "badge_item", "settings": { "icon": "flask", "icon_bg": "#ead3ee", "text": "36 mg soluble A-type PACs" } },
+        { "type": "badge_item", "settings": { "icon": "drop", "icon_bg": "#d0a6d8", "text": "100% concentrated cranberry fruit juice extract" } },
+        { "type": "badge_item", "settings": { "icon": "leaf", "icon_bg": "#f4e8f6", "text": "Vegan" } },
+        { "type": "badge_item", "settings": { "icon": "wheat", "icon_bg": "#e3cbe8", "text": "Gluten-free" } },
+        { "type": "badge_item", "settings": { "icon": "dna", "icon_bg": "#ead3ee", "text": "Non-GMO" } },
+        { "type": "badge_item", "settings": { "icon": "cube", "icon_bg": "#d0a6d8", "text": "Sugar-free" } },
+        { "type": "badge_item", "settings": { "icon": "capsule", "icon_bg": "#f4e8f6", "text": "One capsule a day" } },
+        { "type": "badge_item", "settings": { "icon": "shield", "icon_bg": "#e3cbe8", "text": "Made in a cGMP-compliant facility" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

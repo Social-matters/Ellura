@@ -1,0 +1,439 @@
+{% comment %}
+  Section contract:
+  ellura-header renders the luxury sticky header bar matching the exact ellura website:
+  - Announcement bar with GSAP rotating messages and prev/next controls
+  - Sticky glassmorphic navbar with plum brand logo
+  - Left & Right navigation links
+  - Mobile slide-in drawer
+  - Search trigger, account link, cart drawer toggle with dynamic badge
+  - "Shop now" pill button
+{% endcomment %}
+
+<div
+  id="ellura-header-wrapper-{{ section.id }}"
+  class="ellura-header-wrapper"
+  style="
+    --header-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --header-text: {{ section.settings.text_color | default: '#2d1430' }};
+    --announce-bg: {{ section.settings.announce_bg | default: '#5a2e58' }};
+    --announce-text: {{ section.settings.announce_text | default: '#fbeffb' }};
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(45, 20, 48, 0.08);
+  "
+  {{ section.shopify_attributes }}
+>
+  {% if section.settings.show_announcements %}
+    <!-- Announcement Bar -->
+    <div
+      class="announce"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Announcements"
+      style="background: var(--announce-bg); color: var(--announce-text);"
+    >
+      <button class="announce__btn" id="announce-prev-{{ section.id }}" aria-label="Previous announcement">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+
+      <div class="announce__viewport" style="overflow: hidden; text-align: center; width: 100%; max-width: 600px; height: 24px; position: relative; display: flex; align-items: center; justify-content: center;">
+        <p id="announce-text-{{ section.id }}" class="announce__text" aria-live="polite">
+          {{ section.settings.announcement_1 }}
+        </p>
+      </div>
+
+      <button class="announce__btn" id="announce-next-{{ section.id }}" aria-label="Next announcement">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+  {% endif %}
+
+  <!-- Main Header Bar -->
+  <header class="header is-solid" id="header-main-{{ section.id }}" style="background: var(--header-bg); position: relative; z-index: 10;">
+    <div class="header__bar wrap">
+      <!-- Mobile Burger Button -->
+      <button
+        class="icon-btn header__burger"
+        id="header-burger-{{ section.id }}"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu-{{ section.id }}"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+
+      <!-- Brand Logo -->
+      <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }} home" style="display: flex; align-items: center; height: 32px; max-height: 32px;">
+        {% if section.settings.logo != blank %}
+          <img
+            src="{{ section.settings.logo | image_url: width: 360 }}"
+            alt="{{ shop.name }}"
+            width="{{ section.settings.logo_width | default: 140 }}"
+            height="32"
+            style="height: 32px !important; max-height: 32px !important; width: auto !important; max-width: 160px !important; object-fit: contain; display: block;"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {% else %}
+          <img
+            src="{{ 'ellura-logo-plum.png' | asset_url }}"
+            alt="ellura®"
+            width="{{ section.settings.logo_width | default: 140 }}"
+            height="32"
+            style="height: 32px !important; max-height: 32px !important; width: auto !important; max-width: 160px !important; object-fit: contain; display: block;"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {% endif %}
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="header__nav" aria-label="Main navigation">
+        <ul role="list">
+          {% if section.settings.menu != blank %}
+            {% for link in linklists[section.settings.menu].links %}
+              <li>
+                <a href="{{ link.url }}" class="header__link {% if link.active %}is-active{% endif %}">
+                  {{ link.title | escape }}
+                </a>
+              </li>
+            {% endfor %}
+          {% else %}
+            <!-- Default Ellura Navigation -->
+            <li><a href="/#packs" class="header__link">Shop</a></li>
+            <li><a href="/#how-it-works" class="header__link">How it works</a></li>
+            <li><a href="/#science" class="header__link">The Science</a></li>
+            <li><a href="/#learn" class="header__link">Learn</a></li>
+            <li><a href="/#reviews" class="header__link">Reviews</a></li>
+            <li><a href="/#faq" class="header__link">FAQs</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="header__actions">
+        {% if section.settings.show_search %}
+          <button
+            class="icon-btn header__search"
+            aria-label="Search"
+            onclick="document.querySelector('search-modal')?.showModal?.() || document.querySelector('[data-search-trigger]')?.click();"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
+        {% endif %}
+
+        {% if shop.customer_accounts_enabled and section.settings.show_account %}
+          <a href="{{ routes.account_url }}" class="icon-btn header__account" aria-label="My account">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+          </a>
+        {% endif %}
+
+        {% if section.settings.show_cart %}
+          <a
+            href="{{ routes.cart_url }}"
+            class="icon-btn header__cart"
+            aria-label="Open cart, {{ cart.item_count }} items"
+            onclick="event.preventDefault(); if (window.theme?.cartDrawer) { window.theme.cartDrawer.open(); } else { document.querySelector('cart-drawer')?.open?.(); }"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span class="header__count" id="header-cart-count-{{ section.id }}" aria-hidden="true">
+              {{ cart.item_count }}
+            </span>
+          </a>
+        {% endif %}
+
+        {% if section.settings.cta_text != blank %}
+          <a href="{{ section.settings.cta_url | default: '/#packs' }}" class="btn btn--sm header__cta">
+            {{ section.settings.cta_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div
+    id="mobile-menu-{{ section.id }}"
+    class="mobile-drawer"
+    aria-hidden="true"
+    style="
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+    "
+  >
+    <div
+      class="mobile-drawer__panel"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 85%;
+        max-width: 360px;
+        background: #fff;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+      "
+    >
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0e4f2; padding-bottom: 16px;">
+        <img src="{{ 'ellura-logo-plum.png' | asset_url }}" alt="ellura®" width="120" height="28">
+        <button id="mobile-menu-close-{{ section.id }}" class="icon-btn" aria-label="Close menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <nav style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+        {% if section.settings.menu != blank %}
+          {% for link in linklists[section.settings.menu].links %}
+            <a href="{{ link.url }}" style="font-family: var(--font-display, inherit); font-size: 1.15rem; font-weight: 600; color: #3a1a38; text-decoration: none; padding: 8px 0; border-bottom: 1px solid #faf5fa;">
+              {{ link.title | escape }}
+            </a>
+          {% endfor %}
+        {% else %}
+          <a href="/#packs" class="mobile-nav-link" style="font-size: 1.15rem; font-weight: 600; color: #3a1a38; text-decoration: none; padding: 8px 0; border-bottom: 1px solid #faf5fa;">Shop</a>
+          <a href="/#how-it-works" class="mobile-nav-link" style="font-size: 1.15rem; font-weight: 600; color: #3a1a38; text-decoration: none; padding: 8px 0; border-bottom: 1px solid #faf5fa;">How it works</a>
+          <a href="/#science" class="mobile-nav-link" style="font-size: 1.15rem; font-weight: 600; color: #3a1a38; text-decoration: none; padding: 8px 0; border-bottom: 1px solid #faf5fa;">The Science</a>
+          <a href="/#learn" class="mobile-nav-link" style="font-size: 1.15rem; font-weight: 600; color: #3a1a38; text-decoration: none; padding: 8px 0; border-bottom: 1px solid #faf5fa;">Learn</a>
+          <a href="/#reviews" class="mobile-nav-link" style="font-size: 1.15rem; font-weight: 600; color: #3a1a38; text-decoration: none; padding: 8px 0; border-bottom: 1px solid #faf5fa;">Reviews</a>
+          <a href="/#faq" class="mobile-nav-link" style="font-size: 1.15rem; font-weight: 600; color: #3a1a38; text-decoration: none; padding: 8px 0; border-bottom: 1px solid #faf5fa;">FAQs</a>
+        {% endif %}
+      </nav>
+
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+        <a href="{{ section.settings.cta_url | default: '/#packs' }}" class="btn btn--primary btn--full" style="text-align: center;">
+          {{ section.settings.cta_text | default: 'Shop now' }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var messages = [
+      {{ section.settings.announcement_1 | json }},
+      {{ section.settings.announcement_2 | json }},
+      {{ section.settings.announcement_3 | json }}
+    ].filter(Boolean);
+
+    var currentIdx = 0;
+    var timer = null;
+    var textEl = document.getElementById('announce-text-{{ section.id }}');
+    var prevBtn = document.getElementById('announce-prev-{{ section.id }}');
+    var nextBtn = document.getElementById('announce-next-{{ section.id }}');
+
+    function showAnnouncement(idx, direction) {
+      if (!textEl || messages.length <= 1) return;
+      var yFrom = direction === 'next' ? 20 : -20;
+      if (typeof gsap !== 'undefined') {
+        gsap.to(textEl, {
+          y: -yFrom,
+          opacity: 0,
+          duration: 0.25,
+          onComplete: function () {
+            textEl.textContent = messages[idx];
+            gsap.fromTo(textEl, { y: yFrom, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: 'power2.out' });
+          }
+        });
+      } else {
+        textEl.textContent = messages[idx];
+      }
+      currentIdx = idx;
+    }
+
+    if (messages.length > 1) {
+      function startTimer() {
+        clearInterval(timer);
+        timer = setInterval(function () {
+          var next = (currentIdx + 1) % messages.length;
+          showAnnouncement(next, 'next');
+        }, 5000);
+      }
+
+      startTimer();
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function () {
+          var prev = (currentIdx - 1 + messages.length) % messages.length;
+          showAnnouncement(prev, 'prev');
+          startTimer();
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function () {
+          var next = (currentIdx + 1) % messages.length;
+          showAnnouncement(next, 'next');
+          startTimer();
+        });
+      }
+    }
+
+    // Mobile menu toggle
+    var burger = document.getElementById('header-burger-{{ section.id }}');
+    var drawer = document.getElementById('mobile-menu-{{ section.id }}');
+    var closeBtn = document.getElementById('mobile-menu-close-{{ section.id }}');
+
+    if (burger && drawer) {
+      burger.addEventListener('click', function () {
+        drawer.style.display = 'block';
+        drawer.setAttribute('aria-hidden', 'false');
+        burger.setAttribute('aria-expanded', 'true');
+        if (typeof gsap !== 'undefined') {
+          gsap.fromTo(drawer.querySelector('.mobile-drawer__panel'), { xPercent: -100 }, { xPercent: 0, duration: 0.35, ease: 'power3.out' });
+        }
+      });
+    }
+
+    function closeDrawer() {
+      if (!drawer) return;
+      if (typeof gsap !== 'undefined') {
+        gsap.to(drawer.querySelector('.mobile-drawer__panel'), {
+          xPercent: -100,
+          duration: 0.25,
+          ease: 'power3.in',
+          onComplete: function () {
+            drawer.style.display = 'none';
+            drawer.setAttribute('aria-hidden', 'true');
+            burger && burger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      } else {
+        drawer.style.display = 'none';
+        drawer.setAttribute('aria-hidden', 'true');
+        burger && burger.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (drawer) {
+      drawer.addEventListener('click', function (e) {
+        if (e.target === drawer) closeDrawer();
+      });
+      drawer.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeDrawer);
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Ellura Luxury Header",
+  "tag": "section",
+  "class": "section-ellura-header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcements",
+      "label": "Show announcement bar ticker",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_1",
+      "label": "Announcement 1",
+      "default": "Now in India — backed by 20+ years of cranberry research"
+    },
+    {
+      "type": "text",
+      "id": "announcement_2",
+      "label": "Announcement 2",
+      "default": "Subscribe & Save 10% · free shipping on subscriptions"
+    },
+    {
+      "type": "text",
+      "id": "announcement_3",
+      "label": "Announcement 3",
+      "default": "36 mg soluble A-type PACs in one daily capsule"
+    },
+    {
+      "type": "color",
+      "id": "announce_bg",
+      "label": "Announcement background",
+      "default": "#5a2e58"
+    },
+    {
+      "type": "color",
+      "id": "announce_text",
+      "label": "Announcement text color",
+      "default": "#fbeffb"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Custom logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 140
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show customer account link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Shop CTA button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Shop CTA button URL"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Header background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Header text color",
+      "default": "#2d1430"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ellura Luxury Header"
+    }
+  ]
+}
+{% endschema %}

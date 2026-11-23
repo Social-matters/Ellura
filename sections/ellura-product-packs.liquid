@@ -1,0 +1,393 @@
+{% comment %}
+  Section contract:
+  ellura-product-packs renders the "choose your supply" product pack cards (30, 90, 180 capsules).
+  Features a sticky sidebar on the left and sticky stacked cards on the right with GSAP scale & parallax.
+{% endcomment %}
+
+<div
+  id="packs-{{ section.id }}"
+  class="packs section"
+  style="--packs-bg: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; background: var(--packs-bg);"
+  {{ section.shopify_attributes }}
+>
+  <div class="wrap packs__grid">
+    <!-- Sticky Header Column -->
+    <header class="packs__head">
+      <div class="packs__sticky">
+        {% if section.settings.eyebrow != blank %}
+          <p class="eyebrow" data-gsap="fade-up">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        <h2 id="packs-title-{{ section.id }}" class="t-d2 accent-em" data-gsap="fade-up">
+          {{ section.settings.heading }}
+        </h2>
+
+        {% if section.settings.lead != blank %}
+          <p class="t-lead" data-gsap="fade-up">{{ section.settings.lead }}</p>
+        {% endif %}
+
+        <ul class="packs__perks" role="list" data-gsap="stagger">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
+            <span>{{ section.settings.perk_1 | default: 'Subscribe & Save 10%' }}</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>{{ section.settings.perk_2 | default: 'Free shipping on subscriptions' }}</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            <span>{{ section.settings.perk_3 | default: 'Pause or cancel anytime' }}</span>
+          </li>
+        </ul>
+
+        {% if section.settings.compare_link_text != blank %}
+          <a href="{{ section.settings.compare_link_url | default: '/collections/all' }}" class="text-link" data-gsap="fade-up">
+            {{ section.settings.compare_link_text | escape }}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        {% endif %}
+      </div>
+    </header>
+
+    <!-- Stacked Cards Column -->
+    <ol class="packs__stack" role="list">
+      {% for block in section.blocks %}
+        {% if block.type == 'pack' %}
+          <li
+            class="pack-card pcard--{{ block.settings.card_theme }}"
+            style="top: calc(var(--header-h) + 32px + {{ forloop.index0 | times: 24 }}px);"
+            {{ block.shopify_attributes }}
+          >
+            <a href="{{ block.settings.product.url | default: '/collections/all' }}" class="pack-card__img" tabindex="-1" aria-hidden="true">
+              {% if block.settings.image != blank %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 700 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  width="700"
+                  height="700"
+                  loading="lazy"
+                >
+              {% else %}
+                {% assign fallback_pack_img = block.settings.preset_image | append: '-700.webp' %}
+                <img
+                  src="{{ fallback_pack_img | asset_url }}"
+                  alt="{{ block.settings.title | escape }}"
+                  width="700"
+                  height="700"
+                  loading="lazy"
+                >
+              {% endif %}
+            </a>
+
+            <div class="pack-card__body">
+              <p class="pack-card__idx">
+                <span class="chip chip--solid">{{ block.settings.badge | escape }}</span>
+                <span class="t-mono">0{{ forloop.index }} / 0{{ section.blocks.size }}</span>
+              </p>
+
+              <h3 class="t-d3">
+                <a href="{{ block.settings.product.url | default: '/collections/all' }}">
+                  {{ block.settings.title | escape }}
+                </a>
+              </h3>
+
+              <p class="muted">{{ block.settings.summary | escape }}</p>
+
+              <div class="price price--md">
+                <span class="price__now">{{ block.settings.price | escape }}</span>
+                {% if block.settings.mrp != blank %}
+                  <span class="price__was"><s>{{ block.settings.mrp | escape }}</s></span>
+                {% endif %}
+              </div>
+
+              {% if block.settings.subscribe_note != blank %}
+                <p class="pack-card__sub t-sm">
+                  <span class="chip chip--save">Save 10%</span>
+                  <span>{{ block.settings.subscribe_note | escape }}</span>
+                </p>
+              {% endif %}
+
+              <div class="pack-card__ctas">
+                <a href="{{ block.settings.product.url | default: '/collections/all' }}" class="btn">
+                  {{ block.settings.btn_label | default: 'Shop now' }}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initPacksGSAP() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      var root = document.getElementById('packs-{{ section.id }}');
+      if (!root) return;
+
+      var mm = gsap.matchMedia();
+      mm.add('(min-width: 960px)', function () {
+        var cards = root.querySelectorAll('.pack-card');
+        cards.forEach(function (card, idx) {
+          var nextCard = cards[idx + 1];
+          if (nextCard) {
+            gsap.to(card, {
+              scale: 0.92 + idx * 0.02,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: nextCard,
+                start: 'top bottom',
+                end: 'top 24%',
+                scrub: true
+              }
+            });
+          }
+        });
+
+        root.querySelectorAll('.pack-card__img img').forEach(function (img) {
+          gsap.fromTo(img,
+            { yPercent: 6, rotate: -2 },
+            {
+              yPercent: -6,
+              rotate: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: img,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+              }
+            }
+          );
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPacksGSAP);
+    } else {
+      initPacksGSAP();
+    }
+
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}') {
+        initPacksGSAP();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product Pack Cards",
+  "tag": "section",
+  "class": "section-ellura-packs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Shop ellura"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "choose your <em>supply.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Description",
+      "default": "One capsule a day. Pick the bottle that fits your routine — and subscribe to save 10% on every delivery, with free shipping."
+    },
+    {
+      "type": "text",
+      "id": "perk_1",
+      "label": "Perk 1 text",
+      "default": "Subscribe & Save 10%"
+    },
+    {
+      "type": "text",
+      "id": "perk_2",
+      "label": "Perk 2 text",
+      "default": "Free shipping on subscriptions"
+    },
+    {
+      "type": "text",
+      "id": "perk_3",
+      "label": "Perk 3 text",
+      "default": "Pause or cancel anytime"
+    },
+    {
+      "type": "text",
+      "id": "compare_link_text",
+      "label": "Comparison link label",
+      "default": "Compare all packs"
+    },
+    {
+      "type": "url",
+      "id": "compare_link_url",
+      "label": "Comparison link URL"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "transparent"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pack",
+      "name": "Supply Pack Card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Shopify Product"
+        },
+        {
+          "type": "select",
+          "id": "preset_image",
+          "label": "Preset Pack Image",
+          "options": [
+            { "value": "pack-30", "label": "30 Capsules" },
+            { "value": "pack-90", "label": "90 Capsules" },
+            { "value": "pack-180", "label": "180 Capsules Bundle" }
+          ],
+          "default": "pack-30"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image Override"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge pill",
+          "default": "1 MONTH"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Pack title",
+          "default": "30 capsules"
+        },
+        {
+          "type": "textarea",
+          "id": "summary",
+          "label": "Summary",
+          "default": "One bottle, one capsule a day. The easiest way to start."
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "₹2,199"
+        },
+        {
+          "type": "text",
+          "id": "mrp",
+          "label": "MRP (strikethrough)",
+          "default": "₹2,499"
+        },
+        {
+          "type": "text",
+          "id": "subscribe_note",
+          "label": "Subscribe note",
+          "default": "or ₹1,979 / delivery (Save 10%)"
+        },
+        {
+          "type": "select",
+          "id": "card_theme",
+          "label": "Card color theme",
+          "options": [
+            { "value": "blush", "label": "Blush (Soft pink)" },
+            { "value": "lilac", "label": "Lilac (Soft purple)" },
+            { "value": "butter", "label": "Butter (Warm yellow/cream)" }
+          ],
+          "default": "blush"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button label",
+          "default": "Shop now"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Pack Cards",
+      "blocks": [
+        {
+          "type": "pack",
+          "settings": {
+            "preset_image": "pack-30",
+            "badge": "1 MONTH",
+            "title": "30 capsules",
+            "summary": "One bottle, one capsule a day. The easiest way to start.",
+            "price": "₹2,199",
+            "mrp": "₹2,499",
+            "subscribe_note": "or ₹1,979 / delivery with subscription",
+            "card_theme": "blush"
+          }
+        },
+        {
+          "type": "pack",
+          "settings": {
+            "preset_image": "pack-90",
+            "badge": "MOST POPULAR · 3 MONTHS",
+            "title": "90 capsules",
+            "summary": "Three months of daily support in a single bottle.",
+            "price": "₹5,999",
+            "mrp": "₹6,499",
+            "subscribe_note": "or ₹5,399 / delivery with subscription",
+            "card_theme": "lilac"
+          }
+        },
+        {
+          "type": "pack",
+          "settings": {
+            "preset_image": "pack-180",
+            "badge": "BEST VALUE · 6 MONTHS",
+            "title": "180 capsules (2 × 90)",
+            "summary": "Two 90-capsule bottles side by side — the 180-capsule bundle.",
+            "price": "₹10,999",
+            "mrp": "₹11,999",
+            "subscribe_note": "Free priority shipping included",
+            "card_theme": "butter"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

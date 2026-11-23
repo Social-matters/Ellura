@@ -1,0 +1,220 @@
+{% comment %}
+  Section contract:
+  ellura-references renders the expandable Clinical & Scientific References drawer
+  providing indexed medical research citations matching superscripts in the copy.
+{% endcomment %}
+
+<div
+  id="references-{{ section.id }}"
+  class="section section--tight references-section"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  {{ section.shopify_attributes }}
+>
+  <div class="wrap wrap--narrow">
+    <div class="accordion refs-acc">
+      <div class="acc acc--line {% if section.settings.initially_open %}is-open{% endif %}" id="refs-drawer-{{ section.id }}">
+        <h4 class="acc__heading">
+          <button
+            type="button"
+            class="acc__btn"
+            id="refs-btn-{{ section.id }}"
+            aria-expanded="{% if section.settings.initially_open %}true{% else %}false{% endif %}"
+            aria-controls="refs-panel-{{ section.id }}"
+          >
+            <span class="acc__title t-mono">{{ section.settings.title | default: 'References' }} ({{ section.blocks.size }})</span>
+            <span class="acc__icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+        </h4>
+
+        <div
+          id="refs-panel-{{ section.id }}"
+          role="region"
+          aria-labelledby="refs-btn-{{ section.id }}"
+          class="acc__panel"
+          style="{% unless section.settings.initially_open %}display: none;{% endunless %}"
+        >
+          <div class="acc__inner">
+            <ol class="refs" role="list">
+              {% for block in section.blocks %}
+                {% if block.type == 'citation' %}
+                  <li id="ref-{{ forloop.index }}" class="refs__item" {{ block.shopify_attributes }}>
+                    <span class="refs__n t-mono">{{ forloop.index }}</span>
+                    <p>
+                      <strong>{{ block.settings.authors | escape }}</strong> ({{ block.settings.year | escape }}).
+                      <em>{{ block.settings.title | escape }}</em>
+                      <span>{{ block.settings.source | escape }} {{ block.settings.detail | escape }}</span>
+                      {% if block.settings.url != blank %}
+                        <a href="{{ block.settings.url }}" target="_blank" rel="noopener noreferrer" class="link">View study</a>
+                      {% endif %}
+                    </p>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('refs-btn-{{ section.id }}');
+    var drawer = document.getElementById('refs-drawer-{{ section.id }}');
+    var panel = document.getElementById('refs-panel-{{ section.id }}');
+
+    if (btn && drawer && panel) {
+      btn.addEventListener('click', function () {
+        var isOpen = drawer.classList.contains('is-open');
+        if (isOpen) {
+          drawer.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          panel.style.display = 'none';
+        } else {
+          drawer.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          panel.style.display = 'block';
+        }
+
+        if (typeof ScrollTrigger !== 'undefined') {
+          ScrollTrigger.refresh();
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Ellura References",
+  "tag": "section",
+  "class": "section-ellura-references",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Drawer title",
+      "default": "References"
+    },
+    {
+      "type": "checkbox",
+      "id": "initially_open",
+      "label": "Initially open",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "citation",
+      "name": "Research Citation",
+      "settings": [
+        {
+          "type": "text",
+          "id": "authors",
+          "label": "Authors",
+          "default": "Xiong Z, Gao Y, Yuan C, Jian Z, Wei X."
+        },
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Publication year",
+          "default": "2024"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Study title",
+          "default": "Preventive effect of cranberries with high dose of proanthocyanidins on urinary tract infections: a meta-analysis and systematic review."
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Journal / Publication source",
+          "default": "Frontiers in Nutrition"
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "Issue / Volume details",
+          "default": "2024 Nov 28;11:1422121."
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "DOI / Publication URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Clinical References Drawer",
+      "blocks": [
+        {
+          "type": "citation",
+          "settings": {
+            "authors": "Xiong Z, Gao Y, Yuan C, Jian Z, Wei X.",
+            "year": "2024",
+            "title": "Preventive effect of cranberries with high dose of proanthocyanidins on urinary tract infections: a meta-analysis and systematic review.",
+            "source": "Frontiers in Nutrition",
+            "detail": "2024 Nov 28;11:1422121."
+          }
+        },
+        {
+          "type": "citation",
+          "settings": {
+            "authors": "Williams G, Hahn D, Stephens JH, Craig JC, Hodson EM.",
+            "year": "2023",
+            "title": "Cranberries for preventing urinary tract infections.",
+            "source": "Cochrane Database of Systematic Reviews",
+            "detail": "2023, Issue 4. Art. No.: CD001321."
+          }
+        },
+        {
+          "type": "citation",
+          "settings": {
+            "authors": "Howell AB, Botto H, Combescure C, Blanc-Potard AB, Gausa L, Matsumoto T, Tenke P, Sotto A, Lavigne JP.",
+            "year": "2010",
+            "title": "Dosage effect on uropathogenic Escherichia coli anti-adhesion activity in urine following consumption of cranberry powder standardized for proanthocyanidin content.",
+            "source": "BMC Infectious Diseases",
+            "detail": "2010 Apr 14;10:94."
+          }
+        },
+        {
+          "type": "citation",
+          "settings": {
+            "authors": "Lavigne JP, Vitrac X, Bernard M, Bruyere F, Sotto A.",
+            "year": "2008",
+            "title": "In-vitro and in-vivo evidence of dose-dependent decrease of uropathogenic Escherichia coli virulence by a cranberry extract.",
+            "source": "Clinical Microbiology and Infection",
+            "detail": "2008 Apr;14(4):350-5."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

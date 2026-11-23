@@ -1,0 +1,44 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "t:names.footer",
+  "sections": {
+    "ellura_footer": {
+      "type": "ellura-footer",
+      "settings": {
+        "lead": "Urinary tract health, backed by 20+ years of cranberry research. Now available in India.",
+        "show_newsletter": true,
+        "newsletter_placeholder": "Enter your email",
+        "newsletter_btn": "Subscribe",
+        "email": "hello@ellurautihealth.com",
+        "origin": "Formulated in France · Distributed in India",
+        "disclaimer": "*These statements have not been evaluated by the Food and Drug Administration or FSSAI. This product is a dietary supplement and is not intended to diagnose, treat, cure, or prevent any disease. Consult your physician before starting any dietary supplement.",
+        "bg_color": "#d0a6d8",
+        "text_color": "#2d1430"
+      },
+      "blocks": {
+        "col_1": { "type": "link_column", "settings": { "title": "Shop" } },
+        "col_2": { "type": "link_column", "settings": { "title": "Science" } },
+        "col_3": { "type": "link_column", "settings": { "title": "Company" } },
+        "col_4": { "type": "link_column", "settings": { "title": "Legal" } }
+      },
+      "block_order": [
+        "col_1",
+        "col_2",
+        "col_3",
+        "col_4"
+      ]
+    }
+  },
+  "order": [
+    "ellura_footer"
+  ]
+}

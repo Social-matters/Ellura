@@ -1,0 +1,270 @@
+{% comment %}
+  Section contract:
+  ellura-rewards renders the Rewards and Referral Program feature card
+  with split copy, perks list, account CTA buttons, and a layered visual (orb + arch + floating product).
+{% endcomment %}
+
+<div
+  id="rewards-{{ section.id }}"
+  class="rewards-section"
+  style="--rewards-bg: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  {{ section.shopify_attributes }}
+>
+  <div class="rewards" style="background: var(--rewards-bg);">
+    <div class="wrap rewards__grid">
+      <!-- Copy Column -->
+      <div class="rewards__copy">
+        {% if section.settings.eyebrow != blank %}
+          <p class="eyebrow" data-gsap="fade-up">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        <h2 id="rewards-title-{{ section.id }}" class="t-d2 accent-em" data-gsap="fade-up">
+          {{ section.settings.heading }}
+        </h2>
+
+        {% if section.settings.lead != blank %}
+          <p class="t-lead" data-gsap="fade-up">{{ section.settings.lead }}</p>
+        {% endif %}
+
+        <ul class="rewards__list" role="list" data-gsap="stagger">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            <span>{{ section.settings.perk_1 | default: 'Earn points on every purchase' }}</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>{{ section.settings.perk_2 | default: 'Redeem them for discounts' }}</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>{{ section.settings.perk_3 | default: 'Share ellura with friends and family' }}</span>
+          </li>
+        </ul>
+
+        {% if section.settings.member_note != blank %}
+          <p class="rewards__member" data-gsap="fade-up">
+            <strong>{{ section.settings.member_bold | default: 'Already a member?' }}</strong>
+            {{ section.settings.member_note | escape }}
+          </p>
+        {% endif %}
+
+        <div class="rewards__ctas" data-gsap="fade-up">
+          <a href="{{ section.settings.register_link | default: routes.account_register_url }}" class="btn btn--ghost">
+            {{ section.settings.register_label | default: 'Create account' }}
+          </a>
+          <a href="{{ section.settings.login_link | default: routes.account_login_url }}" class="btn">
+            {{ section.settings.login_label | default: 'Sign in' }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Layered Visual Column -->
+      <div class="rewards__visual">
+        <div class="rewards__orb" aria-hidden="true"></div>
+
+        <div class="rewards__arch" data-arch="true">
+          {% if section.settings.arch_image != blank %}
+            <img src="{{ section.settings.arch_image | image_url: width: 800 }}" alt="Nature" width="400" height="500" loading="lazy">
+          {% else %}
+            <img src="{{ 'leaf-shadow-2-800.webp' | asset_url }}" alt="Nature leaves" width="400" height="500" loading="lazy">
+          {% endif %}
+        </div>
+
+        {% if section.settings.product_image != blank %}
+          <img class="rewards__product" src="{{ section.settings.product_image | image_url: width: 700 }}" alt="ellura product" width="350" height="350" loading="lazy">
+        {% else %}
+          <img class="rewards__product" src="{{ 'pack-90-700.webp' | asset_url }}" alt="ellura pack" width="350" height="350" loading="lazy">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initRewardsGSAP() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      var root = document.getElementById('rewards-{{ section.id }}');
+      if (!root) return;
+
+      var mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', function () {
+        var prod = root.querySelector('.rewards__product');
+        if (prod) {
+          gsap.fromTo(prod,
+            { yPercent: 12, rotate: 4 },
+            {
+              yPercent: -8,
+              rotate: -2,
+              ease: 'none',
+              scrollTrigger: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true }
+            }
+          );
+        }
+
+        var orb = root.querySelector('.rewards__orb');
+        if (orb) {
+          gsap.fromTo(orb,
+            { scale: 0.6, opacity: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 1.6,
+              ease: 'expo.out',
+              scrollTrigger: { trigger: root, start: 'top 70%', once: true }
+            }
+          );
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRewardsGSAP);
+    } else {
+      initRewardsGSAP();
+    }
+
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}') {
+        initRewardsGSAP();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "My Ellura Rewards",
+  "tag": "section",
+  "class": "section-ellura-rewards",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "My ellura Rewards"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "earn rewards & <em>share the benefits.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Description",
+      "default": "We love rewarding our loyal customers! With the My ellura Rewards & Referral Program, you can earn points on every purchase, redeem discounts, and share the benefits of ellura with your friends and family."
+    },
+    {
+      "type": "header",
+      "content": "Perks List"
+    },
+    {
+      "type": "text",
+      "id": "perk_1",
+      "label": "Perk 1 text",
+      "default": "Earn points on every purchase"
+    },
+    {
+      "type": "text",
+      "id": "perk_2",
+      "label": "Perk 2 text",
+      "default": "Redeem them for discounts"
+    },
+    {
+      "type": "text",
+      "id": "perk_3",
+      "label": "Perk 3 text",
+      "default": "Share ellura with friends and family"
+    },
+    {
+      "type": "header",
+      "content": "Member Sign-In Callout"
+    },
+    {
+      "type": "text",
+      "id": "member_bold",
+      "label": "Member note highlight",
+      "default": "Already a member?"
+    },
+    {
+      "type": "text",
+      "id": "member_note",
+      "label": "Member note text",
+      "default": "Sign in to check your points and redeem rewards."
+    },
+    {
+      "type": "text",
+      "id": "register_label",
+      "label": "Create account button",
+      "default": "Create account"
+    },
+    {
+      "type": "url",
+      "id": "register_link",
+      "label": "Create account URL"
+    },
+    {
+      "type": "text",
+      "id": "login_label",
+      "label": "Sign in button",
+      "default": "Sign in"
+    },
+    {
+      "type": "url",
+      "id": "login_link",
+      "label": "Sign in URL"
+    },
+    {
+      "type": "header",
+      "content": "Visual Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "arch_image",
+      "label": "Arch frame background photo"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Floating product bottle photo"
+    },
+    {
+      "type": "header",
+      "content": "Colors & Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Card background color",
+      "default": "#f4e8f6"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "My Ellura Rewards"
+    }
+  ]
+}
+{% endschema %}

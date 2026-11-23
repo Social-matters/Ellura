@@ -1,0 +1,448 @@
+{% comment %}
+  Section contract:
+  ellura-reels renders the "ellura in everyday life" UGC/lifestyle reel carousel
+  with edge-to-edge full-width layout, smooth continuous GSAP scrolling,
+  automatic hover/focus pause, and interactive product tags.
+{% endcomment %}
+
+{% style %}
+  #shopify-section-{{ section.id }},
+  .section-ellura-reels {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden;
+  }
+
+  #reels-{{ section.id }} {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    position: relative;
+    overflow: hidden;
+    grid-column: 1 / -1 !important;
+  }
+
+  #reels-{{ section.id }} .reels__head {
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  #reels-{{ section.id }} .reels__head .section-head {
+    margin-bottom: clamp(24px, 3.5vw, 44px);
+    max-width: 880px;
+  }
+
+  #reels-{{ section.id }} .reels__viewport {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden;
+    position: relative;
+    grid-column: 1 / -1 !important;
+  }
+
+  #reels-{{ section.id }} .reels__track {
+    display: flex;
+    align-items: stretch;
+    width: max-content;
+    padding-left: 0;
+    margin: 0;
+    will-change: transform;
+  }
+
+  #reels-{{ section.id }} .reels__cell {
+    flex: 0 0 auto;
+    padding-right: 18px;
+  }
+
+  #reels-{{ section.id }} .reel {
+    display: grid;
+    gap: 10px;
+    width: clamp(230px, 20vw, 310px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  #reels-{{ section.id }} .reel:hover {
+    transform: translateY(-6px);
+  }
+
+  @media (max-width: 768px) {
+    #reels-{{ section.id }} .reel {
+      width: clamp(210px, 62vw, 270px);
+    }
+    #reels-{{ section.id }} .reels__cell {
+      padding-right: 14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #reels-{{ section.id }} .reels__viewport {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+    #reels-{{ section.id }} .reels__cell {
+      scroll-snap-align: start;
+    }
+    #reels-{{ section.id }} .reels__cell[aria-hidden="true"] {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+<div
+  id="reels-{{ section.id }}"
+  class="reels"
+  style="--reels-bg: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; background: var(--reels-bg);"
+  {{ section.shopify_attributes }}
+>
+  <div class="wrap reels__head">
+    <div class="section-head">
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      <h2 id="reels-title-{{ section.id }}" class="t-d2 accent-em">
+        {{ section.settings.heading }}
+      </h2>
+      {% if section.settings.lead != blank %}
+        <p class="t-lead">{{ section.settings.lead | escape }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="reels__viewport" aria-label="Lifestyle story reels">
+    <div class="reels__track">
+      {% for i in (1..2) %}
+        {% for block in section.blocks %}
+          <div class="reels__cell" {% if i == 2 %}aria-hidden="true"{% endif %} {{ block.shopify_attributes }}>
+            <article class="reel">
+              <div class="reel__media">
+                {% if block.settings.image != blank %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 800 }}"
+                    alt="{{ block.settings.caption | escape }}"
+                    width="400"
+                    height="600"
+                    loading="lazy"
+                  >
+                {% else %}
+                  {% assign fallback_img = block.settings.preset_photo | append: '-800.webp' %}
+                  <img
+                    src="{{ fallback_img | asset_url }}"
+                    alt="{{ block.settings.caption | escape }}"
+                    width="400"
+                    height="600"
+                    loading="lazy"
+                  >
+                {% endif %}
+                <span class="reel__tag chip">{{ block.settings.tag | escape }}</span>
+                <p class="reel__caption">{{ block.settings.caption | escape }}</p>
+              </div>
+
+              <div class="reel__product">
+                {% if block.settings.product != blank %}
+                  {% assign prod = block.settings.product %}
+                  {% if prod.featured_image %}
+                    <img src="{{ prod.featured_image | image_url: width: 120 }}" alt="{{ prod.title | escape }}" width="52" height="52" loading="lazy">
+                  {% else %}
+                    <img src="{{ 'pack-30-700.webp' | asset_url }}" alt="ellura" width="52" height="52" loading="lazy">
+                  {% endif %}
+                  <span class="reel__meta">
+                    <a href="{{ prod.url }}" class="reel__name">{{ prod.title | escape }}</a>
+                    <span class="reel__price">{{ prod.price | money }}</span>
+                  </span>
+                  <a href="{{ prod.url }}" class="reel__buy">+ Add</a>
+                {% else %}
+                  {% assign pack_img = block.settings.preset_pack | append: '-700.webp' %}
+                  <img src="{{ pack_img | asset_url }}" alt="ellura pack" width="52" height="52" loading="lazy">
+                  <span class="reel__meta">
+                    <a href="{{ routes.all_products_collection_url }}" class="reel__name">{{ block.settings.pack_name | escape }}</a>
+                    <span class="reel__price">{{ block.settings.pack_price | escape }}</span>
+                  </span>
+                  <a href="{{ routes.all_products_collection_url }}" class="reel__buy">+ Add</a>
+                {% endif %}
+              </div>
+            </article>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initReelsGSAP() {
+      if (typeof gsap === 'undefined') return;
+      var root = document.getElementById('reels-{{ section.id }}');
+      if (!root) return;
+
+      // Clean up any existing instances on re-render
+      if (root._reelsTween) {
+        root._reelsTween.kill();
+        root._reelsTween = null;
+      }
+      if (root._reelsTrigger) {
+        root._reelsTrigger.kill();
+        root._reelsTrigger = null;
+      }
+
+      var track = root.querySelector('.reels__track');
+      var viewport = root.querySelector('.reels__viewport');
+      if (!track || !viewport) return;
+
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      var halfWidth = track.scrollWidth / 2;
+      if (halfWidth <= 0) return;
+
+      var speed = {{ section.settings.speed | default: 44 }};
+      var duration = halfWidth / speed;
+
+      var tween = gsap.fromTo(track,
+        { x: 0 },
+        {
+          x: -halfWidth,
+          duration: duration,
+          ease: 'none',
+          repeat: -1
+        }
+      );
+      root._reelsTween = tween;
+
+      // Subtle breath zoom on reel images
+      root.querySelectorAll('.reel__media img').forEach(function (img, idx) {
+        gsap.fromTo(img,
+          { scale: 1.02 },
+          { scale: 1.12, duration: 8 + (idx % 3), ease: 'sine.inOut', yoyo: true, repeat: -1 }
+        );
+      });
+
+      // Pause on hover, resume on leave
+      function pauseReels() {
+        gsap.to(tween, { timeScale: 0, duration: 0.35, overwrite: 'auto' });
+      }
+
+      function resumeReels() {
+        gsap.to(tween, { timeScale: 1, duration: 0.35, overwrite: 'auto' });
+      }
+
+      viewport.addEventListener('mouseenter', pauseReels);
+      viewport.addEventListener('mouseleave', resumeReels);
+      viewport.addEventListener('focusin', pauseReels);
+      viewport.addEventListener('focusout', resumeReels);
+      viewport.addEventListener('touchstart', pauseReels, { passive: true });
+      viewport.addEventListener('touchend', resumeReels, { passive: true });
+
+      // Window resize handling to keep loop seamless
+      var resizeTimer;
+      function handleResize() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          if (!track || !root._reelsTween) return;
+          var newHalfWidth = track.scrollWidth / 2;
+          if (newHalfWidth > 0 && Math.abs(newHalfWidth - halfWidth) > 3) {
+            halfWidth = newHalfWidth;
+            var progress = root._reelsTween.progress();
+            var newDuration = halfWidth / speed;
+            root._reelsTween.kill();
+            root._reelsTween = gsap.fromTo(track,
+              { x: 0 },
+              {
+                x: -halfWidth,
+                duration: newDuration,
+                ease: 'none',
+                repeat: -1
+              }
+            ).progress(progress);
+          }
+        }, 200);
+      }
+      window.addEventListener('resize', handleResize);
+
+      if (typeof ScrollTrigger !== 'undefined') {
+        var trigger = ScrollTrigger.create({
+          trigger: root,
+          start: 'top bottom',
+          end: 'bottom top',
+          onToggle: function (self) {
+            self.isActive ? tween.play() : tween.pause();
+          }
+        });
+        root._reelsTrigger = trigger;
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReelsGSAP);
+    } else {
+      initReelsGSAP();
+    }
+
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}') {
+        initReelsGSAP();
+      }
+    });
+
+    document.addEventListener('shopify:section:unload', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}') {
+        var root = document.getElementById('reels-{{ section.id }}');
+        if (root && root._reelsTween) root._reelsTween.kill();
+        if (root && root._reelsTrigger) root._reelsTrigger.kill();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Ellura Everyday Reels",
+  "tag": "section",
+  "class": "section-ellura-reels",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "ellura in everyday life"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "one small ritual. <em>every single day.</em>"
+    },
+    {
+      "type": "text",
+      "id": "lead",
+      "label": "Subheading",
+      "default": "A capsule with your morning water — that’s the whole routine. Tap any bottle to shop."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "transparent"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Reel speed",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "Story Reel",
+      "settings": [
+        {
+          "type": "select",
+          "id": "preset_photo",
+          "label": "Preset Lifestyle Photo",
+          "options": [
+            { "value": "life-calm", "label": "Calm Morning Routine" },
+            { "value": "life-glass", "label": "Glass of Water" },
+            { "value": "life-sari-golden", "label": "Golden Afternoon" },
+            { "value": "life-editorial", "label": "Editorial Portrait" },
+            { "value": "life-morning", "label": "Morning Window" },
+            { "value": "life-ritual", "label": "Self-Care Ritual" },
+            { "value": "life-street", "label": "On the Go" },
+            { "value": "life-sunlight", "label": "Sunlight Stretch" }
+          ],
+          "default": "life-calm"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Photo (optional override)"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Pill tag",
+          "default": "07:30"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Reel caption",
+          "default": "One capsule, first thing"
+        },
+        {
+          "type": "header",
+          "content": "Product Tile"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Linked Product (optional)"
+        },
+        {
+          "type": "select",
+          "id": "preset_pack",
+          "label": "Default Pack Image",
+          "options": [
+            { "value": "pack-30", "label": "30 Capsules" },
+            { "value": "pack-90", "label": "90 Capsules" },
+            { "value": "pack-180", "label": "180 Capsules" }
+          ],
+          "default": "pack-30"
+        },
+        {
+          "type": "text",
+          "id": "pack_name",
+          "label": "Default Pack Title",
+          "default": "30 Capsules · 1 Month"
+        },
+        {
+          "type": "text",
+          "id": "pack_price",
+          "label": "Default Price",
+          "default": "₹2,490"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ellura Everyday Reels",
+      "blocks": [
+        { "type": "reel", "settings": { "preset_photo": "life-calm", "tag": "07:30", "caption": "One capsule, first thing", "preset_pack": "pack-30", "pack_name": "30 Capsules · 1 Month", "pack_price": "₹2,490" } },
+        { "type": "reel", "settings": { "preset_photo": "life-glass", "tag": "Hydrate", "caption": "Always with a glass of water", "preset_pack": "pack-30", "pack_name": "30 Capsules · 1 Month", "pack_price": "₹2,490" } },
+        { "type": "reel", "settings": { "preset_photo": "life-sari-golden", "tag": "Daily", "caption": "Part of the day, not a project", "preset_pack": "pack-90", "pack_name": "90 Capsules · 3 Months", "pack_price": "₹6,490" } },
+        { "type": "reel", "settings": { "preset_photo": "life-editorial", "tag": "36 mg", "caption": "Soluble A-type PACs, every capsule", "preset_pack": "pack-30", "pack_name": "30 Capsules · 1 Month", "pack_price": "₹2,490" } },
+        { "type": "reel", "settings": { "preset_photo": "life-morning", "tag": "Routine", "caption": "Same time, every day", "preset_pack": "pack-180", "pack_name": "180 Capsules · 6 Months", "pack_price": "₹11,990" } },
+        { "type": "reel", "settings": { "preset_photo": "life-ritual", "tag": "Self-care", "caption": "Small habits add up", "preset_pack": "pack-30", "pack_name": "30 Capsules · 1 Month", "pack_price": "₹2,490" } },
+        { "type": "reel", "settings": { "preset_photo": "life-street", "tag": "On the go", "caption": "One bottle, one month", "preset_pack": "pack-30", "pack_name": "30 Capsules · 1 Month", "pack_price": "₹2,490" } },
+        { "type": "reel", "settings": { "preset_photo": "life-sunlight", "tag": "Travel", "caption": "Two capsules on busy days, then back to one", "preset_pack": "pack-90", "pack_name": "90 Capsules · 3 Months", "pack_price": "₹6,490" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

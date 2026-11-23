@@ -1,0 +1,896 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "ellura_hero": {
+      "type": "ellura-hero",
+      "blocks": {
+        "ellura_hero_block_1": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_preset": "badge-20",
+            "label": "20+ Years Cranberry Research"
+          }
+        },
+        "ellura_hero_block_2": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_preset": "badge-cgmp",
+            "label": "Manufactured in a cGMP Compliant Facility"
+          }
+        },
+        "ellura_hero_block_3": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_preset": "badge-award",
+            "label": "2024 Mindful Awards Winner"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_hero_block_1",
+        "ellura_hero_block_2",
+        "ellura_hero_block_3"
+      ],
+      "settings": {
+        "badge_1": "Urinary tract health",
+        "badge_2": "Now in India",
+        "heading_line_1": "The UTI struggle",
+        "heading_line_2": "is real —",
+        "heading_line_3": "we hear you.",
+        "lead_text": "If you've ever had a UTI, you know how frustrating, painful, and disruptive it can be.",
+        "body_text": "<p>ellura® is a scientifically and clinically backed supplement that helps reduce the ability of certain bacteria to adhere to the urinary tract, supporting urinary tract health*(1,2). Each capsule delivers 36 mg of soluble, bioactive A-type PACs from 100% concentrated cranberry fruit juice extract(3,4).</p>",
+        "btn_text": "Buy now",
+        "btn_link": "shopify://collections/all",
+        "secondary_link_text": "How it works",
+        "secondary_link_url": "",
+        "disc_color": "#d0a6d8",
+        "show_sticker_a": true,
+        "sticker_a_num": "36 mg",
+        "sticker_a_text": "Soluble A-Type PACs",
+        "sticker_a_bg": "#d0a6d8",
+        "show_sticker_b": true,
+        "sticker_b_num": "1x",
+        "sticker_b_text": "Capsule a day",
+        "sticker_b_bg": "#f4e8f6",
+        "show_stamp": false,
+        "stamp_text": "TRUSTED IN THE US · NOW IN INDIA ·",
+        "bg_color": "#5a2e58",
+        "corner_radius": 36,
+        "padding_top": 8,
+        "padding_bottom": 16,
+        "enable_gsap": true
+      }
+    },
+    "ellura_marquee": {
+      "type": "ellura-marquee",
+      "blocks": {
+        "ellura_marquee_block_1": {
+          "type": "badge_item",
+          "settings": {
+            "icon": "flask",
+            "icon_bg": "#ead3ee",
+            "text": "36 mg soluble A-type PACs"
+          }
+        },
+        "ellura_marquee_block_2": {
+          "type": "badge_item",
+          "settings": {
+            "icon": "drop",
+            "icon_bg": "#d0a6d8",
+            "text": "100% concentrated cranberry fruit juice extract"
+          }
+        },
+        "ellura_marquee_block_3": {
+          "type": "badge_item",
+          "settings": {
+            "icon": "leaf",
+            "icon_bg": "#f4e8f6",
+            "text": "Vegan"
+          }
+        },
+        "ellura_marquee_block_4": {
+          "type": "badge_item",
+          "settings": {
+            "icon": "wheat",
+            "icon_bg": "#e3cbe8",
+            "text": "Gluten-free"
+          }
+        },
+        "ellura_marquee_block_5": {
+          "type": "badge_item",
+          "settings": {
+            "icon": "dna",
+            "icon_bg": "#ead3ee",
+            "text": "Non-GMO"
+          }
+        },
+        "ellura_marquee_block_6": {
+          "type": "badge_item",
+          "settings": {
+            "icon": "cube",
+            "icon_bg": "#d0a6d8",
+            "text": "Sugar-free"
+          }
+        },
+        "ellura_marquee_block_7": {
+          "type": "badge_item",
+          "settings": {
+            "icon": "capsule",
+            "icon_bg": "#f4e8f6",
+            "text": "One capsule a day"
+          }
+        },
+        "ellura_marquee_block_8": {
+          "type": "badge_item",
+          "settings": {
+            "icon": "shield",
+            "icon_bg": "#e3cbe8",
+            "text": "Made in a cGMP-compliant facility"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_marquee_block_1",
+        "ellura_marquee_block_2",
+        "ellura_marquee_block_3",
+        "ellura_marquee_block_4",
+        "ellura_marquee_block_5",
+        "ellura_marquee_block_6",
+        "ellura_marquee_block_7",
+        "ellura_marquee_block_8"
+      ],
+      "settings": {
+        "bg_color": "#ead3ee66",
+        "text_color": "#26141f",
+        "speed": 60,
+        "pause_on_hover": true,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "ellura_reels": {
+      "type": "ellura-reels",
+      "blocks": {
+        "ellura_reels_block_1": {
+          "type": "reel",
+          "settings": {
+            "preset_photo": "life-calm",
+            "tag": "07:30",
+            "caption": "One capsule, first thing",
+            "product": "ellura",
+            "preset_pack": "pack-30",
+            "pack_name": "30 Caps",
+            "pack_price": ""
+          }
+        },
+        "ellura_reels_block_2": {
+          "type": "reel",
+          "settings": {
+            "preset_photo": "life-glass",
+            "tag": "Hydrate",
+            "caption": "Always with a glass of water",
+            "product": "",
+            "preset_pack": "pack-30",
+            "pack_name": "30 Capsules · 1 Month",
+            "pack_price": "₹2,490"
+          }
+        },
+        "ellura_reels_block_3": {
+          "type": "reel",
+          "settings": {
+            "preset_photo": "life-sari-golden",
+            "tag": "Daily",
+            "caption": "Part of the day, not a project",
+            "product": "",
+            "preset_pack": "pack-90",
+            "pack_name": "90 Capsules · 3 Months",
+            "pack_price": "₹6,490"
+          }
+        },
+        "ellura_reels_block_4": {
+          "type": "reel",
+          "settings": {
+            "preset_photo": "life-editorial",
+            "tag": "36 mg",
+            "caption": "Soluble A-type PACs, every capsule",
+            "product": "",
+            "preset_pack": "pack-30",
+            "pack_name": "30 Capsules · 1 Month",
+            "pack_price": "₹2,490"
+          }
+        },
+        "ellura_reels_block_5": {
+          "type": "reel",
+          "settings": {
+            "preset_photo": "life-morning",
+            "tag": "Routine",
+            "caption": "Same time, every day",
+            "product": "",
+            "preset_pack": "pack-180",
+            "pack_name": "180 Capsules · 6 Months",
+            "pack_price": "₹11,990"
+          }
+        },
+        "ellura_reels_block_6": {
+          "type": "reel",
+          "settings": {
+            "preset_photo": "life-ritual",
+            "tag": "Self-care",
+            "caption": "Small habits add up",
+            "product": "",
+            "preset_pack": "pack-30",
+            "pack_name": "30 Capsules · 1 Month",
+            "pack_price": "₹2,490"
+          }
+        },
+        "ellura_reels_block_7": {
+          "type": "reel",
+          "settings": {
+            "preset_photo": "life-street",
+            "tag": "On the go",
+            "caption": "One bottle, one month",
+            "product": "",
+            "preset_pack": "pack-30",
+            "pack_name": "30 Capsules · 1 Month",
+            "pack_price": "₹2,490"
+          }
+        },
+        "ellura_reels_block_8": {
+          "type": "reel",
+          "settings": {
+            "preset_photo": "life-sunlight",
+            "tag": "Travel",
+            "caption": "Two capsules on busy days, then back to one",
+            "product": "",
+            "preset_pack": "pack-90",
+            "pack_name": "90 Capsules · 3 Months",
+            "pack_price": "₹6,490"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_reels_block_1",
+        "ellura_reels_block_2",
+        "ellura_reels_block_3",
+        "ellura_reels_block_4",
+        "ellura_reels_block_5",
+        "ellura_reels_block_6",
+        "ellura_reels_block_7",
+        "ellura_reels_block_8"
+      ],
+      "settings": {
+        "eyebrow": "ellura in everyday life",
+        "heading": "one small ritual. <em>every single day.</em>",
+        "lead": "A capsule with your morning water — that’s the whole routine. Tap any bottle to shop.",
+        "bg_color": "rgba(0,0,0,0)",
+        "speed": 44,
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    },
+    "ellura_heritage_stats": {
+      "type": "ellura-heritage-stats",
+      "blocks": {
+        "ellura_heritage_stats_block_1": {
+          "type": "stat",
+          "settings": {
+            "value": "20",
+            "suffix": "+",
+            "subnote": "",
+            "label": "Years of Cranberry Research",
+            "color_theme": "butter"
+          }
+        },
+        "ellura_heritage_stats_block_2": {
+          "type": "stat",
+          "settings": {
+            "value": "17",
+            "suffix": "",
+            "subnote": "",
+            "label": "Clinical Studies",
+            "color_theme": "blush"
+          }
+        },
+        "ellura_heritage_stats_block_3": {
+          "type": "stat",
+          "settings": {
+            "value": "22",
+            "suffix": "",
+            "subnote": "",
+            "label": "Herbal Medicine Approvals",
+            "color_theme": "peri"
+          }
+        },
+        "ellura_heritage_stats_block_4": {
+          "type": "stat",
+          "settings": {
+            "value": "36",
+            "suffix": "mg",
+            "subnote": "",
+            "label": "Soluble A-Type PACs",
+            "color_theme": "sage"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_heritage_stats_block_1",
+        "ellura_heritage_stats_block_2",
+        "ellura_heritage_stats_block_3",
+        "ellura_heritage_stats_block_4"
+      ],
+      "settings": {
+        "story_eyebrow": "From the US, for India",
+        "story_heading": "trusted in the US for 20+ years. <em>now in India.</em>",
+        "story_lead": "Developed by Pharmatoka and trusted in the United States for more than two decades, ellura® now arrives in India — the same research-led approach to urinary tract health, in one capsule a day.",
+        "story_bg": "#d0a6d8",
+        "show_doctor": true,
+        "doctor_eyebrow": "RECOMMENDED BY UROLOGISTS",
+        "doctor_quote": "“Urinary tract health is one of the most frustrating concerns my patients bring to me. Having a supplement backed by 20+ years of cranberry research and 36 mg of soluble, bioactive A-type PACs gives clinicians and patients a meaningful, non-antibiotic tool.”",
+        "doctor_link_text": "Learn more about the science",
+        "doctor_link_url": "",
+        "doctor_name": "Dr. Bilal Chughtai, MD",
+        "doctor_role": "Urologist · New York Presbyterian / Weill Cornell Medicine",
+        "doctor_bg": "#422343",
+        "bg_color": "rgba(0,0,0,0)",
+        "padding_top": 36,
+        "padding_bottom": 60
+      }
+    },
+    "ellura_how_it_works": {
+      "type": "ellura-how-it-works",
+      "blocks": {
+        "ellura_how_it_works_block_1": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Bacteria enter, attach, and multiply",
+            "description": "Bacteria migrate to the urinary tract, leading to disruption of urinary tract balance."
+          }
+        },
+        "ellura_how_it_works_block_2": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "ellura may help reduce bacterial adhesion",
+            "description": "36 mg PACs in ellura may reduce certain bacteria from adhering to the bladder wall."
+          }
+        },
+        "ellura_how_it_works_block_3": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "Bacteria are flushed out",
+            "description": "Without attachment, bacteria are naturally eliminated through urine."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_how_it_works_block_1",
+        "ellura_how_it_works_block_2",
+        "ellura_how_it_works_block_3"
+      ],
+      "settings": {
+        "eyebrow": "The mechanism",
+        "heading": "how <span class=\"brand-word\">ellura</span> <em>works</em>",
+        "legend_bacteria": "Bacteria",
+        "legend_pac": "Soluble A-type PACs",
+        "bg_color": "#5a2e58",
+        "padding_top": 80,
+        "padding_bottom": 100
+      }
+    },
+    "ellura_comparison": {
+      "type": "ellura-comparison",
+      "blocks": {
+        "ellura_comparison_block_1": {
+          "type": "point",
+          "settings": {
+            "point_number": "01",
+            "text": "<p><strong>ellura’s</strong> difference lies in its 36 mg of soluble, bioactive A-type PACs — a clinically backed formula with superior absorption and the highest concentration of active PACs, the key component to help reduce the ability of certain bacteria from adhering to the urinary tract.</p>"
+          }
+        },
+        "ellura_comparison_block_2": {
+          "type": "point",
+          "settings": {
+            "point_number": "02",
+            "text": "<p>Many products claim to have PACs, but if sourced from insoluble cranberry pomace (seeds, stems, skin, pulp), they remain trapped in fibre and cannot be absorbed by the body.</p>"
+          }
+        },
+        "ellura_comparison_block_3": {
+          "type": "point",
+          "settings": {
+            "point_number": "03",
+            "text": "<p>Clinical research shows that only supplements with the highest levels of soluble PACs, like ellura, deliver powerful urinary tract defence.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_comparison_block_1",
+        "ellura_comparison_block_2",
+        "ellura_comparison_block_3"
+      ],
+      "settings": {
+        "eyebrow": "Why it’s different",
+        "heading": "how is <span class=\"brand-word\">ellura</span> <em>different?</em>",
+        "bg_color": "#ead3ee",
+        "juice_title": "Juice",
+        "juice_desc": "Soluble PACs — free to be absorbed",
+        "pomace_title": "Pomace",
+        "pomace_desc": "Insoluble PACs — trapped in fibre",
+        "btn_text": "Buy ellura",
+        "btn_link": "",
+        "chart_axis": "Anti-adhesion activity %",
+        "chart_note": "*Insoluble PACs from pomace remain trapped in fibre and have negligible anti-adhesion effect in vivo.",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "ellura_take_control": {
+      "type": "ellura-take-control",
+      "blocks": {
+        "ellura_take_control_block_1": {
+          "type": "attribute",
+          "settings": {
+            "icon": "leaf",
+            "icon_bg": "#e3cbe8",
+            "label": "Vegan",
+            "note": "100% plant-based capsule"
+          }
+        },
+        "ellura_take_control_block_2": {
+          "type": "attribute",
+          "settings": {
+            "icon": "wheat",
+            "icon_bg": "#ead3ee",
+            "label": "Gluten-free",
+            "note": "No gluten, wheat or lactose"
+          }
+        },
+        "ellura_take_control_block_3": {
+          "type": "attribute",
+          "settings": {
+            "icon": "dna",
+            "icon_bg": "#dec0e4",
+            "label": "Non-GMO",
+            "note": "No GMOs, dyes or artificial preservatives"
+          }
+        },
+        "ellura_take_control_block_4": {
+          "type": "attribute",
+          "settings": {
+            "icon": "cube",
+            "icon_bg": "#f4e8f6",
+            "label": "Sugar-free",
+            "note": "No added sugars or sweeteners"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_take_control_block_1",
+        "ellura_take_control_block_2",
+        "ellura_take_control_block_3",
+        "ellura_take_control_block_4"
+      ],
+      "settings": {
+        "eyebrow": "36 mg · soluble · bioactive",
+        "heading": "take control of your urinary tract health <em>with ellura</em>",
+        "lead": "ellura contains 36 mg of soluble, bioactive A-type proanthocyanidins (PACs) from 100% pure concentrated cranberry fruit juice (Vaccinium macrocarpon) — a key compound shown in research to help reduce the ability of certain bacteria from adhering to the urinary tract and bladder, supporting urinary tract health.",
+        "watermark_num": "36",
+        "ring_text": "36 MG SOLUBLE A-TYPE PACS · 100% CRANBERRY JUICE EXTRACT · CLINICALLY BACKED · ONCE DAILY ·",
+        "btn_text": "Buy now",
+        "btn_link": "",
+        "bg_color": "#7a3d78",
+        "padding_top": 80,
+        "padding_bottom": 100
+      }
+    },
+    "ellura_product_packs": {
+      "type": "ellura-product-packs",
+      "blocks": {
+        "ellura_product_packs_block_1": {
+          "type": "pack",
+          "settings": {
+            "product": "",
+            "preset_image": "pack-30",
+            "badge": "1 MONTH",
+            "title": "30 capsules",
+            "summary": "One bottle, one capsule a day. The easiest way to start.",
+            "price": "₹2,199",
+            "mrp": "₹2,499",
+            "subscribe_note": "or ₹1,979 / delivery with subscription",
+            "card_theme": "blush",
+            "btn_label": "Shop now"
+          }
+        },
+        "ellura_product_packs_block_2": {
+          "type": "pack",
+          "settings": {
+            "product": "",
+            "preset_image": "pack-90",
+            "badge": "MOST POPULAR · 3 MONTHS",
+            "title": "90 capsules",
+            "summary": "Three months of daily support in a single bottle.",
+            "price": "₹5,999",
+            "mrp": "₹6,499",
+            "subscribe_note": "or ₹5,399 / delivery with subscription",
+            "card_theme": "lilac",
+            "btn_label": "Shop now"
+          }
+        },
+        "ellura_product_packs_block_3": {
+          "type": "pack",
+          "settings": {
+            "product": "",
+            "preset_image": "pack-180",
+            "badge": "BEST VALUE · 6 MONTHS",
+            "title": "180 capsules (2 × 90)",
+            "summary": "Two 90-capsule bottles side by side — the 180-capsule bundle.",
+            "price": "₹10,999",
+            "mrp": "₹11,999",
+            "subscribe_note": "Free priority shipping included",
+            "card_theme": "butter",
+            "btn_label": "Shop now"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_product_packs_block_1",
+        "ellura_product_packs_block_2",
+        "ellura_product_packs_block_3"
+      ],
+      "settings": {
+        "eyebrow": "Shop ellura",
+        "heading": "choose your <em>supply.</em>",
+        "lead": "One capsule a day. Pick the bottle that fits your routine — and subscribe to save 10% on every delivery, with free shipping.",
+        "perk_1": "Subscribe & Save 10%",
+        "perk_2": "Free shipping on subscriptions",
+        "perk_3": "Pause or cancel anytime",
+        "compare_link_text": "Compare all packs",
+        "compare_link_url": "",
+        "bg_color": "rgba(0,0,0,0)",
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    },
+    "ellura_habits": {
+      "type": "ellura-habits",
+      "blocks": {
+        "ellura_habits_block_1": {
+          "type": "habit",
+          "settings": {
+            "icon": "capsule",
+            "title": "Take ellura daily",
+            "description": "One capsule helps reduce the ability of certain bacteria to adhere to the urinary tract.*"
+          }
+        },
+        "ellura_habits_block_2": {
+          "type": "habit",
+          "settings": {
+            "icon": "drop",
+            "title": "Stay hydrated",
+            "description": "Drinking water helps wash bacteria out of the urinary tract naturally."
+          }
+        },
+        "ellura_habits_block_3": {
+          "type": "habit",
+          "settings": {
+            "icon": "heart",
+            "title": "Urinate after intimacy",
+            "description": "Helps wash out bacteria before they can adhere to the urinary tract walls."
+          }
+        },
+        "ellura_habits_block_4": {
+          "type": "habit",
+          "settings": {
+            "icon": "shield",
+            "title": "Wipe front to back",
+            "description": "A simple everyday practice that helps prevent bacterial transfer."
+          }
+        },
+        "ellura_habits_block_5": {
+          "type": "habit",
+          "settings": {
+            "icon": "clock",
+            "title": "Don’t hold urine",
+            "description": "Empty your bladder regularly and completely whenever you feel the urge."
+          }
+        },
+        "ellura_habits_block_6": {
+          "type": "habit",
+          "settings": {
+            "icon": "sun",
+            "title": "Support immunity",
+            "description": "Eat nutrient-dense food, get adequate sleep, and manage stress."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_habits_block_1",
+        "ellura_habits_block_2",
+        "ellura_habits_block_3",
+        "ellura_habits_block_4",
+        "ellura_habits_block_5",
+        "ellura_habits_block_6"
+      ],
+      "settings": {
+        "eyebrow": "Everyday urinary health",
+        "heading": "one capsule, <em>plus a few good habits.</em>",
+        "bg_color": "#e3cbe8",
+        "intro_title": "How to take ellura",
+        "intro_desc": "Take one capsule daily with water, at the same time each day. When you want extra support — travel, stress — take two, then return to one.",
+        "end_card_title": "Want the full picture?",
+        "end_card_link": "Visit the Urinary Health Hub",
+        "end_card_url": "",
+        "padding_top": 30,
+        "padding_bottom": 40
+      }
+    },
+    "ellura_rewards": {
+      "type": "ellura-rewards",
+      "settings": {
+        "eyebrow": "My ellura Rewards",
+        "heading": "earn rewards & <em>share the benefits.</em>",
+        "lead": "We love rewarding our loyal customers! With the My ellura Rewards & Referral Program, you can earn points on every purchase, redeem discounts, and share the benefits of ellura with your friends and family.",
+        "perk_1": "Earn points on every purchase",
+        "perk_2": "Redeem them for discounts",
+        "perk_3": "Share ellura with friends and family",
+        "member_bold": "Already a member?",
+        "member_note": "Sign in to check your points and redeem rewards.",
+        "register_label": "Create account",
+        "register_link": "",
+        "login_label": "Sign in",
+        "login_link": "",
+        "bg_color": "#f4e8f6",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "ellura_reviews": {
+      "type": "ellura-reviews",
+      "blocks": {
+        "ellura_reviews_block_1": {
+          "type": "review",
+          "settings": {
+            "title": "Great product",
+            "body": "Great product. I have used it for many years.",
+            "author": "Janet S.",
+            "location_or_source": "United States · Verified Buyer",
+            "card_theme": "blush"
+          }
+        },
+        "ellura_reviews_block_2": {
+          "type": "review",
+          "settings": {
+            "title": "So happy I found this",
+            "body": "I’ve been really happy with Ellura! It’s easy to take, and I’ve noticed a positive difference since starting it. Definitely something I’ll continue using!",
+            "author": "Savannah",
+            "location_or_source": "Verified Buyer",
+            "card_theme": "butter"
+          }
+        },
+        "ellura_reviews_block_3": {
+          "type": "review",
+          "settings": {
+            "title": "Trusted routine",
+            "body": "One capsule daily with my morning water. Clean ingredients, no upset stomach, and completely dependable.",
+            "author": "Anonymous",
+            "location_or_source": "United States · Verified Buyer",
+            "card_theme": "sage"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_reviews_block_1",
+        "ellura_reviews_block_2",
+        "ellura_reviews_block_3"
+      ],
+      "settings": {
+        "eyebrow": "Reviews from the US store",
+        "heading": "loved in the US. <em>arriving in India.</em>",
+        "average_score": "4.9",
+        "review_count": "78 reviews",
+        "all_reviews_label": "All reviews",
+        "all_reviews_link": "",
+        "cta_body": "India reviews will appear here as verified buyers share them.",
+        "cta_btn_label": "Share your experience",
+        "cta_url": "",
+        "disclaimer": "Totals as published on ellurautihealth.com. Individual experiences vary.",
+        "bg_color": "rgba(0,0,0,0)",
+        "padding_top": 30,
+        "padding_bottom": 50
+      }
+    },
+    "ellura_learn": {
+      "type": "ellura-learn",
+      "blocks": {
+        "ellura_learn_block_1": {
+          "type": "article_item",
+          "settings": {
+            "topic": "Microbiome",
+            "title": "UTIs, antibiotic resistance and prevention strategies",
+            "meta": "5 min read · September 2026",
+            "card_theme": "lilac",
+            "preset_photo": "lab-scientist",
+            "url": ""
+          }
+        },
+        "ellura_learn_block_2": {
+          "type": "article_item",
+          "settings": {
+            "topic": "Clinical Research",
+            "title": "Why 36 mg of soluble PACs is the clinical gold standard",
+            "meta": "6 min read · August 2026",
+            "card_theme": "butter",
+            "preset_photo": "lab-pipette",
+            "url": ""
+          }
+        },
+        "ellura_learn_block_3": {
+          "type": "article_item",
+          "settings": {
+            "topic": "Ingredients",
+            "title": "Juice vs Pomace: the truth about cranberry extracts",
+            "meta": "4 min read · July 2026",
+            "card_theme": "blush",
+            "preset_photo": "berries-dark",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "ellura_learn_block_1",
+        "ellura_learn_block_2",
+        "ellura_learn_block_3"
+      ],
+      "settings": {
+        "heading": "know your body. <em>know the science.</em>",
+        "view_all_label": "View all articles",
+        "view_all_url": "",
+        "featured_badge": "Featured article",
+        "featured_title": "Cranberry PACs vs. D-mannose: which better supports urinary tract health?",
+        "featured_read_label": "Read more",
+        "featured_url": "",
+        "bg_color": "rgba(0,0,0,0)",
+        "padding_top": 30,
+        "padding_bottom": 60
+      }
+    },
+    "ellura_faq": {
+      "type": "ellura-faq",
+      "blocks": {
+        "ellura_faq_block_1": {
+          "type": "question",
+          "settings": {
+            "question": "What is ellura?",
+            "answer": "<p>ellura is a clinically backed supplement that supports urinary tract health and helps reduce the ability of certain bacteria to adhere to the urinary tract, allowing them to be flushed out naturally.</p>"
+          }
+        },
+        "ellura_faq_block_2": {
+          "type": "question",
+          "settings": {
+            "question": "What are the ingredients in ellura?",
+            "answer": "<p>Each capsule delivers 36 mg of soluble, bioactive proanthocyanidins (PACs) from 206 mg of concentrated cranberry fruit juice extract powder (Gikacran®), the key clinically studied compound.</p><p>Clean vegetarian capsule shell with no GMOs, gluten, added sugars, or artificial dyes.</p>"
+          }
+        },
+        "ellura_faq_block_3": {
+          "type": "question",
+          "settings": {
+            "question": "How do I take ellura?",
+            "answer": "<p>Take 1 capsule once daily with water, at the same time each day. For extra support during travel or stress, you can take two capsules, then return to one.</p>"
+          }
+        },
+        "ellura_faq_block_4": {
+          "type": "question",
+          "settings": {
+            "question": "How is ellura different from cranberry juice or pills?",
+            "answer": "<p>Unlike generic cranberry pills made from leftover pomace (stems and seeds), ellura is derived exclusively from 100% concentrated cranberry fruit juice, delivering soluble, bioavailable PACs that your body can actually absorb.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_faq_block_1",
+        "ellura_faq_block_2",
+        "ellura_faq_block_3",
+        "ellura_faq_block_4"
+      ],
+      "settings": {
+        "heading": "FAQs",
+        "lead": "We’re here to help! Below you’ll find answers to some of our most frequently asked questions. If you need further assistance, feel free to reach out — our team will be in touch shortly.",
+        "contact_btn_label": "Contact us",
+        "contact_btn_url": "",
+        "group_title": "About <span class=\"brand-word\">ellura</span>",
+        "first_open": true,
+        "see_all_label": "See all FAQs",
+        "see_all_url": "",
+        "bg_color": "#f4e8f6",
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    },
+    "ellura_references": {
+      "type": "ellura-references",
+      "blocks": {
+        "ellura_references_block_1": {
+          "type": "citation",
+          "settings": {
+            "authors": "Xiong Z, Gao Y, Yuan C, Jian Z, Wei X.",
+            "year": "2024",
+            "title": "Preventive effect of cranberries with high dose of proanthocyanidins on urinary tract infections: a meta-analysis and systematic review.",
+            "source": "Frontiers in Nutrition",
+            "detail": "2024 Nov 28;11:1422121.",
+            "url": ""
+          }
+        },
+        "ellura_references_block_2": {
+          "type": "citation",
+          "settings": {
+            "authors": "Williams G, Hahn D, Stephens JH, Craig JC, Hodson EM.",
+            "year": "2023",
+            "title": "Cranberries for preventing urinary tract infections.",
+            "source": "Cochrane Database of Systematic Reviews",
+            "detail": "2023, Issue 4. Art. No.: CD001321.",
+            "url": ""
+          }
+        },
+        "ellura_references_block_3": {
+          "type": "citation",
+          "settings": {
+            "authors": "Howell AB, Botto H, Combescure C, Blanc-Potard AB, Gausa L, Matsumoto T, Tenke P, Sotto A, Lavigne JP.",
+            "year": "2010",
+            "title": "Dosage effect on uropathogenic Escherichia coli anti-adhesion activity in urine following consumption of cranberry powder standardized for proanthocyanidin content.",
+            "source": "BMC Infectious Diseases",
+            "detail": "2010 Apr 14;10:94.",
+            "url": ""
+          }
+        },
+        "ellura_references_block_4": {
+          "type": "citation",
+          "settings": {
+            "authors": "Lavigne JP, Vitrac X, Bernard M, Bruyere F, Sotto A.",
+            "year": "2008",
+            "title": "In-vitro and in-vivo evidence of dose-dependent decrease of uropathogenic Escherichia coli virulence by a cranberry extract.",
+            "source": "Clinical Microbiology and Infection",
+            "detail": "2008 Apr;14(4):350-5.",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "ellura_references_block_1",
+        "ellura_references_block_2",
+        "ellura_references_block_3",
+        "ellura_references_block_4"
+      ],
+      "settings": {
+        "title": "References",
+        "initially_open": false,
+        "padding_top": 16,
+        "padding_bottom": 32
+      }
+    }
+  },
+  "order": [
+    "ellura_hero",
+    "ellura_marquee",
+    "ellura_reels",
+    "ellura_heritage_stats",
+    "ellura_how_it_works",
+    "ellura_comparison",
+    "ellura_take_control",
+    "ellura_product_packs",
+    "ellura_habits",
+    "ellura_rewards",
+    "ellura_reviews",
+    "ellura_learn",
+    "ellura_faq",
+    "ellura_references"
+  ]
+}

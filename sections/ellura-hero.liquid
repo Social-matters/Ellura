@@ -1,0 +1,529 @@
+{% comment %}
+  Section contract:
+  ellura-hero renders the full-width spotlight Hero Banner with deep plum card,
+  rich typography, dual CTA buttons, trust badges, product bottle visual,
+  floating circular callouts, and rotating stamp.
+  Fully editable via Theme Editor with GSAP scroll & intro animations.
+{% endcomment %}
+
+<div
+  id="hero-{{ section.id }}"
+  class="hero section-spacing"
+  style="--hero-bg: {{ section.settings.bg_color }}; --hero-radius: {{ section.settings.corner_radius }}px; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  {{ section.shopify_attributes }}
+>
+  <div class="wrap">
+    <div class="hero__card" style="background: var(--hero-bg); border-radius: var(--hero-radius);">
+      <div class="hero__copy">
+        <p class="hero__kicker hero__fade">
+          {% if section.settings.badge_1 != blank %}
+            <span class="chip chip--lilac">{{ section.settings.badge_1 | escape }}</span>
+          {% endif %}
+          {% if section.settings.badge_2 != blank %}
+            <span class="chip chip--butter">{{ section.settings.badge_2 | escape }}</span>
+          {% endif %}
+        </p>
+
+        <h1 id="hero-title-{{ section.id }}" class="t-hero hero__title">
+          {% if section.settings.heading_line_1 != blank %}
+            <span class="hero__line"><span>{{ section.settings.heading_line_1 }}</span></span>
+          {% endif %}
+          {% if section.settings.heading_line_2 != blank %}
+            <span class="hero__line"><span>{{ section.settings.heading_line_2 }}</span></span>
+          {% endif %}
+          {% if section.settings.heading_line_3 != blank %}
+            <span class="hero__line"><span><em>{{ section.settings.heading_line_3 }}</em></span></span>
+          {% endif %}
+        </h1>
+
+        {% if section.settings.lead_text != blank %}
+          <p class="hero__lead hero__fade">{{ section.settings.lead_text }}</p>
+        {% endif %}
+
+        {% if section.settings.body_text != blank %}
+          <div class="hero__body hero__fade">{{ section.settings.body_text }}</div>
+        {% endif %}
+
+        <div class="hero__ctas hero__fade">
+          {% if section.settings.btn_text != blank %}
+            <a href="{{ section.settings.btn_link | default: '/collections/all' }}" class="btn btn--lilac btn--lg">
+              {{ section.settings.btn_text | escape }}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          {% endif %}
+
+          {% if section.settings.secondary_link_text != blank %}
+            <a href="{{ section.settings.secondary_link_url | default: '#how-it-works' }}" class="text-link">
+              {{ section.settings.secondary_link_text | escape }}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          {% endif %}
+        </div>
+
+        <div class="hero__badges hero__fade">
+          {% for block in section.blocks %}
+            {% if block.type == 'trust_badge' %}
+              {% if block.settings.image != blank %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 160 }}"
+                  alt="{{ block.settings.label | escape }}"
+                  width="76"
+                  height="76"
+                  loading="lazy"
+                  {{ block.shopify_attributes }}
+                >
+              {% else %}
+                {% assign default_badge_img = block.settings.badge_preset | append: '.webp' %}
+                <img
+                  src="{{ default_badge_img | asset_url }}"
+                  alt="{{ block.settings.label | escape }}"
+                  width="76"
+                  height="76"
+                  loading="lazy"
+                  {{ block.shopify_attributes }}
+                >
+              {% endif %}
+              {% unless forloop.last %}
+                <span aria-hidden="true"></span>
+              {% endunless %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="hero__disc" data-depth="20" style="background: {{ section.settings.disc_color }};"></div>
+        <div class="hero__bottles-wrap" data-depth="30">
+          {% if section.settings.product_image != blank %}
+            <img
+              class="hero__bottles"
+              src="{{ section.settings.product_image | image_url: width: 900 }}"
+              alt="{{ section.settings.heading_line_1 | escape }}"
+              width="900"
+              height="976"
+              fetchpriority="high"
+            >
+          {% else %}
+            <img
+              class="hero__bottles"
+              src="{{ 'bottles-duo-900.webp' | asset_url }}"
+              alt="ellura bottles"
+              width="900"
+              height="976"
+              fetchpriority="high"
+            >
+          {% endif %}
+        </div>
+
+        {% if section.settings.show_sticker_a %}
+          <div class="hero__sticker hero__sticker--a sticker" data-depth="50" style="background: {{ section.settings.sticker_a_bg }};">
+            <span>
+              <b>{{ section.settings.sticker_a_num | escape }}</b>
+              {{ section.settings.sticker_a_text | escape }}
+            </span>
+          </div>
+        {% endif %}
+
+        {% if section.settings.show_sticker_b %}
+          <div class="hero__sticker hero__sticker--b sticker" data-depth="40" style="background: {{ section.settings.sticker_b_bg }};">
+            <span>
+              <b>{{ section.settings.sticker_b_num | escape }}</b>
+              {{ section.settings.sticker_b_text | escape }}
+            </span>
+          </div>
+        {% endif %}
+
+        {% if section.settings.show_stamp %}
+          <div class="hero__stamp" data-depth="30">
+            <svg class="hero__spin" viewBox="0 0 200 200" aria-hidden="true">
+              <defs>
+                <path id="heroStampPath-{{ section.id }}" d="M 100, 100 m -78, 0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" />
+              </defs>
+              <text style="font-family: var(--font-sans, inherit); font-size: 13.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; fill: currentColor;">
+                <textPath href="#heroStampPath-{{ section.id }}">
+                  {{ section.settings.stamp_text | escape }}
+                </textPath>
+              </text>
+            </svg>
+            <svg class="hero__stamp-clover" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+              <path d="M50 49.5C45.5 43 32 36.5 31.2 24.5 30.6 15.6 36.6 9 43.2 9c3.6 0 5.8 2 6.8 4.2C51 11 53.2 9 56.8 9c6.6 0 12.6 6.6 12 15.5C68 36.5 54.5 43 50 49.5Z" />
+              <path d="M49.5 50C43 54.5 36.5 68 24.5 68.8 15.6 69.4 9 63.4 9 56.8c0-3.6 2-5.8 4.2-6.8C11 49 9 46.8 9 43.2c0-6.6 6.6-12.6 15.5-12C36.5 32 43 45.5 49.5 50Z" />
+              <path d="M50 50.5C54.5 57 68 63.5 68.8 75.5c.6 8.9-5.4 15.5-12 15.5-3.6 0-5.8-2-6.8-4.2C49 89 46.8 91 43.2 91c-6.6 0-12.6-6.6-12-15.5C32 63.5 45.5 57 50 50.5Z" />
+              <path d="M50.5 50C57 45.5 63.5 32 75.5 31.2 84.4 30.6 91 36.6 91 43.2c0 3.6-2 5.8-4.2 6.8C89 51 91 53.2 91 56.8c0 6.6-6.6 12.6-15.5 12C63.5 68 57 54.5 50.5 50Z" />
+            </svg>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if section.settings.enable_gsap %}
+  <script>
+    (function () {
+      function initHeroGSAP() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+        var section = document.getElementById('hero-{{ section.id }}');
+        if (!section) return;
+
+        var mm = gsap.matchMedia();
+        mm.add('(prefers-reduced-motion: no-preference)', function () {
+          var tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+          tl.fromTo(section.querySelector('.hero__card'),
+            { clipPath: 'inset(6% 4% 6% 4% round 48px)', scale: 0.96 },
+            { clipPath: 'inset(0% 0% 0% 0% round {{ section.settings.corner_radius }}px)', scale: 1, duration: 1.4 }
+          )
+          .fromTo(section.querySelector('.hero__disc'),
+            { scale: 0.2, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 1.5 }, 0.15
+          )
+          .fromTo(section.querySelector('.hero__bottles'),
+            { yPercent: 22, rotate: 6, opacity: 0 },
+            { yPercent: 0, rotate: 0, opacity: 1, duration: 1.6 }, 0.3
+          )
+          .fromTo(section.querySelectorAll('.hero__title .hero__line > span'),
+            { yPercent: 110, rotate: 2 },
+            { yPercent: 0, rotate: 0, duration: 1.2, stagger: 0.1 }, 0.25
+          )
+          .fromTo(section.querySelectorAll('.hero__fade'),
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: 'power3.out' }, 0.7
+          )
+          .fromTo(section.querySelectorAll('.hero__sticker'),
+            { opacity: 0, scale: 0.3, rotate: -25 },
+            { opacity: 1, scale: 1, rotate: function(i) { return [-8, 7][i] || 0; }, duration: 1, stagger: 0.14, ease: 'back.out(2)' }, 1
+          )
+          .fromTo(section.querySelectorAll('.hero__badges img'),
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, stagger: 0.08, duration: 0.8, ease: 'power3.out' }, 1.1
+          );
+
+          var spin = section.querySelector('.hero__spin');
+          if (spin) {
+            gsap.to(spin, { rotate: 360, duration: 24, repeat: -1, ease: 'none' });
+          }
+
+          gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 0.6
+            }
+          })
+          .to(section.querySelector('.hero__bottles'), { yPercent: -10, rotate: -3, ease: 'none' }, 0)
+          .to(section.querySelector('.hero__disc'), { scale: 1.08, ease: 'none' }, 0)
+          .to(section.querySelector('.hero__copy'), { y: -45, ease: 'none' }, 0);
+        });
+
+        // Parallax mouse tilt for desktop
+        mm.add('(min-width: 960px)', function () {
+          var depthEls = section.querySelectorAll('[data-depth]');
+          if (!depthEls.length) return;
+          var getters = Array.from(depthEls).map(function (el) {
+            return {
+              x: gsap.quickTo(el, 'x', { duration: 1.2, ease: 'power3.out' }),
+              y: gsap.quickTo(el, 'y', { duration: 1.2, ease: 'power3.out' }),
+              d: parseFloat(el.dataset.depth || '20')
+            };
+          });
+
+          function onMove(e) {
+            var cx = (e.clientX / window.innerWidth) - 0.5;
+            var cy = (e.clientY / window.innerHeight) - 0.5;
+            getters.forEach(function (g) {
+              g.x(cx * g.d);
+              g.y(cy * g.d);
+            });
+          }
+
+          window.addEventListener('pointermove', onMove);
+          return function () {
+            window.removeEventListener('pointermove', onMove);
+          };
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHeroGSAP);
+      } else {
+        initHeroGSAP();
+      }
+
+      document.addEventListener('shopify:section:load', function (e) {
+        if (e.target.id === 'shopify-section-{{ section.id }}') {
+          initHeroGSAP();
+        }
+      });
+    })();
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Ellura Hero Banner",
+  "tag": "section",
+  "class": "section-ellura-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Eyebrow Badges"
+    },
+    {
+      "type": "text",
+      "id": "badge_1",
+      "label": "Badge 1 text",
+      "default": "Urinary tract health"
+    },
+    {
+      "type": "text",
+      "id": "badge_2",
+      "label": "Badge 2 text",
+      "default": "Now in India"
+    },
+    {
+      "type": "header",
+      "content": "Headings"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "the UTI struggle"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "is real —"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_3",
+      "label": "Heading line 3 (italic)",
+      "default": "we hear you."
+    },
+    {
+      "type": "text",
+      "id": "lead_text",
+      "label": "Lead subheading",
+      "default": "If you've ever had a UTI, you know how frustrating, painful, and disruptive it can be."
+    },
+    {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Body paragraph",
+      "default": "<p>ellura® is a scientifically and clinically backed supplement that helps reduce the ability of certain bacteria to adhere to the urinary tract, supporting urinary tract health*(1,2). Each capsule delivers 36 mg of soluble, bioactive A-type PACs from 100% concentrated cranberry fruit juice extract(3,4).</p>"
+    },
+    {
+      "type": "header",
+      "content": "Action Buttons"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Primary button label",
+      "default": "Buy now"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_link_text",
+      "label": "Secondary link label",
+      "default": "How it works"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link_url",
+      "label": "Secondary link URL"
+    },
+    {
+      "type": "header",
+      "content": "Media & Visuals"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Bottles visual image (optional override)"
+    },
+    {
+      "type": "color",
+      "id": "disc_color",
+      "label": "Background circle glow color",
+      "default": "#d0a6d8"
+    },
+    {
+      "type": "header",
+      "content": "Floating Badges & Stamps"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticker_a",
+      "label": "Show Top Left Sticker",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sticker_a_num",
+      "label": "Sticker A big text",
+      "default": "36 mg"
+    },
+    {
+      "type": "text",
+      "id": "sticker_a_text",
+      "label": "Sticker A description",
+      "default": "Soluble A-Type PACs"
+    },
+    {
+      "type": "color",
+      "id": "sticker_a_bg",
+      "label": "Sticker A background",
+      "default": "#d0a6d8"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticker_b",
+      "label": "Show Bottom Right Sticker",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sticker_b_num",
+      "label": "Sticker B big text",
+      "default": "1x"
+    },
+    {
+      "type": "text",
+      "id": "sticker_b_text",
+      "label": "Sticker B description",
+      "default": "Capsule a day"
+    },
+    {
+      "type": "color",
+      "id": "sticker_b_bg",
+      "label": "Sticker B background",
+      "default": "#f4e8f6"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stamp",
+      "label": "Show Rotating Stamp",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stamp_text",
+      "label": "Rotating stamp text",
+      "default": "TRUSTED IN THE US · NOW IN INDIA · "
+    },
+    {
+      "type": "header",
+      "content": "Colors & Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Card background color",
+      "default": "#5a2e58"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Card corner radius",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_gsap",
+      "label": "Enable GSAP motion animations",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "badge_preset",
+          "label": "Preset Badge Icon",
+          "options": [
+            { "value": "badge-20", "label": "20+ Years Research" },
+            { "value": "badge-cgmp", "label": "cGMP Compliant" },
+            { "value": "badge-award", "label": "2024 Mindful Awards" }
+          ],
+          "default": "badge-20"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Badge Image (optional)"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Accessible badge name",
+          "default": "Trust Badge"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ellura Hero Banner",
+      "blocks": [
+        {
+          "type": "trust_badge",
+          "settings": {
+            "badge_preset": "badge-20",
+            "label": "20+ Years Cranberry Research"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "badge_preset": "badge-cgmp",
+            "label": "Manufactured in a cGMP Compliant Facility"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "badge_preset": "badge-award",
+            "label": "2024 Mindful Awards Winner"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

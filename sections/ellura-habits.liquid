@@ -1,0 +1,283 @@
+{% comment %}
+  Section contract:
+  ellura-habits renders the "Everyday urinary health" horizontal pinned rail
+  featuring an interactive progress bar, intro dosage card, lifestyle habit cards, and GSAP pin scroll.
+{% endcomment %}
+
+<div
+  id="habits-{{ section.id }}"
+  class="habits"
+  style="--habits-bg: {{ section.settings.bg_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; background: var(--habits-bg);"
+  {{ section.shopify_attributes }}
+>
+  <div class="habits__pin">
+    <div class="wrap habits__head">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <p class="eyebrow" data-gsap="fade-up">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+        <h2 id="habits-title-{{ section.id }}" class="t-d2 accent-em" data-gsap="fade-up">
+          {{ section.settings.heading }}
+        </h2>
+      </div>
+
+      <div class="habits__progress" aria-hidden="true">
+        <i style="transform: scaleX(0);"></i>
+      </div>
+    </div>
+
+    <div class="habits__viewport">
+      <ol class="habits__track" role="list">
+        <!-- Card 0: Intro / Dosage Card -->
+        <li class="habit habit--intro">
+          <div class="habit__img">
+            {% if section.settings.intro_img != blank %}
+              <img src="{{ section.settings.intro_img | image_url: width: 800 }}" alt="How to take ellura" width="400" height="300" loading="lazy">
+            {% else %}
+              <img src="{{ 'life-glass-2-800.webp' | asset_url }}" alt="How to take ellura" width="400" height="300" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="habit__intro-body">
+            <p class="t-mono">{{ section.settings.intro_title | default: 'How to take ellura' }}</p>
+            <p>{{ section.settings.intro_desc | default: 'Take one capsule daily with water, at the same time each day. When you want extra support — travel, stress — take two, then return to one.' }}</p>
+          </div>
+        </li>
+
+        <!-- Habit Cards -->
+        {% for block in section.blocks %}
+          {% if block.type == 'habit' %}
+            <li class="habit" {{ block.shopify_attributes }}>
+              <span class="habit__n t-mono">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              <span class="habit__icon">
+                {% case block.settings.icon %}
+                  {% when 'capsule' %}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                  {% when 'drop' %}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                  {% when 'heart' %}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                  {% when 'shield' %}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  {% when 'clock' %}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  {% when 'sun' %}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                  {% else %}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                {% endcase %}
+              </span>
+              <h3 class="t-h4">{{ block.settings.title | escape }}</h3>
+              <p class="muted">{{ block.settings.description | escape }}</p>
+            </li>
+          {% endif %}
+        {% endfor %}
+
+        <!-- Card End: Hub link -->
+        <li class="habit habit--end">
+          <p class="t-h4">{{ section.settings.end_card_title | default: 'Want the full picture?' }}</p>
+          <a href="{{ section.settings.end_card_url | default: '/pages/learn' }}" class="text-link">
+            {{ section.settings.end_card_link | default: 'Visit the Urinary Health Hub' }}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initHabitsGSAP() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      var root = document.getElementById('habits-{{ section.id }}');
+      if (!root) return;
+
+      var mm = gsap.matchMedia();
+      mm.add('(min-width: 960px)', function () {
+        var track = root.querySelector('.habits__track');
+        var pinEl = root.querySelector('.habits__pin');
+        var progressEl = root.querySelector('.habits__progress i');
+        if (!track || !pinEl) return;
+
+        function getDistance() {
+          return track.scrollWidth - window.innerWidth + 80;
+        }
+
+        var anim = gsap.to(track, {
+          x: function () { return -getDistance(); },
+          ease: 'none',
+          scrollTrigger: {
+            trigger: pinEl,
+            start: 'top top',
+            end: function () { return '+=' + getDistance(); },
+            pin: true,
+            scrub: 0.8,
+            invalidateOnRefresh: true
+          }
+        });
+
+        if (progressEl) {
+          gsap.to(progressEl, {
+            scaleX: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: pinEl,
+              start: 'top top',
+              end: function () { return '+=' + getDistance(); },
+              scrub: true
+            }
+          });
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHabitsGSAP);
+    } else {
+      initHabitsGSAP();
+    }
+
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}') {
+        initHabitsGSAP();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Everyday Habits Rail",
+  "tag": "section",
+  "class": "section-ellura-habits",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Everyday urinary health"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "one capsule, <em>plus a few good habits.</em>"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background color",
+      "default": "#e3cbe8"
+    },
+    {
+      "type": "header",
+      "content": "Intro Dosage Card"
+    },
+    {
+      "type": "image_picker",
+      "id": "intro_img",
+      "label": "Intro photo override"
+    },
+    {
+      "type": "text",
+      "id": "intro_title",
+      "label": "Intro pill label",
+      "default": "How to take ellura"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_desc",
+      "label": "Intro description",
+      "default": "Take one capsule daily with water, at the same time each day. When you want extra support — travel, stress — take two, then return to one."
+    },
+    {
+      "type": "header",
+      "content": "End Link Card"
+    },
+    {
+      "type": "text",
+      "id": "end_card_title",
+      "label": "End card heading",
+      "default": "Want the full picture?"
+    },
+    {
+      "type": "text",
+      "id": "end_card_link",
+      "label": "End card link label",
+      "default": "Visit the Urinary Health Hub"
+    },
+    {
+      "type": "url",
+      "id": "end_card_url",
+      "label": "End card link URL"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "habit",
+      "name": "Habit Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "capsule", "label": "Capsule" },
+            { "value": "drop", "label": "Water drop" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "clock", "label": "Clock / Routine" },
+            { "value": "sun", "label": "Sun" }
+          ],
+          "default": "capsule"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Habit title",
+          "default": "Take ellura daily"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Habit description",
+          "default": "One capsule helps reduce the ability of certain bacteria to adhere to the urinary tract.*"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Everyday Habits Rail",
+      "blocks": [
+        { "type": "habit", "settings": { "icon": "capsule", "title": "Take ellura daily", "description": "One capsule helps reduce the ability of certain bacteria to adhere to the urinary tract.*" } },
+        { "type": "habit", "settings": { "icon": "drop", "title": "Stay hydrated", "description": "Drinking water helps wash bacteria out of the urinary tract naturally." } },
+        { "type": "habit", "settings": { "icon": "heart", "title": "Urinate after intimacy", "description": "Helps wash out bacteria before they can adhere to the urinary tract walls." } },
+        { "type": "habit", "settings": { "icon": "shield", "title": "Wipe front to back", "description": "A simple everyday practice that helps prevent bacterial transfer." } },
+        { "type": "habit", "settings": { "icon": "clock", "title": "Don’t hold urine", "description": "Empty your bladder regularly and completely whenever you feel the urge." } },
+        { "type": "habit", "settings": { "icon": "sun", "title": "Support immunity", "description": "Eat nutrient-dense food, get adequate sleep, and manage stress." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,34 @@
+{% doc %}
+  Renders one accordion item (reference Lf). Place items inside a container with data-acc so
+  ellura-motion.js animates them; without JavaScript every panel stays open and readable.
+
+  @param {string} id - Unique id for the item; the button and panel ids derive from it
+  @param {string} title - Question or heading text (plain text)
+  @param {string} body - Panel HTML
+  @param {boolean} [open] - Start expanded
+  @param {string} [variant] - 'line' (default, plus icon) or 'pill' (chevron icon)
+  @param {string} [heading_level] - 'h3' (default) or 'h4'
+  @param {string} [attributes] - Extra attributes for the item, e.g. block.shopify_attributes
+
+  @example
+  {% render 'ellura-acc-item', id: block.id, title: block.settings.question, body: block.settings.answer %}
+{% enddoc %}
+{%- assign acc_variant = variant | default: 'line' -%}
+{%- assign acc_tag = heading_level | default: 'h3' -%}
+<div class="acc acc--{{ acc_variant }}{% if open %} is-open{% endif %}" id="{{ id }}" {{ attributes }}>
+  <{{ acc_tag }} class="acc__heading">
+    <button type="button" id="{{ id }}-btn" class="acc__btn" aria-expanded="{% if open %}true{% else %}false{% endif %}" aria-controls="{{ id }}-panel">
+      <span class="acc__title">{{ title | escape }}</span>
+      <span class="acc__icon" aria-hidden="true">
+        {%- if acc_variant == 'pill' -%}
+          {% render 'ellura-icon', name: 'chevron', px: 18 %}
+        {%- else -%}
+          {% render 'ellura-icon', name: 'plus', px: 18 %}
+        {%- endif -%}
+      </span>
+    </button>
+  </{{ acc_tag }}>
+  <div id="{{ id }}-panel" role="region" aria-labelledby="{{ id }}-btn" class="acc__panel">
+    <div class="acc__inner">{{ body }}</div>
+  </div>
+</div>

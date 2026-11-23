@@ -185,6 +185,36 @@
         tl.set(el, { clearProps: 'clipPath' });
       });
 
+      all('[data-parallax]').forEach(function (el) {
+        var distance = parseFloat(el.dataset.parallax || '10');
+        gsap.fromTo(el, { yPercent: -distance }, {
+          yPercent: distance,
+          ease: 'none',
+          scrollTrigger: { trigger: el.parentElement || el, start: 'top bottom', end: 'bottom top', scrub: true },
+        });
+      });
+
+      all('[data-draw]').forEach(function (el) {
+        if (typeof el.getTotalLength !== 'function') return;
+        var length = el.getTotalLength();
+        gsap.fromTo(el, { strokeDasharray: length, strokeDashoffset: length }, {
+          strokeDashoffset: 0,
+          ease: 'none',
+          scrollTrigger: { trigger: el.closest('[data-draw-trigger]') || el, start: 'top 80%', end: 'bottom 40%', scrub: 0.6 },
+        });
+      });
+
+      all('[data-pac-chart]').forEach(function (chart) {
+        var q = function (s) { return chart.querySelectorAll(s); };
+        gsap.timeline({ scrollTrigger: { trigger: chart, start: 'top 75%', once: true } })
+          .fromTo(q('.chart__gridline'), { scaleX: 0 }, { scaleX: 1, duration: 0.9, stagger: 0.08, ease: 'power3.inOut', transformOrigin: 'left' })
+          .fromTo(q('.chart__bar--ellura'), { scaleY: 0 }, { scaleY: 1, duration: 1.4, ease: 'expo.out', transformOrigin: 'bottom' }, 0.3)
+          .fromTo(q('.chart__bar--other'), { scaleY: 0 }, { scaleY: 1, duration: 1.1, ease: 'expo.out', transformOrigin: 'bottom' }, 0.55)
+          .fromTo(q('.chart__bar--pomace'), { scaleY: 0 }, { scaleY: 1, duration: 1, ease: 'expo.out', transformOrigin: 'bottom' }, 0.7)
+          .fromTo(q('.chart__txt'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, stagger: 0.1, duration: 0.6 }, 0.9)
+          .fromTo(q('.chart__capsule'), { opacity: 0, rotate: -40, y: -30 }, { opacity: 1, rotate: -28, y: 0, duration: 1, ease: 'back.out(1.6)' }, 1);
+      });
+
       all('[data-count]').forEach(function (el) {
         var raw = String(el.dataset.count || '').trim();
         if (!/^\d+(\.\d+)?$/.test(raw)) return;
@@ -230,6 +260,59 @@
     });
   }
 
+  /* ---- Accordions: [data-acc] containers holding .acc items (reference Lf component) ---- */
+  function setAccordion(item, open, animate) {
+    var btn = item.querySelector('.acc__btn');
+    var panel = item.querySelector('.acc__panel');
+    if (!btn || !panel) return;
+    item.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    gsap.killTweensOf(panel);
+    /* Only user toggles change layout after load; initial setup must not refresh per item. */
+    var duration = animate && !reduced() ? 0.55 : 0;
+    if (open) {
+      panel.removeAttribute('inert');
+      panel.style.visibility = 'visible';
+      if (!animate) {
+        gsap.set(panel, { height: 'auto' });
+        return;
+      }
+      gsap.fromTo(panel, { height: panel.offsetHeight }, { height: 'auto', duration: duration, ease: 'power3.inOut', onComplete: refresh });
+    } else {
+      panel.setAttribute('inert', '');
+      if (!animate) {
+        gsap.set(panel, { height: 0 });
+        panel.style.visibility = 'hidden';
+        return;
+      }
+      gsap.to(panel, {
+        height: 0,
+        duration: duration,
+        ease: 'power3.inOut',
+        onComplete: function () {
+          panel.style.visibility = 'hidden';
+          refresh();
+        },
+      });
+    }
+  }
+
+  function initAccordions(scope) {
+    (scope || document).querySelectorAll('[data-acc] .acc').forEach(function (item) {
+      if (item._accReady) return;
+      item._accReady = true;
+      var open = item.classList.contains('is-open') || (location.hash && item.id && '#' + item.id === location.hash);
+      setAccordion(item, open, false);
+    });
+  }
+
+  document.addEventListener('click', function (event) {
+    var btn = event.target.closest ? event.target.closest('[data-acc] .acc__btn') : null;
+    if (!btn) return;
+    var item = btn.closest('.acc');
+    setAccordion(item, !item.classList.contains('is-open'), true);
+  });
+
   function refresh() {
     ScrollTrigger.refresh();
   }
@@ -248,6 +331,7 @@
   });
 
   document.addEventListener('shopify:section:load', function (event) {
+    initAccordions(event.target);
     reveal(event.target);
     refresh();
   });
@@ -258,6 +342,8 @@
     touch: touch,
     introDelay: introDelay,
     reveal: reveal,
+    setAccordion: setAccordion,
+    initAccordions: initAccordions,
     lockScroll: lockScroll,
     refresh: refresh,
     get lenis() {
@@ -270,6 +356,7 @@
    * so they run before this one: pinned sections exist before reveal triggers are created.
    */
   function init() {
+    initAccordions(document);
     startLenis();
     document.querySelectorAll('.shopify-section').forEach(reveal);
     initMagnetic();

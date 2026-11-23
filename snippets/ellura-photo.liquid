@@ -1,0 +1,45 @@
+{% doc %}
+  Renders a responsive photo: the merchant's image when set, otherwise a bundled ellura photo
+  (assets named <preset>-800.webp and <preset>-1600.webp).
+
+  @param {image} [image] - Merchant-selected image (image_picker value)
+  @param {string} [preset] - Bundled photo base name, e.g. 'cranberry-cut', 'life-morning'
+  @param {string} [sizes] - sizes attribute matching the rendered layout
+  @param {string} [alt] - Alternative text; pass '' for decorative photos
+  @param {boolean} [priority] - Eager, high-priority load for above-the-fold media
+  @param {number} [width] - Intrinsic width for the bundled photo (default 1200)
+  @param {number} [height] - Intrinsic height for the bundled photo (default 1500)
+
+  @example
+  {% render 'ellura-photo', image: section.settings.image, preset: section.settings.preset, sizes: '(max-width: 900px) 100vw, 45vw', alt: '' %}
+{% enddoc %}
+{%- liquid
+  assign photo_sizes = sizes | default: '100vw'
+  assign photo_loading = 'lazy'
+  assign photo_priority = 'auto'
+  if priority
+    assign photo_loading = 'eager'
+    assign photo_priority = 'high'
+  endif
+-%}
+{%- if image != blank -%}
+  {{
+    image
+    | image_url: width: 1600
+    | image_tag: widths: '600, 800, 1200, 1600', sizes: photo_sizes, alt: alt, loading: photo_loading, fetchpriority: photo_priority
+  }}
+{%- elsif preset != blank -%}
+  {%- assign small = preset | append: '-800.webp' | asset_url -%}
+  {%- assign large = preset | append: '-1600.webp' | asset_url -%}
+  <img
+    src="{{ small }}"
+    srcset="{{ small }} 800w, {{ large }} 1600w"
+    sizes="{{ photo_sizes }}"
+    alt="{{ alt | escape }}"
+    width="{{ width | default: 1200 }}"
+    height="{{ height | default: 1500 }}"
+    loading="{{ photo_loading }}"
+    fetchpriority="{{ photo_priority }}"
+    decoding="async"
+  >
+{%- endif -%}

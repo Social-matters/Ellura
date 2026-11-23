@@ -1,0 +1,108 @@
+{% comment %}
+  Section contract.
+  ellura-main-blog renders the Learn hub (reference Learn): the newest article as a featured
+  card, topic tabs built from article tags that filter the grid in place, and article cards.
+  The first tag of each article is shown as its topic.
+  @example
+  <!-- blog template, below the page hero -->
+{% endcomment %}
+{%- paginate blog.articles by section.settings.per_page -%}
+  {%- assign featured = blog.articles.first -%}
+  {%- if featured and paginate.current_page == 1 -%}
+    <div class="section section--tight" aria-label="Featured article">
+      <div class="wrap">
+        <a href="{{ featured.url }}" class="feature" data-fade>
+          <div class="feature__img" data-img>
+            {%- if featured.image -%}
+              {{ featured.image | image_url: width: 1600 | image_tag: widths: '600, 900, 1200, 1600', sizes: '(max-width: 900px) 100vw, 55vw', alt: featured.image.alt, loading: 'eager' }}
+            {%- else -%}
+              {% render 'ellura-photo', preset: 'berries-frost', sizes: '(max-width: 900px) 100vw, 55vw', alt: '', width: 1600, height: 1067 %}
+            {%- endif -%}
+          </div>
+          <div class="feature__body">
+            {%- assign read_mins = featured.content | strip_html | split: ' ' | size | divided_by: 200 | floor | at_least: 1 -%}
+            <p class="t-mono">Featured{% if featured.tags.first %} · {{ featured.tags.first | escape }}{% endif %} · {{ read_mins }} min read</p>
+            <h2 class="t-d3">{{ featured.title | escape }}</h2>
+            <p class="muted">{{ featured.excerpt_or_content | strip_html | truncatewords: 32 }}</p>
+            <span class="text-link">Read article {% render 'ellura-icon', name: 'arrow' %}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="section section--tight" aria-labelledby="all-title-{{ section.id }}" id="learn-{{ section.id }}">
+    <div class="wrap">
+      <div class="learn-filter">
+        <h2 id="all-title-{{ section.id }}" class="t-d3">{{ section.settings.heading | escape }}</h2>
+        {%- if blog.all_tags.size > 0 -%}
+          <div class="tabs" role="group" aria-label="Filter by topic">
+            <button type="button" aria-pressed="true" data-topic="">All</button>
+            {%- for tag in blog.all_tags -%}
+              <button type="button" aria-pressed="false" data-topic="{{ tag | handleize }}">{{ tag | escape }}</button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+      <ul class="agrid" role="list" aria-live="polite">
+        {%- for article in blog.articles -%}
+          {%- if paginate.current_page == 1 and forloop.first -%}{%- continue -%}{%- endif -%}
+          {%- capture topics -%}{%- for tag in article.tags -%}{{ tag | handleize }} {% endfor -%}{%- endcapture -%}
+          <li class="acard" data-topics="{{ topics | strip }}">
+            <a href="{{ article.url }}">
+              <div class="acard__img">
+                {%- if article.image -%}
+                  {{ article.image | image_url: width: 800 | image_tag: widths: '400, 600, 800', sizes: '(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw', alt: article.image.alt, loading: 'lazy' }}
+                {%- else -%}
+                  {% render 'ellura-photo', preset: 'cranberry-cut', sizes: '(max-width: 700px) 100vw, 33vw', alt: '', width: 800, height: 600 %}
+                {%- endif -%}
+              </div>
+              <p class="t-mono muted">{% if article.tags.first %}{{ article.tags.first | escape }} · {% endif %}{{ article.published_at | date: format: 'date' }}</p>
+              <h3 class="t-h4">{{ article.title | escape }}</h3>
+              <p class="muted t-sm">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if paginate.pages > 1 -%}
+        <nav aria-label="Pagination" style="margin-top: 32px; text-align: center;">{{ paginate | default_pagination }}</nav>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endpaginate -%}
+
+<script>
+  (function () {
+    var root = document.getElementById('learn-{{ section.id }}');
+    if (!root) return;
+    var tabs = root.querySelectorAll('[data-topic]');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var topic = tab.dataset.topic;
+        tabs.forEach(function (t) { t.setAttribute('aria-pressed', String(t === tab)); });
+        var shown = [];
+        root.querySelectorAll('.acard').forEach(function (card) {
+          var match = !topic || (' ' + card.dataset.topics + ' ').indexOf(' ' + topic + ' ') !== -1;
+          card.hidden = !match;
+          if (match) shown.push(card);
+        });
+        if (typeof gsap !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          gsap.fromTo(shown, { opacity: 0, y: 24 }, { opacity: 1, y: 0, stagger: 0.06, duration: 0.6, ease: 'power3.out' });
+        }
+        if (window.elluraMotion) window.elluraMotion.refresh();
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Learn hub articles",
+  "tag": "section",
+  "class": "section-ellura-main-blog",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Grid heading", "default": "All articles" },
+    { "type": "range", "id": "per_page", "label": "Articles per page", "min": 6, "max": 24, "step": 3, "default": 12 }
+  ]
+}
+{% endschema %}

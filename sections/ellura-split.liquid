@@ -1,0 +1,221 @@
+{% comment %}
+  Section contract.
+  ellura-split renders a two-column story block (reference two-col sections): a section head,
+  body copy and optional glossary terms, numbered steps, notices and buttons beside an arch
+  photo, a wide photo, the PAC chart or a terms card. Layouts also cover heading-beside-text
+  and a single narrow column.
+  @example
+  <!-- How it works "What are PACs?", Our story "We control every step", Science "DMAC/A2" -->
+{% endcomment %}
+{%- liquid
+  case section.settings.tone
+    when 'bone'
+      assign tone_class = 'tone-bone'
+    when 'lilac'
+      assign tone_class = 'tone-lilac'
+    when 'dark'
+      assign tone_class = 'on-dark'
+    else
+      assign tone_class = ''
+  endcase
+  assign layout = section.settings.layout
+  assign title_id = 'split-title-' | append: section.id
+
+  assign term_count = 0
+  for block in section.blocks
+    if block.type == 'term'
+      assign term_count = term_count | plus: 1
+    endif
+  endfor
+-%}
+{%- capture blocks_html -%}
+  {%- if term_count > 0 -%}
+    <dl class="glossary" data-stagger>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'term' -%}
+          <div {{ block.shopify_attributes }}>
+            <dt>{{ block.settings.term | escape }}</dt>
+            <dd>{{ block.settings.definition }}</dd>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </dl>
+  {%- endif -%}
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'steps' -%}
+        {%- assign steps = block.settings.steps | newline_to_br | split: '<br />' -%}
+        <ul class="field-steps" role="list" data-stagger {{ block.shopify_attributes }}>
+          {%- for step in steps -%}
+            {%- assign step_text = step | strip -%}
+            {%- if step_text != blank -%}
+              <li><span class="t-mono">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span> {{ step_text | escape }}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- when 'notice' -%}
+        <div class="note note--info" role="status" {{ block.shopify_attributes }}>
+          {% render 'ellura-icon', name: 'info', px: 18 %}
+          <div>{{ block.settings.text }}</div>
+        </div>
+      {%- when 'button' -%}
+        <p data-fade {{ block.shopify_attributes }}>
+          <a class="btn {{ block.settings.style }}" href="{{ block.settings.link | default: '#' }}">{{ block.settings.label | escape }}</a>
+        </p>
+    {%- endcase -%}
+  {%- endfor -%}
+{%- endcapture -%}
+<div class="section {{ tone_class }}" id="split-{{ section.id }}" aria-labelledby="{{ title_id }}">
+  {%- if layout == 'narrow' -%}
+    <div class="wrap wrap--narrow stack">
+      {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, scale: section.settings.size, title_id: title_id %}
+      {%- if section.settings.body != blank -%}
+        <div class="t-body stack" data-fade>{{ section.settings.body }}</div>
+      {%- endif -%}
+      {{ blocks_html }}
+    </div>
+  {%- elsif layout == 'columns' -%}
+    <div class="wrap two-col">
+      {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, scale: section.settings.size, title_id: title_id %}
+      <div class="stack t-body" data-fade>
+        {{ section.settings.body }}
+        {{ blocks_html }}
+      </div>
+    </div>
+  {%- else -%}
+    {%- capture media -%}
+      {%- case section.settings.visual -%}
+        {%- when 'arch' -%}
+          <div class="arch-frame" data-arch>
+            {% render 'ellura-photo', image: section.settings.image, preset: section.settings.preset, sizes: '(max-width: 900px) 100vw, 45vw', alt: '', width: 1200, height: 1500 %}
+          </div>
+        {%- when 'wide' -%}
+          <div class="phero__media phero__media--wide" data-img>
+            {% render 'ellura-photo', image: section.settings.image, preset: section.settings.preset, sizes: '(max-width: 900px) 100vw, 45vw', alt: '', width: 1200, height: 960 %}
+          </div>
+        {%- when 'chart' -%}
+          <div data-fade>{% render 'ellura-pac-chart' %}</div>
+        {%- when 'card' -%}
+          <div class="card card--bone stack-sm" data-fade>
+            {%- if section.settings.card_heading != blank -%}
+              <h3 class="t-h4">{{ section.settings.card_heading | escape }}</h3>
+            {%- endif -%}
+            <div class="prose">{{ section.settings.card_body }}</div>
+            {%- if section.settings.card_note != blank -%}
+              <p class="t-xs muted">{{ section.settings.card_note }}</p>
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endcapture -%}
+    <div class="wrap two-col"{% if section.settings.visual != 'card' %} style="align-items: center;"{% endif %}>
+      {%- if layout == 'media_left' -%}{{ media }}{%- endif -%}
+      <div class="stack">
+        {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, scale: section.settings.size, title_id: title_id %}
+        {%- if section.settings.body != blank -%}
+          <div class="t-body stack" data-fade>{{ section.settings.body }}</div>
+        {%- endif -%}
+        {{ blocks_html }}
+      </div>
+      {%- if layout == 'media_right' -%}{{ media }}{%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Story split",
+  "tag": "section",
+  "class": "section-ellura-split",
+  "settings": [
+    { "type": "select", "id": "tone", "label": "Background", "options": [{"value": "none", "label": "Page background"}, {"value": "bone", "label": "Bone"}, {"value": "lilac", "label": "Lilac"}, {"value": "dark", "label": "Plum (dark)"}], "default": "none" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "media_right", "label": "Text left, visual right" },
+        { "value": "media_left", "label": "Visual left, text right" },
+        { "value": "columns", "label": "Heading left, text right" },
+        { "value": "narrow", "label": "Single narrow column" }
+      ],
+      "default": "media_right"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The key compound" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What are <em>PACs?</em>" },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Heading size",
+      "options": [
+        { "value": "d2", "label": "Large" },
+        { "value": "d3", "label": "Medium" }
+      ],
+      "default": "d2"
+    },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Proanthocyanidins (PACs) are naturally occurring compounds found in cranberry fruit.</p>" },
+    { "type": "header", "content": "Visual", "visible_if": "{{ section.settings.layout == 'media_right' or section.settings.layout == 'media_left' }}" },
+    {
+      "type": "select",
+      "id": "visual",
+      "label": "Visual",
+      "options": [
+        { "value": "arch", "label": "Arch photo" },
+        { "value": "wide", "label": "Wide photo" },
+        { "value": "chart", "label": "PAC activity chart" },
+        { "value": "card", "label": "Terms card" }
+      ],
+      "default": "arch",
+      "visible_if": "{{ section.settings.layout == 'media_right' or section.settings.layout == 'media_left' }}"
+    },
+    { "type": "image_picker", "id": "image", "label": "Photo", "visible_if": "{{ section.settings.visual == 'arch' or section.settings.visual == 'wide' }}" },
+    { "type": "select", "id": "preset", "label": "Bundled photo", "info": "Used when no photo is selected.", "options": [{"value": "", "label": "None"}, {"value": "cranberry-cut", "label": "Cranberry cut"}, {"value": "berries-frost", "label": "Berries frost"}, {"value": "berries-dark", "label": "Berries dark"}, {"value": "berry-branch", "label": "Berry branch"}, {"value": "cranberry-bog", "label": "Cranberry bog"}, {"value": "cranberry-plant", "label": "Cranberry plant"}, {"value": "lab-pipette", "label": "Lab pipette"}, {"value": "lab-scientist", "label": "Lab scientist"}, {"value": "lab-wells", "label": "Lab wells"}, {"value": "leaf-shadow", "label": "Leaf shadow"}, {"value": "leaf-shadow-2", "label": "Leaf shadow 2"}, {"value": "france", "label": "France"}, {"value": "india", "label": "India"}, {"value": "atlanta", "label": "Atlanta"}, {"value": "life-calm", "label": "Calm"}, {"value": "life-editorial", "label": "Editorial"}, {"value": "life-elder", "label": "Elder"}, {"value": "life-friends", "label": "Friends"}, {"value": "life-glass", "label": "Glass"}, {"value": "life-glass-2", "label": "Glass 2"}, {"value": "life-morning", "label": "Morning"}, {"value": "life-ritual", "label": "Ritual"}, {"value": "life-sari-golden", "label": "Sari golden"}, {"value": "life-sari-red", "label": "Sari red"}, {"value": "life-smile", "label": "Smile"}, {"value": "life-street", "label": "Street"}, {"value": "life-sunlight", "label": "Sunlight"}, {"value": "life-water-sprig", "label": "Water sprig"}], "default": "berries-frost", "visible_if": "{{ section.settings.visual == 'arch' or section.settings.visual == 'wide' }}" },
+    { "type": "text", "id": "card_heading", "label": "Card heading", "visible_if": "{{ section.settings.visual == 'card' }}" },
+    { "type": "richtext", "id": "card_body", "label": "Card text", "visible_if": "{{ section.settings.visual == 'card' }}" },
+    { "type": "inline_richtext", "id": "card_note", "label": "Card footnote", "visible_if": "{{ section.settings.visual == 'card' }}" }
+  ],
+  "blocks": [
+    {
+      "type": "term",
+      "name": "Glossary term",
+      "settings": [
+        { "type": "text", "id": "term", "label": "Term", "default": "A-type" },
+        { "type": "inline_richtext", "id": "definition", "label": "Definition", "default": "The PAC structure found in North American cranberries." }
+      ]
+    },
+    {
+      "type": "steps",
+      "name": "Numbered steps",
+      "settings": [
+        { "type": "textarea", "id": "steps", "label": "Steps", "info": "One step per line.", "default": "Cranberry fruit rich in PACs\nJuice concentrated — not pomace" }
+      ]
+    },
+    {
+      "type": "notice",
+      "name": "Notice",
+      "settings": [
+        { "type": "inline_richtext", "id": "text", "label": "Text", "default": "Spotted a suspicious seller? Report it to customer care." }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Learn more" },
+        { "type": "url", "id": "link", "label": "Link" },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "options": [
+            { "value": "", "label": "Solid" },
+            { "value": "btn--ghost", "label": "Outline" },
+            { "value": "btn--lilac", "label": "Lilac" }
+          ],
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Story split", "category": "ellura" }]
+}
+{% endschema %}

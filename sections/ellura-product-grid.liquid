@@ -1,0 +1,38 @@
+{% comment %}
+  Section contract.
+  ellura-product-grid renders a heading and a grid of ellura product cards from a collection
+  (reference product page "other ways to buy"). On a product page the current product is left out.
+  @example
+  <!-- product template, near the end -->
+{% endcomment %}
+{%- assign title_id = 'grid-title-' | append: section.id -%}
+{%- assign source = section.settings.collection | default: collections.all -%}
+<div class="pdp-section" id="product-grid-{{ section.id }}" aria-labelledby="{{ title_id }}">
+  <div class="wrap">
+    <h2 id="{{ title_id }}" class="t-d2" data-split style="margin-bottom: 28px;">{{ section.settings.heading }}</h2>
+    <ul class="shop-grid{% if section.settings.columns == '2' %} shop-grid--2{% endif %}" role="list" data-stagger>
+      {%- assign shown = 0 -%}
+      {%- for item in source.products -%}
+        {%- if product and item.id == product.id -%}{%- continue -%}{%- endif -%}
+        {%- if shown >= section.settings.limit -%}{%- break -%}{%- endif -%}
+        <li>{% render 'ellura-product-card', product: item, index: forloop.index0 %}</li>
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "tag": "section",
+  "class": "section-ellura-product-grid",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "other ways <em>to buy</em>" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Defaults to all products." },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 1, "max": 6, "step": 1, "default": 2 },
+    { "type": "select", "id": "columns", "label": "Columns", "options": [{ "value": "2", "label": "Two" }, { "value": "3", "label": "Three" }], "default": "2" }
+  ],
+  "presets": [{ "name": "Product grid", "category": "ellura" }]
+}
+{% endschema %}

@@ -1,0 +1,59 @@
+{% comment %}
+  Section contract.
+  ellura-retailers renders the where-to-buy cards (reference "wtb"): an emphasised official
+  store card and further marketplace cards, each with a chip, icon, text and button.
+  @example
+  <!-- Where to buy page -->
+{% endcomment %}
+<div class="section section--tight" id="wtb-{{ section.id }}" aria-label="{{ section.settings.label | escape }}">
+  <div class="wrap">
+    <ul class="wtb" role="list" data-stagger>
+      {%- for block in section.blocks -%}
+        <li class="wtb__card{% if block.settings.primary %} wtb__card--primary{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.chip != blank -%}
+            <span class="chip{% if block.settings.primary %} chip--solid{% endif %}">{{ block.settings.chip | escape }}</span>
+          {%- endif -%}
+          {% render 'ellura-icon', name: block.settings.icon, px: 32 %}
+          <h2 class="t-d3">{{ block.settings.title | escape }}</h2>
+          <p>{{ block.settings.text }}</p>
+          {%- if block.settings.btn_label != blank -%}
+            {%- if block.settings.btn_link != blank -%}
+              <a href="{{ block.settings.btn_link }}" class="btn {% if block.settings.primary %}btn--lilac{% else %}btn--ghost{% endif %}">
+                {{ block.settings.btn_label | escape }}{% if block.settings.primary %} {% render 'ellura-icon', name: 'arrow' %}{% endif %}
+              </a>
+            {%- else -%}
+              <span class="btn btn--ghost" aria-disabled="true">{{ block.settings.btn_label | escape }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Where to buy",
+  "tag": "section",
+  "class": "section-ellura-retailers",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Accessible label", "default": "Retailers" }
+  ],
+  "blocks": [
+    {
+      "type": "retailer",
+      "name": "Retailer",
+      "settings": [
+        { "type": "checkbox", "id": "primary", "label": "Highlight as recommended", "default": false },
+        { "type": "text", "id": "chip", "label": "Chip", "default": "Marketplace" },
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{"value": "capsule", "label": "Capsule"}, {"value": "drop", "label": "Drop"}, {"value": "leaf", "label": "Leaf"}, {"value": "wheat", "label": "Wheat"}, {"value": "dna", "label": "Dna"}, {"value": "cube", "label": "Cube"}, {"value": "flask", "label": "Flask"}, {"value": "shield", "label": "Shield"}, {"value": "check", "label": "Check"}, {"value": "info", "label": "Info"}, {"value": "bolt", "label": "Bolt"}, {"value": "repeat", "label": "Repeat"}, {"value": "pause", "label": "Pause"}, {"value": "truck", "label": "Truck"}, {"value": "box", "label": "Box"}, {"value": "bag", "label": "Bag"}, {"value": "store", "label": "Store"}, {"value": "gift", "label": "Gift"}, {"value": "pin", "label": "Pin"}, {"value": "mail", "label": "Mail"}, {"value": "phone", "label": "Phone"}, {"value": "chat", "label": "Chat"}, {"value": "lock", "label": "Lock"}, {"value": "user", "label": "User"}, {"value": "star", "label": "Star"}, {"value": "search", "label": "Search"}, {"value": "arrow", "label": "Arrow"}], "default": "bag" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Amazon.in" },
+        { "type": "inline_richtext", "id": "text", "label": "Text", "default": "ellura’s official Amazon.in storefront." },
+        { "type": "text", "id": "btn_label", "label": "Button label", "default": "Link coming soon" },
+        { "type": "url", "id": "btn_link", "label": "Button link", "info": "Leave empty to show a disabled button." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Where to buy", "category": "ellura", "blocks": [{ "type": "retailer", "settings": { "primary": true, "chip": "Recommended", "icon": "store", "title": "Official ellura store", "btn_label": "Shop now" } }, { "type": "retailer" }] }]
+}
+{% endschema %}

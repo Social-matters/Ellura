@@ -1,0 +1,100 @@
+{% doc %}
+  Renders the ellura product card (reference `pcard`): tinted media tile with badges and a
+  capsule count, name, summary and an add-to-cart button for the first available variant.
+
+  Optional product metafields refine the card:
+  custom.badge (single line text), custom.capsules (integer), custom.summary (single line text).
+  Without them the capsule count is read from the first number in the title, and the summary
+  falls back to the product description.
+
+  @param {product} product - Product to render
+  @param {number} [index] - Position in its list; picks the tile tone (blush, lilac, butter)
+  @param {boolean} [priority] - Load the image eagerly (first card above the fold)
+
+  @example
+  {% render 'ellura-product-card', product: product, index: forloop.index0, priority: forloop.first %}
+{% enddoc %}
+{%- liquid
+  assign tones = 'blush,lilac,butter' | split: ','
+  assign tone_index = index | default: 0 | modulo: 3
+  assign tone = tones[tone_index]
+
+  assign capsules = product.metafields.custom.capsules.value
+  if capsules == blank
+    assign words = product.title | split: ' '
+    for word in words
+      assign n = word | plus: 0
+      if n > 0
+        assign capsules = n
+        break
+      endif
+    endfor
+  endif
+
+  assign summary = product.metafields.custom.summary.value
+  if summary == blank
+    assign summary = product.description | strip_html | truncatewords: 14
+  endif
+
+  assign img_loading = 'lazy'
+  if priority
+    assign img_loading = 'eager'
+  endif
+
+  assign variant = product.selected_or_first_available_variant
+  assign saving = 0
+  if variant.compare_at_price > variant.price
+    assign saving = variant.compare_at_price | minus: variant.price
+  endif
+-%}
+<article class="pcard pcard--{{ tone }}">
+  <a href="{{ product.url }}" class="pcard__media" aria-label="{{ product.title | escape }}">
+    <span class="pcard__badges">
+      {%- if product.metafields.custom.badge != blank -%}
+        <span class="chip chip--solid">{{ product.metafields.custom.badge.value | escape }}</span>
+      {%- endif -%}
+      {%- if saving > 0 -%}
+        <span class="chip chip--save">Save {{ saving | money_without_trailing_zeros }}</span>
+      {%- endif -%}
+    </span>
+    {%- if product.featured_image -%}
+      {{
+        product.featured_image
+        | image_url: width: 1400
+        | image_tag:
+          widths: '400, 700, 1000, 1400',
+          sizes: '(max-width: 700px) 80vw, (max-width: 1100px) 40vw, 28vw',
+          alt: '',
+          loading: img_loading
+      }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+    {%- if capsules != blank -%}
+      <span class="pcard__capsules" aria-hidden="true">{{ capsules }}<small>caps</small></span>
+    {%- endif -%}
+  </a>
+  <div class="pcard__body">
+    <h3 class="pcard__name">
+      <a href="{{ product.url }}">{{ product.title | escape }}</a>
+    </h3>
+    {%- if summary != blank -%}
+      <p class="pcard__desc">{{ summary | escape }}</p>
+    {%- endif -%}
+    <div class="pcard__buy">
+      {%- if product.available -%}
+        {%- form 'product', product, class: 'pcard__form' -%}
+          <input type="hidden" name="id" value="{{ variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="btn btn--ghost btn--block">
+            Add to cart <span aria-hidden="true">·</span> {{ variant.price | money_without_trailing_zeros }}
+          </button>
+        {%- endform -%}
+      {%- else -%}
+        <a href="{{ product.url }}" class="btn btn--ghost btn--block">
+          Price at launch {% render 'ellura-icon', name: 'arrow', px: 18 %}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

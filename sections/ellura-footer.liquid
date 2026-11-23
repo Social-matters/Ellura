@@ -71,23 +71,25 @@
                   <!-- Fallback links -->
                   {% case block.settings.title %}
                     {% when 'Shop' %}
-                      <li><a href="{{ routes.all_products_collection_url }}">30 Capsules</a></li>
-                      <li><a href="{{ routes.all_products_collection_url }}">90 Capsules</a></li>
-                      <li><a href="{{ routes.all_products_collection_url }}">180 Capsules</a></li>
-                      <li><a href="/pages/subscribe">Subscribe & Save</a></li>
-                    {% when 'Science' %}
-                      <li><a href="/pages/how-it-works">How it works</a></li>
-                      <li><a href="/pages/science">The 36 mg Standard</a></li>
-                      <li><a href="/pages/clinical-studies">Clinical Studies</a></li>
-                      <li><a href="/pages/faq">FAQs</a></li>
-                    {% when 'Company' %}
+                      <li><a href="{{ routes.all_products_collection_url }}">Shop all</a></li>
+                      <li><a href="/pages/subscribe">Subscribe &amp; Save</a></li>
+                      <li><a href="/pages/where-to-buy">Where to buy</a></li>
+                    {% when 'Science', 'Discover' %}
+                      <li><a href="/pages/how-it-works">How ellura works</a></li>
+                      <li><a href="/pages/science">The Science</a></li>
+                      <li><a href="/blogs/news">Learn: Urinary Health Hub</a></li>
+                      <li><a href="/pages/reviews">Reviews</a></li>
                       <li><a href="/pages/our-story">Our Story</a></li>
-                      <li><a href="/pages/pharmatoka">Pharmatoka France</a></li>
-                      <li><a href="/pages/contact">Contact Us</a></li>
+                    {% when 'Company', 'Help' %}
+                      <li><a href="/pages/contact">Help &amp; Support</a></li>
+                      <li><a href="/pages/track-order">Track your order</a></li>
+                      <li><a href="/pages/faq">FAQs</a></li>
+                      <li><a href="{{ routes.account_url }}">My account</a></li>
                     {% else %}
-                      <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
-                      <li><a href="/policies/terms-of-service">Terms of Service</a></li>
                       <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
+                      <li><a href="/policies/refund-policy">Returns, Refunds &amp; Cancellation</a></li>
+                      <li><a href="/policies/terms-of-service">Terms of Sale</a></li>
+                      <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
                   {% endcase %}
                 {% endif %}
               </ul>

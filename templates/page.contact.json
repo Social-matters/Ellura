@@ -1,145 +1,112 @@
 /*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */{
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
   "sections": {
-    "main": {
-      "type": "main-page",
+    "hero": {
+      "type": "ellura-page-hero",
+      "settings": {
+        "crumb_label": "Help & Support",
+        "eyebrow": "Help & Support",
+        "heading": "Real people, <em>ready to help.</em>",
+        "lead": "Questions about your order, your subscription or ellura itself? Reach us the way that suits you.",
+        "visual": "none"
+      }
+    },
+    "channels": {
+      "type": "ellura-icon-cards",
       "blocks": {
-        "title": {
-          "type": "text",
-          "name": "t:names.title",
+        "ellura_icon_cards_01": {
+          "type": "card",
           "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "icon": "mail",
+            "title": "Email",
+            "text": "Response time: within one business day",
+            "link_label": "hello@ellurautihealth.com",
+            "link": "mailto:hello@ellurautihealth.com"
+          }
         },
-        "content": {
-          "type": "text",
-          "name": "t:names.content",
+        "ellura_icon_cards_02": {
+          "type": "card",
           "settings": {
-            "text": "{{ closest.page.content }}",
-            "width": "100%",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "icon": "phone",
+            "title": "Phone",
+            "text": "Hours: to be confirmed",
+            "link_label": "India customer care number — to be confirmed",
+            "link": ""
+          }
+        },
+        "ellura_icon_cards_03": {
+          "type": "card",
+          "settings": {
+            "icon": "chat",
+            "title": "WhatsApp",
+            "text": "Chat with us for order updates and quick questions.",
+            "link_label": "WhatsApp number — to be confirmed",
+            "link": ""
+          }
         }
       },
       "block_order": [
-        "title",
-        "content"
+        "ellura_icon_cards_01",
+        "ellura_icon_cards_02",
+        "ellura_icon_cards_03"
       ],
       "settings": {
-        "content_direction": "column",
-        "gap": 32,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 40,
-        "padding-block-end": 0
+        "style": "channels",
+        "eyebrow": "",
+        "heading": ""
       }
     },
     "form": {
-      "type": "section",
+      "type": "ellura-contact",
       "blocks": {
-        "contact_form_UwiCkQ": {
-          "type": "contact-form",
+        "ellura_contact_01": {
+          "type": "link",
           "settings": {
-            "width": "custom",
-            "custom_width": 50,
-            "width_mobile": "custom",
-            "custom_width_mobile": 100,
-            "input_style": "default",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "submit-button": {
-              "type": "contact-form-submit-button",
-              "static": true,
-              "settings": {
-                "label": "Submit",
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
+            "icon": "truck",
+            "label": "Track your order",
+            "link": "/pages/track-order"
+          }
+        },
+        "ellura_contact_02": {
+          "type": "link",
+          "settings": {
+            "icon": "box",
+            "label": "Returns & refunds",
+            "link": "/policies/refund-policy"
+          }
+        },
+        "ellura_contact_03": {
+          "type": "link",
+          "settings": {
+            "icon": "repeat",
+            "label": "Manage subscription",
+            "link": "/account"
+          }
+        },
+        "ellura_contact_04": {
+          "type": "link",
+          "settings": {
+            "icon": "info",
+            "label": "Browse FAQs",
+            "link": "/pages/faq"
+          }
         }
       },
       "block_order": [
-        "contact_form_UwiCkQ"
+        "ellura_contact_01",
+        "ellura_contact_02",
+        "ellura_contact_03",
+        "ellura_contact_04"
       ],
-      "name": "t:names.contact_form",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
-        "section_width": "page-width",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "{{ settings.color_palette.background }}",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 32,
-        "padding-block-end": 84
-      }
+      "settings": {}
     }
   },
   "order": [
-    "main",
+    "hero",
+    "channels",
     "form"
   ]
 }

@@ -1,0 +1,73 @@
+{% comment %}
+  Section contract.
+  ellura-track-order renders the order status card (reference Track order): an order-number
+  form, the delivery stages and help links. Shopify themes cannot look up guest orders, so the
+  form sends a tracking request to the store inbox through the contact form, and signed-in
+  customers are pointed to their order history.
+  @example
+  <!-- page.track-order template, below the page hero -->
+{% endcomment %}
+{%- liquid
+  assign stages = section.settings.stages | newline_to_br | split: '<br />'
+  assign form_id = 'ellura-track-' | append: section.id
+-%}
+<div class="section section--tight" style="padding-top: 0;" id="track-{{ section.id }}">
+  <div class="wrap wrap--narrow">
+    <div class="card stack" data-fade>
+      {%- form 'contact', id: form_id, class: 'form-grid' -%}
+        <input type="hidden" name="contact[topic]" value="Order tracking request">
+        {%- if form.posted_successfully? -%}
+          <div class="note note--success span-2" role="status">
+            {% render 'ellura-icon', name: 'check', px: 18 %}
+            <div>{{ section.settings.success | escape }}</div>
+          </div>
+        {%- endif -%}
+        <div class="field">
+          <label class="field__label" for="{{ form_id }}-order">Order number</label>
+          <input id="{{ form_id }}-order" name="contact[order]" class="input" required placeholder="e.g. #1001">
+        </div>
+        <div class="field">
+          <label class="field__label" for="{{ form_id }}-email">Email used at checkout</label>
+          <input id="{{ form_id }}-email" name="contact[email]" type="email" class="input" required autocomplete="email">
+        </div>
+        <button type="submit" class="btn btn--lg span-2">{% render 'ellura-icon', name: 'search' %} Track order</button>
+      {%- endform -%}
+      {%- if shop.customer_accounts_enabled -%}
+        <p class="t-sm muted">
+          {%- if customer -%}
+            <a href="{{ routes.account_url }}" class="link">See your orders and tracking in your account</a>.
+          {%- else -%}
+            Have an account? <a href="{{ routes.account_login_url }}" class="link">Sign in</a> to see every order and its tracking link.
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+    </div>
+
+    <ol class="track-stages" role="list" aria-label="Delivery stages" data-stagger>
+      {%- for stage in stages -%}
+        {%- assign stage_text = stage | strip -%}
+        {%- if stage_text != blank -%}
+          <li><span class="track-stages__dot">{{ forloop.index }}</span><span>{{ stage_text | escape }}</span></li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ol>
+
+    {%- if section.settings.help != blank -%}
+      <p class="t-sm muted" style="margin-top: 28px; text-align: center;">{{ section.settings.help }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Track order",
+  "tag": "section",
+  "class": "section-ellura-track-order",
+  "settings": [
+    { "type": "textarea", "id": "stages", "label": "Delivery stages", "info": "One per line.", "default": "Order placed\nPacked\nShipped\nOut for delivery\nDelivered" },
+    { "type": "text", "id": "success", "label": "Success message", "default": "Thanks — we’ll email your order status shortly. Until then, use the tracking link in your shipping email." },
+    { "type": "inline_richtext", "id": "help", "label": "Help text", "default": "Need help? <a href=\"/pages/contact\">Contact customer care</a> · <a href=\"/policies/shipping-policy\">Shipping Policy</a>" }
+  ],
+  "presets": [{ "name": "Track order", "category": "ellura" }]
+}
+{% endschema %}

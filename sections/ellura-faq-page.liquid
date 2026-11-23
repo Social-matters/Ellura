@@ -1,0 +1,155 @@
+{% comment %}
+  Section contract.
+  ellura-faq-page renders the full help centre (reference FAQ page): a hero with live search,
+  a category nav and grouped accordions. Add a Category block, then the Question blocks that
+  belong to it; questions follow the category above them.
+  @example
+  <!-- page.faq template -->
+{% endcomment %}
+<div id="faq-page-{{ section.id }}">
+  <div class="phero phero--bone">
+    <div class="wrap">
+      <div class="phero__card phero__grid phero__grid--single">
+        <div class="phero__copy">
+          <div data-fade="load">
+            {% render 'ellura-crumbs', current: section.settings.crumb_label %}
+          </div>
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="eyebrow" data-fade="load">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          <h1 class="t-d1 accent-em" data-split="load">{{ section.settings.heading }}</h1>
+          {%- if section.settings.lead != blank -%}
+            <p class="t-lead" data-fade="load" data-delay="0.1">{{ section.settings.lead }}</p>
+          {%- endif -%}
+          <div class="phero__actions" data-fade="load" data-delay="0.2">
+            <div class="faq-search">
+              {% render 'ellura-icon', name: 'search' %}
+              <label for="faq-q-{{ section.id }}" class="sr-only">Search FAQs</label>
+              <input id="faq-q-{{ section.id }}" type="search" class="input" placeholder="Search questions…" autocomplete="off" data-faq-search>
+            </div>
+          </div>
+        </div>
+        {% render 'ellura-clover', class: 'phero__clover' %}
+      </div>
+    </div>
+  </div>
+
+  <div class="section section--tight">
+    <div class="wrap faq-layout">
+      <nav class="faq-nav" aria-label="FAQ categories">
+        <p class="t-mono muted">Categories</p>
+        <ul role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'category' -%}
+              <li><a href="#faq-{{ block.id }}">{{ block.settings.title | escape }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- if section.settings.contact_label != blank -%}
+          <a href="{{ section.settings.contact_link | default: '/pages/contact' }}" class="btn btn--sm" style="margin-top: 20px;">{{ section.settings.contact_label | escape }}</a>
+        {%- endif -%}
+      </nav>
+
+      <div>
+        <p class="muted" style="margin-bottom: 20px;" aria-live="polite" data-faq-count></p>
+        <p class="t-lead" hidden data-faq-empty>
+          No answers match that search.
+          <a href="{{ section.settings.contact_link | default: '/pages/contact' }}" class="link">Ask our team</a>.
+        </p>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category' -%}
+            <section id="faq-{{ block.id }}" class="faq-group" aria-labelledby="faq-h-{{ block.id }}" data-faq-group {{ block.shopify_attributes }}>
+              <h2 id="faq-h-{{ block.id }}" class="t-h4">{{ block.settings.title | escape }}</h2>
+              <div class="accordion" data-acc>
+                {%- for item in section.blocks offset: forloop.index -%}
+                  {%- if item.type == 'category' -%}{%- break -%}{%- endif -%}
+                  {%- assign acc_id = 'faq-' | append: item.id -%}
+                  {% render 'ellura-acc-item', id: acc_id, title: item.settings.question, body: item.settings.answer, attributes: item.shopify_attributes %}
+                {%- endfor -%}
+              </div>
+            </section>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if section.settings.footnote != blank -%}
+          <p class="t-xs muted" style="margin-top: 32px;">{{ section.settings.footnote }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('faq-page-{{ section.id }}');
+    if (!root) return;
+    var input = root.querySelector('[data-faq-search]');
+    var count = root.querySelector('[data-faq-count]');
+    var empty = root.querySelector('[data-faq-empty]');
+    if (!input) return;
+
+    function filter() {
+      var term = input.value.trim().toLowerCase();
+      var total = 0;
+      root.querySelectorAll('[data-faq-group]').forEach(function (group) {
+        var visible = 0;
+        group.querySelectorAll('.acc').forEach(function (item) {
+          var match = !term || item.textContent.toLowerCase().indexOf(term) !== -1;
+          item.hidden = !match;
+          if (match) visible += 1;
+          if (term && match && window.elluraMotion) window.elluraMotion.setAccordion(item, true, false);
+        });
+        group.hidden = visible === 0;
+        total += visible;
+      });
+      count.textContent = term ? total + (total === 1 ? ' result' : ' results') + ' for “' + input.value.trim() + '”' : '';
+      empty.hidden = !(term && total === 0);
+      if (window.elluraMotion) window.elluraMotion.refresh();
+    }
+
+    input.addEventListener('input', filter);
+    root.querySelectorAll('.faq-nav a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        var target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        event.preventDefault();
+        var lenis = window.elluraMotion && window.elluraMotion.lenis;
+        if (lenis) lenis.scrollTo(target, { offset: -110, duration: 1.2 });
+        else target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ page",
+  "tag": "section",
+  "class": "section-ellura-faq-page",
+  "settings": [
+    { "type": "text", "id": "crumb_label", "label": "Breadcrumb label", "default": "FAQs" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Help centre" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Frequently asked <em>questions</em>" },
+    { "type": "inline_richtext", "id": "lead", "label": "Lead text", "default": "We’re here to help! Below you’ll find answers to our most frequently asked questions. If you need further assistance, reach out — our team will be in touch shortly." },
+    { "type": "text", "id": "contact_label", "label": "Contact button label", "default": "Contact us" },
+    { "type": "url", "id": "contact_link", "label": "Contact button link" },
+    { "type": "inline_richtext", "id": "footnote", "label": "Footnote", "default": "*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease. **International approvals under non-U.S. regulations." }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [{ "type": "text", "id": "title", "label": "Title", "default": "About ellura" }]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What is ellura?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>ellura is a clinically backed supplement that supports urinary tract health.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FAQ page", "category": "ellura", "blocks": [{ "type": "category" }, { "type": "question" }] }]
+}
+{% endschema %}

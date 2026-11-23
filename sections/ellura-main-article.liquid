@@ -1,0 +1,149 @@
+{% comment %}
+  Section contract.
+  ellura-main-article renders a Learn article (reference LearnArticle): reading progress bar,
+  breadcrumbs, title, excerpt, byline, hero image, an "In this article" list built from the
+  article's h2 headings, the article body, a disclaimer callout and two related articles.
+  Optional article metafield custom.reviewer (single line text) fills "Medically reviewed by".
+  @example
+  <!-- article template -->
+{% endcomment %}
+{%- liquid
+  assign read_mins = article.content | strip_html | split: ' ' | size | divided_by: 200 | floor | at_least: 1
+  assign topic = article.tags.first
+  assign crumb_label = topic | default: article.title
+-%}
+<article class="article" id="article-{{ section.id }}">
+  <div class="reading-bar" aria-hidden="true"></div>
+  <header class="article__head page-top">
+    <div class="wrap wrap--narrow stack">
+      <div data-fade="load">
+        {% render 'ellura-crumbs', parent_label: blog.title, parent_url: blog.url, current: crumb_label %}
+      </div>
+      <h1 class="t-d1" data-split="load">{{ article.title | escape }}</h1>
+      {%- if article.excerpt != blank -%}
+        <p class="t-lead" data-fade="load">{{ article.excerpt | strip_html }}</p>
+      {%- endif -%}
+      <div class="byline" data-fade="load">
+        <div>
+          <span class="t-mono muted">Written by</span>
+          <strong>{{ article.author | escape }}</strong>
+        </div>
+        {%- if article.metafields.custom.reviewer != blank -%}
+          <div>
+            <span class="t-mono muted">Medically reviewed by</span>
+            <strong>{{ article.metafields.custom.reviewer.value | escape }}</strong>
+          </div>
+        {%- endif -%}
+        <div>
+          <span class="t-mono muted">Published</span>
+          <strong>{{ article.published_at | date: format: 'date' }}</strong>
+          <span class="t-xs muted">{{ read_mins }} min read</span>
+        </div>
+      </div>
+    </div>
+    {%- if article.image -%}
+      <div class="wrap article__hero" data-img="load">
+        {{ article.image | image_url: width: 1600 | image_tag: widths: '800, 1200, 1600, 2000', sizes: '(max-width: 1440px) 100vw, 1400px', alt: article.image.alt, loading: 'eager', fetchpriority: 'high' }}
+      </div>
+    {%- endif -%}
+  </header>
+
+  <div class="wrap article__layout">
+    <nav class="article__toc" aria-label="In this article" hidden data-toc>
+      <p class="t-mono muted">In this article</p>
+      <ol role="list" data-toc-list></ol>
+    </nav>
+    <div class="article__body prose" data-article-body>
+      {{ article.content }}
+      {%- if section.settings.disclaimer != blank -%}
+        <aside class="callout">
+          {% render 'ellura-icon', name: 'info', px: 24 %}
+          <p class="t-sm">{{ section.settings.disclaimer }}</p>
+        </aside>
+      {%- endif -%}
+    </div>
+  </div>
+</article>
+
+{%- if section.settings.show_related -%}
+  <div class="section tone-bone" aria-labelledby="related-{{ section.id }}">
+    <div class="wrap">
+      <h2 id="related-{{ section.id }}" class="t-d3" style="margin-bottom: 28px;">{{ section.settings.related_heading | escape }}</h2>
+      <ul class="agrid agrid--2" role="list">
+        {%- assign shown = 0 -%}
+        {%- for item in blog.articles -%}
+          {%- if item.id == article.id -%}{%- continue -%}{%- endif -%}
+          {%- if shown >= 2 -%}{%- break -%}{%- endif -%}
+          <li class="acard">
+            <a href="{{ item.url }}">
+              <div class="acard__img">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 800 | image_tag: widths: '400, 600, 800', sizes: '(max-width: 700px) 100vw, 50vw', alt: item.image.alt, loading: 'lazy' }}
+                {%- else -%}
+                  {% render 'ellura-photo', preset: 'cranberry-cut', sizes: '(max-width: 700px) 100vw, 50vw', alt: '', width: 800, height: 600 %}
+                {%- endif -%}
+              </div>
+              {%- if item.tags.first -%}<p class="t-mono muted">{{ item.tags.first | escape }}</p>{%- endif -%}
+              <h3 class="t-h4">{{ item.title | escape }}</h3>
+            </a>
+          </li>
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+{%- endif -%}
+
+<script>
+  (function () {
+    var root = document.getElementById('article-{{ section.id }}');
+    if (!root) return;
+    var body = root.querySelector('[data-article-body]');
+    var toc = root.querySelector('[data-toc]');
+    var list = root.querySelector('[data-toc-list]');
+    var slug = function (text) {
+      return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    };
+
+    /* Headings become anchors and reveal like the reference; runs before the shared reveal pass. */
+    var headings = body.querySelectorAll('h2');
+    headings.forEach(function (h) {
+      if (!h.id) h.id = slug(h.textContent);
+      h.classList.add('t-d3');
+      h.setAttribute('data-split', '');
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    if (headings.length > 1) toc.hidden = false;
+
+    function initBar() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', function () {
+        gsap.fromTo(root.querySelector('.reading-bar'), { scaleX: 0 }, {
+          scaleX: 1,
+          ease: 'none',
+          scrollTrigger: { trigger: body, start: 'top 30%', end: 'bottom 70%', scrub: true }
+        });
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initBar);
+    else initBar();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "class": "section-ellura-main-article",
+  "settings": [
+    { "type": "inline_richtext", "id": "disclaimer", "label": "Disclaimer", "default": "This content is for educational purposes only and summarises current research. It is not intended to replace professional medical advice, diagnosis or treatment. Always consult your doctor with questions about a medical condition or before starting a new supplement." },
+    { "type": "checkbox", "id": "show_related", "label": "Show related articles", "default": true },
+    { "type": "text", "id": "related_heading", "label": "Related heading", "default": "Keep reading" }
+  ]
+}
+{% endschema %}

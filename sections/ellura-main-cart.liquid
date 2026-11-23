@@ -1,0 +1,187 @@
+{% comment %}
+  Section contract.
+  ellura-main-cart renders the cart page (reference Cart): cart lines with quantity and remove
+  links that work without JavaScript, an order summary with MRP and savings, a promo code
+  field that applies codes through /discount/<code>, checkout, and other packs to add.
+  @example
+  <!-- cart template -->
+{% endcomment %}
+{%- liquid
+  assign mrp_total = 0
+  assign has_one_time = false
+  for item in cart.items
+    assign unit_mrp = item.variant.compare_at_price | default: item.original_price
+    if unit_mrp < item.original_price
+      assign unit_mrp = item.original_price
+    endif
+    assign line_mrp = unit_mrp | times: item.quantity
+    assign mrp_total = mrp_total | plus: line_mrp
+    if item.selling_plan_allocation == nil and item.product.selling_plan_groups.size > 0
+      assign has_one_time = true
+    endif
+  endfor
+  assign savings = mrp_total | minus: cart.total_price
+-%}
+<div class="page-top section" id="cart-{{ section.id }}">
+  <div class="wrap">
+    {% render 'ellura-crumbs', current: 'Cart' %}
+    <h1 class="t-d1" data-split="load" style="margin: 18px 0 36px;">{{ section.settings.heading | escape }}</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="rv__empty" data-fade="load">
+        {% render 'ellura-icon', name: 'bag', px: 30 %}
+        <p class="t-h4">Your cart is empty.</p>
+        <p class="muted">{{ section.settings.empty_text | escape }}</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+          <a href="{{ routes.all_products_collection_url }}" class="btn">See all packs</a>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="cartpage">
+        <div>
+          {%- if has_one_time -%}
+            <div class="note note--info" role="status">
+              {% render 'ellura-icon', name: 'info', px: 18 %}
+              <div>Switch any item to <strong>Subscribe &amp; Save</strong> on its product page to save 10% and get free shipping on every delivery.</div>
+            </div>
+          {%- endif -%}
+          <ul role="list" class="cart-lines" style="margin-top: 12px;">
+            {%- for item in cart.items -%}
+              <li>
+                <article class="cart-line">
+                  <a href="{{ item.url }}" class="cart-line__img" tabindex="-1" aria-hidden="true">
+                    {%- if item.image -%}{{ item.image | image_url: width: 240 | image_tag: alt: '', width: 120, height: 120, loading: 'lazy' }}{%- endif -%}
+                  </a>
+                  <div class="cart-line__info">
+                    <div class="cart-line__top">
+                      <div>
+                        <a href="{{ item.url }}" class="cart-line__name">{{ item.product.title | escape }}</a>
+                        {%- unless item.product.has_only_default_variant -%}
+                          <p class="cart-line__meta">{{ item.variant.title | escape }}</p>
+                        {%- endunless -%}
+                        {%- if item.selling_plan_allocation -%}
+                          <p class="cart-line__type is-sub">{% render 'ellura-icon', name: 'repeat', px: 14 %} {{ item.selling_plan_allocation.selling_plan.name | escape }}</p>
+                        {%- else -%}
+                          <p class="cart-line__type">One-time purchase</p>
+                        {%- endif -%}
+                      </div>
+                      <p class="cart-line__price">
+                        {{ item.final_line_price | money_without_trailing_zeros }}
+                        {%- if item.quantity > 1 -%}<span class="muted t-xs">{{ item.final_price | money_without_trailing_zeros }} each</span>{%- endif -%}
+                      </p>
+                    </div>
+                    <div class="cart-line__actions">
+                      {%- assign less = item.quantity | minus: 1 -%}
+                      {%- assign more = item.quantity | plus: 1 -%}
+                      <div class="qty qty--sm" role="group" aria-label="Quantity of {{ item.product.title | escape }}">
+                        <a class="qty__btn" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity={{ less }}" aria-label="Decrease quantity of {{ item.product.title | escape }}">{% render 'ellura-icon', name: 'minus', px: 16 %}</a>
+                        <output class="qty__value" aria-label="Quantity: {{ item.quantity }}">{{ item.quantity }}</output>
+                        <a class="qty__btn" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity={{ more }}" aria-label="Increase quantity of {{ item.product.title | escape }}">{% render 'ellura-icon', name: 'plus', px: 16 %}</a>
+                      </div>
+                      <a class="cart-line__remove" href="{{ item.url_to_remove }}" aria-label="Remove {{ item.product.title | escape }} from cart">
+                        {% render 'ellura-icon', name: 'trash', px: 16 %}<span>Remove</span>
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+            {%- endfor -%}
+          </ul>
+          <a href="{{ routes.all_products_collection_url }}" class="text-link" style="margin-top: 20px;">{% render 'ellura-icon', name: 'arrowLeft' %} Continue shopping</a>
+        </div>
+
+        <aside class="cartpage__aside card" aria-label="Order summary">
+          <h2 class="t-h4">Order summary</h2>
+          <dl class="summary">
+            <div class="summary__row"><dt>MRP total</dt><dd>{{ mrp_total | money_without_trailing_zeros }}</dd></div>
+            {%- if savings > 0 -%}
+              <div class="summary__row summary__row--save"><dt>You save</dt><dd>−{{ savings | money_without_trailing_zeros }}</dd></div>
+            {%- endif -%}
+            {%- for discount in cart.cart_level_discount_applications -%}
+              <div class="summary__row summary__row--save"><dt>{{ discount.title | escape }}</dt><dd>−{{ discount.total_allocated_amount | money_without_trailing_zeros }}</dd></div>
+            {%- endfor -%}
+            <div class="summary__row"><dt>Shipping</dt><dd><span class="muted">Calculated at checkout</span></dd></div>
+            <div class="summary__row summary__row--total">
+              <dt>Subtotal</dt>
+              <dd>{{ cart.total_price | money_without_trailing_zeros }}<span class="summary__tax">Inclusive of all taxes</span></dd>
+            </div>
+          </dl>
+
+          <div class="stack-sm">
+            <form class="promo" action="/checkout" method="get" data-promo>
+              <label for="promo-{{ section.id }}" class="sr-only">Promo code</label>
+              <input id="promo-{{ section.id }}" name="discount" class="input" placeholder="Promo code" autocomplete="off">
+              <button class="btn btn--ghost" type="submit">Apply</button>
+            </form>
+            {%- if section.settings.offer_note != blank -%}<p class="t-xs muted">{{ section.settings.offer_note }}</p>{%- endif -%}
+          </div>
+
+          <form action="{{ routes.cart_url }}" method="post">
+            <button type="submit" name="checkout" class="btn btn--lg btn--block">
+              {% render 'ellura-icon', name: 'lock' %} Checkout · {{ cart.total_price | money_without_trailing_zeros }}
+            </button>
+          </form>
+
+          <ul role="list" class="stack-sm t-xs muted" style="list-style: none; padding: 0; margin: 0;">
+            <li>{% render 'ellura-icon', name: 'truck', px: 14 %} Subscriptions ship free. One-time shipping is calculated at checkout.</li>
+            <li>{% render 'ellura-icon', name: 'repeat', px: 14 %} Pause, skip or cancel a subscription anytime.</li>
+            <li>{% render 'ellura-icon', name: 'shield', px: 14 %} See our <a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}" class="link">returns policy</a>.</li>
+          </ul>
+        </aside>
+      </div>
+
+      {%- assign other_source = section.settings.other_collection | default: collections.all -%}
+      {%- if other_source != blank -%}
+        {%- capture others -%}
+          {%- for product in other_source.products limit: 6 -%}
+            {%- assign in_cart = false -%}
+            {%- for item in cart.items -%}{%- if item.product_id == product.id -%}{%- assign in_cart = true -%}{%- endif -%}{%- endfor -%}
+            {%- unless in_cart -%}
+              <a href="{{ product.url }}" class="mini-product">
+                {%- if product.featured_image -%}{{ product.featured_image | image_url: width: 144 | image_tag: alt: '', width: 72, height: 72, loading: 'lazy' }}{%- endif -%}
+                <span>
+                  <strong>{{ product.title | escape }}</strong>
+                  <span class="muted t-sm">{% if product.available %}{{ product.price | money_without_trailing_zeros }}{% else %}Price at launch{% endif %}</span>
+                </span>
+                {% render 'ellura-icon', name: 'arrow', px: 18 %}
+              </a>
+            {%- endunless -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- if others != blank -%}
+          <section style="margin-top: 72px;" aria-labelledby="also-{{ section.id }}">
+            <h2 id="also-{{ section.id }}" class="t-h4" style="margin-bottom: 16px;">Other packs</h2>
+            <div class="search__products" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); display: grid;">{{ others }}</div>
+          </section>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    var promo = document.querySelector('#cart-{{ section.id }} [data-promo]');
+    if (!promo) return;
+    promo.addEventListener('submit', function (event) {
+      var code = promo.querySelector('input').value.trim();
+      event.preventDefault();
+      if (!code) return;
+      window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent('{{ routes.cart_url }}');
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "section",
+  "class": "section-ellura-main-cart",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Your cart" },
+    { "type": "text", "id": "empty_text", "label": "Empty cart text", "default": "Start with a 30-capsule bottle — one capsule a day." },
+    { "type": "inline_richtext", "id": "offer_note", "label": "Offer note", "default": "Offers are subject to our Offers & Promotions Terms." },
+    { "type": "collection", "id": "other_collection", "label": "Other packs collection", "info": "Defaults to all products." }
+  ]
+}
+{% endschema %}

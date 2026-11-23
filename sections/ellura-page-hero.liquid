@@ -1,0 +1,142 @@
+{% comment %}
+  Section contract.
+  ellura-page-hero renders the inner-page hero card (reference PageHero): breadcrumbs, eyebrow,
+  heading, lead and buttons that reveal on load, plus an arch photo or a fan of pack images.
+  @example
+  <!-- Add as the first section of any page, collection or blog template -->
+{% endcomment %}
+{%- liquid
+  assign crumb = section.settings.crumb_label
+  if crumb == blank
+    if page
+      assign crumb = page.title
+    elsif collection
+      assign crumb = collection.title
+    elsif blog
+      assign crumb = blog.title
+    endif
+  endif
+  assign packs_source = section.settings.packs_collection
+  if packs_source == blank and collection
+    assign packs_source = collection
+  endif
+  assign has_visual = false
+  if section.settings.visual == 'packs' and packs_source != blank
+    assign has_visual = true
+  elsif section.settings.visual == 'photo'
+    if section.settings.image != blank or section.settings.preset != blank
+      assign has_visual = true
+    endif
+  endif
+-%}
+<div class="phero phero--{{ section.settings.tone }}" id="phero-{{ section.id }}">
+  <div class="wrap">
+    <div class="phero__card phero__grid{% unless has_visual %} phero__grid--single{% endunless %}">
+      <div class="phero__copy">
+        {%- if section.settings.show_crumbs and crumb != blank -%}
+          <div data-fade="load">
+            {% render 'ellura-crumbs', parent_label: section.settings.crumb_parent_label, parent_url: section.settings.crumb_parent_url, current: crumb %}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow" data-fade="load">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h1 class="t-d1 accent-em" data-split="load">{{ section.settings.heading }}</h1>
+        {%- if section.settings.lead != blank -%}
+          <p class="t-lead" data-fade="load" data-delay="0.1">{{ section.settings.lead }}</p>
+        {%- endif -%}
+        {%- if section.settings.btn_label != blank or section.settings.btn2_label != blank -%}
+          <div class="phero__actions" data-fade="load" data-delay="0.2">
+            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+              {%- if section.settings.btn_label != blank -%}
+                <a href="{{ section.settings.btn_link | default: '#' }}" class="btn btn--lilac btn--lg" data-magnetic>
+                  {{ section.settings.btn_label | escape }} {% render 'ellura-icon', name: 'arrow' %}
+                </a>
+              {%- endif -%}
+              {%- if section.settings.btn2_label != blank -%}
+                <a href="{{ section.settings.btn2_link | default: '#' }}" class="btn btn--ghost btn--lg">
+                  {{ section.settings.btn2_label | escape }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if has_visual -%}
+        {%- if section.settings.visual == 'packs' -%}
+          <div class="phero__visual">
+            <div class="phero__packs">
+              {%- assign tones = 'blush,lilac,butter' | split: ',' -%}
+              {%- for product in packs_source.products limit: 3 -%}
+                {%- assign t = forloop.index0 | modulo: 3 -%}
+                <span class="phero__pack pcard--{{ tones[t] }}" style="--i: {{ forloop.index0 }};">
+                  {%- if product.featured_image -%}
+                    {{ product.featured_image | image_url: width: 700 | image_tag: alt: '', width: 700, height: 700, loading: 'eager' }}
+                  {%- endif -%}
+                </span>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <div class="phero__media" data-arch="load">
+            {% render 'ellura-photo', image: section.settings.image, preset: section.settings.preset, sizes: '(max-width: 900px) 100vw, 42vw', alt: '', priority: true, width: 1200, height: 1500 %}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+
+      {% render 'ellura-clover', class: 'phero__clover' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page hero",
+  "tag": "section",
+  "class": "section-ellura-page-hero",
+  "settings": [
+    {
+      "type": "select",
+      "id": "tone",
+      "label": "Card colour",
+      "options": [
+        { "value": "light", "label": "Butter" },
+        { "value": "lilac", "label": "Lilac" },
+        { "value": "bone", "label": "Bone" },
+        { "value": "dark", "label": "Plum (dark)" }
+      ],
+      "default": "light"
+    },
+    { "type": "header", "content": "Breadcrumbs" },
+    { "type": "checkbox", "id": "show_crumbs", "label": "Show breadcrumbs", "default": true },
+    { "type": "text", "id": "crumb_label", "label": "Current page label", "info": "Defaults to the page, collection or blog title." },
+    { "type": "text", "id": "crumb_parent_label", "label": "Parent label" },
+    { "type": "url", "id": "crumb_parent_url", "label": "Parent link" },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "How ellura works" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "info": "Italicise words for the serif accent.", "default": "It’s not about killing bacteria. <em>It’s about letting them go.</em>" },
+    { "type": "inline_richtext", "id": "lead", "label": "Lead text", "default": "Most urinary tract trouble starts when bacteria grip the bladder wall." },
+    { "type": "text", "id": "btn_label", "label": "Primary button label" },
+    { "type": "url", "id": "btn_link", "label": "Primary button link" },
+    { "type": "text", "id": "btn2_label", "label": "Secondary button label" },
+    { "type": "url", "id": "btn2_link", "label": "Secondary button link" },
+    { "type": "header", "content": "Visual" },
+    {
+      "type": "select",
+      "id": "visual",
+      "label": "Visual",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "photo", "label": "Arch photo" },
+        { "value": "packs", "label": "Product packs" }
+      ],
+      "default": "photo"
+    },
+    { "type": "image_picker", "id": "image", "label": "Photo", "visible_if": "{{ section.settings.visual == 'photo' }}" },
+    { "type": "select", "id": "preset", "label": "Bundled photo", "info": "Used when no photo is selected.", "options": [{"value": "", "label": "None"}, {"value": "cranberry-cut", "label": "Cranberry cut"}, {"value": "berries-frost", "label": "Berries frost"}, {"value": "berries-dark", "label": "Berries dark"}, {"value": "berry-branch", "label": "Berry branch"}, {"value": "cranberry-bog", "label": "Cranberry bog"}, {"value": "cranberry-plant", "label": "Cranberry plant"}, {"value": "lab-pipette", "label": "Lab pipette"}, {"value": "lab-scientist", "label": "Lab scientist"}, {"value": "lab-wells", "label": "Lab wells"}, {"value": "leaf-shadow", "label": "Leaf shadow"}, {"value": "leaf-shadow-2", "label": "Leaf shadow 2"}, {"value": "france", "label": "France"}, {"value": "india", "label": "India"}, {"value": "atlanta", "label": "Atlanta"}, {"value": "life-calm", "label": "Calm"}, {"value": "life-editorial", "label": "Editorial"}, {"value": "life-elder", "label": "Elder"}, {"value": "life-friends", "label": "Friends"}, {"value": "life-glass", "label": "Glass"}, {"value": "life-glass-2", "label": "Glass 2"}, {"value": "life-morning", "label": "Morning"}, {"value": "life-ritual", "label": "Ritual"}, {"value": "life-sari-golden", "label": "Sari golden"}, {"value": "life-sari-red", "label": "Sari red"}, {"value": "life-smile", "label": "Smile"}, {"value": "life-street", "label": "Street"}, {"value": "life-sunlight", "label": "Sunlight"}, {"value": "life-water-sprig", "label": "Water sprig"}], "default": "cranberry-cut", "visible_if": "{{ section.settings.visual == 'photo' }}" },
+    { "type": "collection", "id": "packs_collection", "label": "Packs collection", "info": "Used by the Product packs visual. Shows the first three product images; on a collection page, defaults to that collection." }
+  ],
+  "presets": [{ "name": "Page hero", "category": "ellura" }]
+}
+{% endschema %}

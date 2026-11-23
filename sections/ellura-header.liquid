@@ -98,12 +98,12 @@
             {% endfor %}
           {% else %}
             <!-- Default Ellura Navigation -->
-            <li><a href="/#packs" class="header__link">Shop</a></li>
-            <li><a href="/#how-it-works" class="header__link">How it works</a></li>
-            <li><a href="/#science" class="header__link">The Science</a></li>
-            <li><a href="/#learn" class="header__link">Learn</a></li>
-            <li><a href="/#reviews" class="header__link">Reviews</a></li>
-            <li><a href="/#faq" class="header__link">FAQs</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}" class="header__link">Shop</a></li>
+            <li><a href="/pages/how-it-works" class="header__link">How it works</a></li>
+            <li><a href="/pages/science" class="header__link">The Science</a></li>
+            <li><a href="/blogs/news" class="header__link">Learn</a></li>
+            <li><a href="/pages/reviews" class="header__link">Reviews</a></li>
+            <li><a href="/pages/faq" class="header__link">FAQs</a></li>
           {% endif %}
         </ul>
       </nav>
@@ -141,7 +141,7 @@
         {% endif %}
 
         {% if section.settings.cta_text != blank %}
-          <a href="{{ section.settings.cta_url | default: '/#packs' }}" class="btn btn--sm header__cta">
+          <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}" class="btn btn--sm header__cta">
             {{ section.settings.cta_text }}
           </a>
         {% endif %}
@@ -174,12 +174,14 @@
                 <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
               {% endfor %}
             {% else %}
-              <li><a href="/#packs">Shop all</a></li>
-              <li><a href="/#how-it-works">How it works</a></li>
-              <li><a href="/#science">The Science</a></li>
-              <li><a href="/#learn">Learn</a></li>
-              <li><a href="/#reviews">Reviews</a></li>
-              <li><a href="/#faq">FAQs</a></li>
+              <li><a href="{{ routes.all_products_collection_url }}">Shop all</a></li>
+              <li><a href="/pages/how-it-works">How it works</a></li>
+              <li><a href="/pages/science">The Science</a></li>
+              <li><a href="/blogs/news">Learn</a></li>
+              <li><a href="/pages/reviews">Reviews</a></li>
+              <li><a href="/pages/faq">FAQs</a></li>
+              <li><a href="/pages/subscribe">Subscribe &amp; Save</a></li>
+              <li><a href="/pages/where-to-buy">Where to buy</a></li>
             {% endif %}
           </ul>
         </nav>

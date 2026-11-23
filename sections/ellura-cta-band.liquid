@@ -1,0 +1,74 @@
+{% comment %}
+  Section contract.
+  ellura-cta-band renders the closing call-to-action card (reference CtaBand): heading, lead,
+  two buttons and a bottle visual with a lilac disc that drifts on scroll.
+  @example
+  <!-- Add as the last section of a page template -->
+{% endcomment %}
+<div class="ctaband" id="ctaband-{{ section.id }}">
+  <div class="wrap">
+    <div class="ctaband__card">
+      <div class="ctaband__copy">
+        <h2 class="t-d2" data-split>{{ section.settings.heading }}</h2>
+        {%- if section.settings.lead != blank -%}
+          <p class="t-lead" data-fade>{{ section.settings.lead }}</p>
+        {%- endif -%}
+        <div class="ctaband__actions" data-fade>
+          {%- if section.settings.btn_label != blank -%}
+            <a href="{{ section.settings.btn_link | default: routes.all_products_collection_url }}" class="btn btn--lilac btn--lg" data-magnetic>
+              {{ section.settings.btn_label | escape }} {% render 'ellura-icon', name: 'arrow' %}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.btn2_label != blank -%}
+            <a href="{{ section.settings.btn2_link | default: '#' }}" class="btn btn--ghost btn--lg">{{ section.settings.btn2_label | escape }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="ctaband__visual" aria-hidden="true">
+        <div class="ctaband__disc"></div>
+        {%- if section.settings.image != blank -%}
+          {%- assign img = section.settings.image -%}
+          <img
+            src="{{ img | image_url: width: 900 }}"
+            srcset="{{ img | image_url: width: 450 }} 450w, {{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1400 }} 1400w"
+            sizes="(max-width: 900px) 70vw, 30vw"
+            alt=""
+            width="{{ img.width }}"
+            height="{{ img.height }}"
+            loading="lazy"
+            data-parallax="6"
+          >
+        {%- else -%}
+          <img
+            src="{{ 'bottles-duo-900.webp' | asset_url }}"
+            srcset="{{ 'bottles-duo-900.webp' | asset_url }} 900w, {{ 'bottles-duo-1800.webp' | asset_url }} 1800w"
+            sizes="(max-width: 900px) 70vw, 30vw"
+            alt=""
+            width="900"
+            height="976"
+            loading="lazy"
+            data-parallax="6"
+          >
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CTA band",
+  "tag": "section",
+  "class": "section-ellura-cta-band",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "one capsule a day. <em>36 mg of soluble PACs.</em>" },
+    { "type": "inline_richtext", "id": "lead", "label": "Lead text", "default": "Start with a 30-capsule bottle, or subscribe and save 10% on every delivery with free shipping." },
+    { "type": "text", "id": "btn_label", "label": "Primary button label", "default": "Shop ellura" },
+    { "type": "url", "id": "btn_link", "label": "Primary button link" },
+    { "type": "text", "id": "btn2_label", "label": "Secondary button label", "default": "Subscribe & Save" },
+    { "type": "url", "id": "btn2_link", "label": "Secondary button link" },
+    { "type": "image_picker", "id": "image", "label": "Product image", "info": "Defaults to the bottle duo." }
+  ],
+  "presets": [{ "name": "CTA band", "category": "ellura" }]
+}
+{% endschema %}

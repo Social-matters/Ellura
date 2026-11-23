@@ -1,0 +1,291 @@
+/*
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "ellura-page-hero",
+      "settings": {
+        "crumb_label": "How it works",
+        "eyebrow": "How ellura works",
+        "heading": "It’s not about killing bacteria. <em>It’s about letting them go.</em>",
+        "lead": "Most urinary tract trouble starts when bacteria grip the bladder wall. ellura’s 36 mg of soluble, bioactive A-type PACs may help reduce their ability to hold on — so they’re naturally flushed out.*",
+        "visual": "photo",
+        "preset": "cranberry-cut"
+      }
+    },
+    "pacs": {
+      "type": "ellura-split",
+      "blocks": {
+        "ellura_split_01": {
+          "type": "term",
+          "settings": {
+            "term": "A-type",
+            "definition": "The PAC structure found in North American cranberries, studied for anti-adhesion activity."
+          }
+        },
+        "ellura_split_02": {
+          "type": "term",
+          "settings": {
+            "term": "Soluble",
+            "definition": "PACs from the juice, free to be absorbed — unlike insoluble PACs bound in fibre."
+          }
+        },
+        "ellura_split_03": {
+          "type": "term",
+          "settings": {
+            "term": "Bioactive",
+            "definition": "Able to act in the body after you take them."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_split_01",
+        "ellura_split_02",
+        "ellura_split_03"
+      ],
+      "settings": {
+        "layout": "media_right",
+        "visual": "arch",
+        "preset": "berries-frost",
+        "eyebrow": "The key compound",
+        "heading": "What are <em>PACs?</em>",
+        "body": "<p>Proanthocyanidins (PACs) are naturally occurring compounds found in cranberry fruit. Research has identified that the unique <strong>A-type</strong> PACs in cranberries play a key role in helping support urinary tract health*¹˒².</p><p>ellura is made with a standardised cranberry juice extract (Gikacran®) produced through an extraction process that preserves these soluble, bioactive PACs, so each capsule delivers 36 mg — the research-based amount — measured with the validated DMAC/A2 method⁹.</p>"
+      }
+    },
+    "mechanism": {
+      "type": "ellura-how-it-works",
+      "blocks": {
+        "ellura_how_it_works_block_1": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Bacteria enter, attach, and multiply",
+            "description": "Bacteria migrate to the urinary tract, leading to disruption of urinary tract balance."
+          }
+        },
+        "ellura_how_it_works_block_2": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "ellura may help reduce bacterial adhesion",
+            "description": "36 mg PACs in ellura may reduce certain bacteria from adhering to the bladder wall."
+          }
+        },
+        "ellura_how_it_works_block_3": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "Bacteria are flushed out",
+            "description": "Without attachment, bacteria are naturally eliminated through urine."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_how_it_works_block_1",
+        "ellura_how_it_works_block_2",
+        "ellura_how_it_works_block_3"
+      ],
+      "settings": {
+        "eyebrow": "The mechanism",
+        "heading": "how <span class=\"brand-word\">ellura</span> <em>works</em>",
+        "legend_bacteria": "Bacteria",
+        "legend_pac": "Soluble A-type PACs",
+        "bg_color": "#5a2e58",
+        "padding_top": 80,
+        "padding_bottom": 100
+      }
+    },
+    "soluble": {
+      "type": "ellura-split",
+      "settings": {
+        "tone": "bone",
+        "layout": "media_right",
+        "visual": "chart",
+        "eyebrow": "Soluble vs insoluble",
+        "heading": "Not all cranberry <em>is equal.</em>",
+        "body": "<p>Many products claim to have PACs, but if sourced from insoluble cranberry pomace (seeds, stems, skin, pulp), they remain trapped in fibre and cannot be absorbed by the body⁶˒⁷.</p><p>A controlled human study found that supplements made from juice-derived, soluble PACs produced significantly higher urinary anti-adhesion activity than supplements made mainly from whole fruit or pomace⁶.</p>"
+      }
+    },
+    "how_to_take": {
+      "type": "ellura-icon-cards",
+      "blocks": {
+        "ellura_icon_cards_01": {
+          "type": "card",
+          "settings": {
+            "icon": "capsule",
+            "title": "One capsule, daily",
+            "text": "Take one capsule with water at the same time each day."
+          }
+        },
+        "ellura_icon_cards_02": {
+          "type": "card",
+          "settings": {
+            "icon": "bolt",
+            "title": "Extra support when needed",
+            "text": "During travel or stress, take two capsules as needed, then return to one daily."
+          }
+        },
+        "ellura_icon_cards_03": {
+          "type": "card",
+          "settings": {
+            "icon": "drop",
+            "title": "Trouble swallowing?",
+            "text": "Open the capsule into yoghurt, a fruit purée or a sweet drink — the powder is naturally bitter."
+          }
+        },
+        "ellura_icon_cards_04": {
+          "type": "card",
+          "settings": {
+            "icon": "repeat",
+            "title": "Make it a habit",
+            "text": "Daily use helps maintain urinary tract balance.* Subscribe so you never miss a day."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_icon_cards_01",
+        "ellura_icon_cards_02",
+        "ellura_icon_cards_03",
+        "ellura_icon_cards_04"
+      ],
+      "settings": {
+        "style": "howto",
+        "eyebrow": "Daily use",
+        "heading": "How to take <em>ellura</em>"
+      }
+    },
+    "callout": {
+      "type": "ellura-callout",
+      "settings": {
+        "heading": "ellura supports urinary tract health. It is not a treatment.",
+        "text": "<p>ellura is not intended to diagnose, treat, cure or prevent any disease, and it cannot replace antibiotics for an active infection. See a doctor promptly if you have burning when you urinate, fever, chills, back or side pain, or blood in your urine. You can take ellura alongside a prescribed antibiotic — ask your healthcare provider.</p>"
+      }
+    },
+    "references": {
+      "type": "ellura-references",
+      "blocks": {
+        "ellura_references_01": {
+          "type": "citation",
+          "settings": {
+            "authors": "Xiong Z, Gao Y, Yuan C, Jian Z, Wei X.",
+            "year": "2024",
+            "title": "Preventive effect of cranberries with high dose of proanthocyanidins on urinary tract infections: a meta-analysis and systematic review.",
+            "source": "Frontiers in Nutrition",
+            "detail": "2024 Nov 28;11:1422121.",
+            "url": "https://doi.org/10.3389/fnut.2024.1422121"
+          }
+        },
+        "ellura_references_02": {
+          "type": "citation",
+          "settings": {
+            "authors": "Williams G, Hahn D, Stephens JH, Craig JC, Hodson EM.",
+            "year": "2023",
+            "title": "Cranberries for preventing urinary tract infections.",
+            "source": "Cochrane Database of Systematic Reviews",
+            "detail": "2023, Issue 4. Art. No.: CD001321.",
+            "url": "https://doi.org/10.1002/14651858.CD001321.pub6"
+          }
+        },
+        "ellura_references_03": {
+          "type": "citation",
+          "settings": {
+            "authors": "Howell AB, Botto H, Combescure C, Blanc-Potard AB, Gausa L, Matsumoto T, Tenke P, Sotto A, Lavigne JP.",
+            "year": "2010",
+            "title": "Dosage effect on uropathogenic Escherichia coli anti-adhesion activity in urine following consumption of cranberry powder standardized for proanthocyanidin content: a multicentric randomized double blind study.",
+            "source": "BMC Infectious Diseases",
+            "detail": "10, 94.",
+            "url": "https://doi.org/10.1186/1471-2334-10-94"
+          }
+        },
+        "ellura_references_04": {
+          "type": "citation",
+          "settings": {
+            "authors": "Lavigne JP, Bourg G, Combescure C, et al.",
+            "year": "2008",
+            "title": "In vitro and in vivo evidence of dose-dependent decrease of uropathogenic Escherichia coli virulence after consumption of commercial Vaccinium macrocarpon (cranberry) capsules.",
+            "source": "Clinical Microbiology and Infection",
+            "detail": "14(4), 350–355.",
+            "url": ""
+          }
+        },
+        "ellura_references_05": {
+          "type": "citation",
+          "settings": {
+            "authors": "Howell AB, Dreyfus JF, Chughtai B.",
+            "year": "2022",
+            "title": "Differences in urinary bacterial anti-adhesion activity after intake of cranberry dietary supplements with soluble versus insoluble proanthocyanidins.",
+            "source": "Journal of Dietary Supplements",
+            "detail": "19(5), 621–639.",
+            "url": "https://doi.org/10.1080/19390211.2021.1908480"
+          }
+        },
+        "ellura_references_06": {
+          "type": "citation",
+          "settings": {
+            "authors": "Chughtai B, Thomas D, Howell A.",
+            "year": "2016",
+            "title": "Variability of commercial cranberry dietary supplements for the prevention of uropathogenic bacterial adhesion.",
+            "source": "American Journal of Obstetrics & Gynecology",
+            "detail": "215(1), 122–123.",
+            "url": ""
+          }
+        },
+        "ellura_references_07": {
+          "type": "citation",
+          "settings": {
+            "authors": "Sintara M, Li L, Cunningham DG, Prior RL, Wu X, Chang T.",
+            "year": "2018",
+            "title": "Single-laboratory validation for determination of total soluble proanthocyanidins in cranberry using 4-dimethylaminocinnamaldehyde.",
+            "source": "Journal of AOAC International",
+            "detail": "101(3), 805–809.",
+            "url": ""
+          }
+        },
+        "ellura_references_08": {
+          "type": "citation",
+          "settings": {
+            "authors": "Howell AB, Vorsa N, Der Marderosian A, Foo LY.",
+            "year": "1998",
+            "title": "Inhibition of the adherence of P-fimbriated Escherichia coli to uroepithelial-cell surfaces by proanthocyanidin extracts from cranberries.",
+            "source": "The New England Journal of Medicine",
+            "detail": "339(15), 1085–1086.",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "ellura_references_01",
+        "ellura_references_02",
+        "ellura_references_03",
+        "ellura_references_04",
+        "ellura_references_05",
+        "ellura_references_06",
+        "ellura_references_07",
+        "ellura_references_08"
+      ],
+      "settings": {
+        "title": "References",
+        "initially_open": false
+      }
+    },
+    "cta": {
+      "type": "ellura-cta-band",
+      "settings": {
+        "btn_link": "/collections/all",
+        "btn2_link": "/pages/subscribe"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "pacs",
+    "mechanism",
+    "soluble",
+    "how_to_take",
+    "callout",
+    "references",
+    "cta"
+  ]
+}

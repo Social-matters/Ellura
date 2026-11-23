@@ -1,222 +1,134 @@
 /*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */{
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
   "sections": {
-    "section": {
-      "type": "section",
+    "hero": {
+      "type": "ellura-page-hero",
+      "settings": {
+        "tone": "bone",
+        "crumb_label": "Shop",
+        "eyebrow": "Shop all",
+        "heading": "one formula. <em>three ways to stock up.</em>",
+        "lead": "Every ellura capsule delivers 36 mg of soluble, bioactive A-type PACs from 100% concentrated cranberry fruit juice extract. Choose the supply that suits your routine.",
+        "visual": "packs"
+      }
+    },
+    "grid": {
+      "type": "ellura-main-collection",
+      "settings": {}
+    },
+    "compare": {
+      "type": "ellura-compare-table",
       "blocks": {
-        "text_tqQTNE": {
-          "type": "text",
-          "name": "t:names.title",
+        "ellura_compare_table_01": {
+          "type": "text_row",
           "settings": {
-            "text": "<h1>{{ closest.collection.title }}</h1>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "label": "Supply at 1 capsule a day",
+            "values": "1-month supply\n3-month supply\n6-month supply"
+          }
         },
-        "text_twGGkJ": {
-          "type": "text",
-          "name": "t:names.description",
+        "ellura_compare_table_02": {
+          "type": "text_row",
           "settings": {
-            "text": "{{ closest.collection.description }}",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "label": "Bottles",
+            "values": "1\n1\n2"
+          }
+        },
+        "ellura_compare_table_03": {
+          "type": "text_row",
+          "settings": {
+            "label": "PACs per capsule",
+            "values": "36 mg\n36 mg\n36 mg"
+          }
+        },
+        "ellura_compare_table_04": {
+          "type": "price_row",
+          "settings": {
+            "label": "One-time price",
+            "unavailable": "India price at launch"
+          }
+        },
+        "ellura_compare_table_05": {
+          "type": "text_row",
+          "settings": {
+            "label": "Subscribe & Save",
+            "values": "10% off, every month\n10% off, every 3 months\nNot available for bundles"
+          }
         }
       },
       "block_order": [
-        "text_tqQTNE",
-        "text_twGGkJ"
+        "ellura_compare_table_01",
+        "ellura_compare_table_02",
+        "ellura_compare_table_03",
+        "ellura_compare_table_04",
+        "ellura_compare_table_05"
       ],
-      "name": "t:names.heading",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "{{ settings.color_palette.background }}",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "footnote": "Prices are MRP-inclusive of all taxes. India pricing for the 90-capsule bottle and 180-capsule bundle will be announced at launch."
       }
     },
-    "main": {
-      "type": "main-collection",
+    "faq": {
+      "type": "ellura-faq",
       "blocks": {
-        "filters": {
-          "type": "filters",
-          "static": true,
+        "ellura_faq_01": {
+          "type": "question",
           "settings": {
-            "enable_filtering": true,
-            "filter_style": "horizontal",
-            "filter_width": "centered",
-            "text_label_case": "default",
-            "show_swatch_label": false,
-            "show_filter_label": false,
-            "enable_sorting": true,
-            "enable_grid_density": true,
-            "padding-block-start": 8,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0,
-            "facets_margin_bottom": 8,
-            "facets_margin_right": 20
-          },
-          "blocks": {}
+            "question": "Who can benefit from taking ellura?",
+            "answer": "<p>ellura provides clinically backed urinary tract support, which may help reduce bacterial adhesion within hours*. Daily use helps maintain urinary tract balance*. Urinary tract health is especially important for women, but men can also benefit. If you have an underlying medical condition, consult your healthcare provider before use.</p>"
+          }
         },
-        "product-card": {
-          "type": "_product-card",
-          "static": true,
+        "ellura_faq_02": {
+          "type": "question",
           "settings": {
-            "product_card_gap": 4,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "card-gallery": {
-              "type": "_product-card-gallery",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_4nY4eT": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_EzJzMm": {
-              "type": "price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "card-gallery",
-            "product_title_4nY4eT",
-            "price_EzJzMm"
-          ]
+            "question": "How often should I take ellura?",
+            "answer": "<p>Take one capsule daily with water, at the same time each day. When you want additional support (for example during travel or stress), take two capsules as needed, then return to one capsule daily.</p><p>ellura is not intended to treat or cure urinary tract infections; it is clinically backed to support urinary tract health*. Always follow your healthcare professional’s recommendation.</p>"
+          }
+        },
+        "ellura_faq_03": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need a prescription?",
+            "answer": "<p>No prescription is needed to buy ellura. It has been researched for its role in supporting urinary tract health*³˒² and is recommended by many healthcare professionals. In the US it is marketed as a dietary supplement. <em>[India regulatory category and licence number — to be confirmed]</em></p>"
+          }
+        },
+        "ellura_faq_04": {
+          "type": "question",
+          "settings": {
+            "question": "Can I take ellura with a prescribed antibiotic?",
+            "answer": "<p>Yes, you can take ellura alongside a prescribed antibiotic to help maintain urinary tract health*¹⁷˒⁶˒³˒¹². ellura is not a substitute for antibiotics, which are necessary to treat an active urinary tract infection.</p><p>Once an infection clears, you can continue taking ellura daily to support urinary tract health. Because long-term antibiotic use for prevention may lead to resistance and unwanted side effects¹³˒⁵, work with your healthcare provider on the best ongoing strategy for you.</p>"
+          }
+        },
+        "ellura_faq_05": {
+          "type": "question",
+          "settings": {
+            "question": "Can ellura replace an antibiotic?",
+            "answer": "<p>No. If you have a confirmed UTI you will likely need an antibiotic to treat it. See a doctor promptly if you have fever, chills, back or side pain, or blood in your urine.</p>"
+          }
         }
       },
+      "block_order": [
+        "ellura_faq_01",
+        "ellura_faq_02",
+        "ellura_faq_03",
+        "ellura_faq_04",
+        "ellura_faq_05"
+      ],
       "settings": {
-        "layout_type": "grid",
-        "product_card_size": "medium",
-        "mobile_product_card_size": "small",
-        "product_grid_width": "centered",
-        "full_width_on_mobile": true,
-        "columns_gap_horizontal": 16,
-        "columns_gap_vertical": 24,
-        "padding-inline-start": 0,
-        "padding-inline-end": 0,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 0,
-        "padding-block-end": 32
+        "heading": "Before you buy",
+        "lead": "",
+        "contact_btn_url": "/pages/contact",
+        "group_title": "How to take <span class=\"brand-word\">ellura</span>",
+        "first_open": false,
+        "see_all_url": "/pages/faq"
       }
     }
   },
   "order": [
-    "section",
-    "main"
+    "hero",
+    "grid",
+    "compare",
+    "faq"
   ]
 }

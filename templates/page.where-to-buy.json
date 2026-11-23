@@ -1,0 +1,100 @@
+/*
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "ellura-page-hero",
+      "settings": {
+        "crumb_label": "Where to buy",
+        "eyebrow": "Where to buy",
+        "heading": "Genuine ellura, <em>wherever you shop.</em>",
+        "lead": "Buy from the official ellura store or an authorised retailer so you know your capsules are genuine, correctly stored and covered by our policies.",
+        "visual": "none"
+      }
+    },
+    "retailers": {
+      "type": "ellura-retailers",
+      "blocks": {
+        "ellura_retailers_01": {
+          "type": "retailer",
+          "settings": {
+            "primary": true,
+            "chip": "Recommended",
+            "icon": "store",
+            "title": "Official ellura store",
+            "text": "The full range, Subscribe & Save (10% off, free shipping) and direct customer care.",
+            "btn_label": "Shop now",
+            "btn_link": "/collections/all"
+          }
+        },
+        "ellura_retailers_02": {
+          "type": "retailer",
+          "settings": {
+            "primary": false,
+            "chip": "Marketplace",
+            "icon": "bag",
+            "title": "Amazon.in",
+            "text": "ellura’s official Amazon.in storefront.",
+            "btn_label": "Link coming soon",
+            "btn_link": ""
+          }
+        },
+        "ellura_retailers_03": {
+          "type": "retailer",
+          "settings": {
+            "primary": false,
+            "chip": "Coming soon",
+            "icon": "bolt",
+            "title": "Quick commerce & more",
+            "text": "We’re working on bringing ellura to quick-commerce apps and other marketplaces.",
+            "btn_label": "Ask about availability",
+            "btn_link": "/pages/contact"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_retailers_01",
+        "ellura_retailers_02",
+        "ellura_retailers_03"
+      ],
+      "settings": {}
+    },
+    "authenticity": {
+      "type": "ellura-split",
+      "blocks": {
+        "ellura_split_01": {
+          "type": "notice",
+          "settings": {
+            "text": "Spotted a suspicious seller? <a href=\"/pages/contact\">Report it to customer care</a> with a link or photo — we’ll look into it."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_split_01"
+      ],
+      "settings": {
+        "tone": "bone",
+        "layout": "narrow",
+        "size": "d3",
+        "eyebrow": "",
+        "heading": "Product authenticity",
+        "body": "<p>Only buy ellura from the official store or the authorised sellers listed on this page. Genuine ellura comes in a sealed bottle and carton printed with “Pharmatoka” and “36 mg soluble, bioactive PACs (proanthocyanidins)”. If a listing looks unusual, the price seems too good to be true, or the seal is broken, please don’t use the product and tell us.</p>"
+      }
+    },
+    "cta": {
+      "type": "ellura-cta-band",
+      "settings": {
+        "btn_link": "/collections/all",
+        "btn2_link": "/pages/subscribe"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "retailers",
+    "authenticity",
+    "cta"
+  ]
+}

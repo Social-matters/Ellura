@@ -1,0 +1,40 @@
+{% doc %}
+  Renders the anti-adhesion activity chart (reference "soluble vs insoluble" chart).
+  ellura-motion.js animates every [data-pac-chart] when it scrolls into view.
+
+  @param {string} [axis] - Axis title (default 'Anti-adhesion activity %')
+  @param {string} [note] - Footnote under the chart
+
+  @example
+  {% render 'ellura-pac-chart' %}
+{% enddoc %}
+<figure class="chart" data-pac-chart>
+  <figcaption class="sr-only">
+    Chart of urinary anti-adhesion activity. ellura, with 36 mg of soluble, bioactive A-type PACs from 100% concentrated cranberry fruit juice extract powder, reaches 100%. Other cranberry products sit below 50%.
+  </figcaption>
+  <div class="chart__plot" aria-hidden="true">
+    <p class="chart__axis-title t-mono">{{ axis | default: 'Anti-adhesion activity %' }}</p>
+    <div class="chart__levels">
+      <div class="chart__level" style="bottom: 100%;"><span class="t-mono">100%</span><i class="chart__gridline"></i></div>
+      <div class="chart__level" style="bottom: 55%;"><span class="t-mono">&lt;50%</span><i class="chart__gridline"></i></div>
+      <div class="chart__level" style="bottom: 26%;"><span class="t-mono">Inferior</span><i class="chart__gridline"></i></div>
+      <div class="chart__level" style="bottom: 6%;"><span class="t-mono">Inactive (0%)</span><i class="chart__gridline"></i></div>
+    </div>
+    <div class="chart__cols">
+      <div class="chart__col">
+        <div class="chart__bar chart__bar--ellura" style="height: 94%;">
+          <span class="chart__brand">ellura</span>
+          <span class="chart__txt">Soluble, bioactive A-type PACs from 100% concentrated cranberry fruit juice extract powder (Gikacran®)</span>
+          <svg class="chart__capsule" viewBox="0 0 40 90" aria-hidden="true"><rect x="4" y="4" width="32" height="82" rx="16" /><path d="M4 45h32" /></svg>
+        </div>
+        <p class="chart__x">36 mg PACs</p>
+      </div>
+      <div class="chart__col">
+        <div class="chart__bar chart__bar--other" style="height: 49%;"><span class="chart__txt">Other cranberry products</span></div>
+        <div class="chart__bar chart__bar--pomace" style="height: 20%;"><span class="chart__txt">Insoluble PACs from pomace*</span></div>
+        <p class="chart__x">&lt;36 mg PACs</p>
+      </div>
+    </div>
+  </div>
+  <p class="claim chart__note">{{ note | default: '*Insoluble PACs from pomace remain trapped in fibre and have negligible anti-adhesion effect.' }}</p>
+</figure>

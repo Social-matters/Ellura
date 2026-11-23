@@ -1,0 +1,125 @@
+/*
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "ellura-page-hero",
+      "settings": {
+        "tone": "lilac",
+        "crumb_label": "Reviews",
+        "eyebrow": "Reviews & testimonials",
+        "heading": "Real words <em>from real customers.</em>",
+        "lead": "We only publish reviews from verified buyers. ellura has just arrived in India, so the ratings below come from our US store and are labelled that way. Reviews from Indian customers will appear as they come in.",
+        "visual": "none"
+      }
+    },
+    "widget": {
+      "type": "ellura-reviews-widget",
+      "blocks": {
+        "ellura_reviews_widget_01": {
+          "type": "review",
+          "settings": {
+            "name": "Janet S.",
+            "location": "United States",
+            "title": "Great product",
+            "body": "Great product. I have used it for many years."
+          }
+        },
+        "ellura_reviews_widget_02": {
+          "type": "review",
+          "settings": {
+            "name": "Savannah",
+            "location": "Verified buyer",
+            "title": "",
+            "body": "I’ve been really happy with Ellura! It’s easy to take, and I’ve noticed a positive difference since starting it. Definitely something I’ll continue using!"
+          }
+        },
+        "ellura_reviews_widget_03": {
+          "type": "review",
+          "settings": {
+            "name": "Anonymous",
+            "location": "United States",
+            "title": "Good product",
+            "body": "Good product"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_reviews_widget_01",
+        "ellura_reviews_widget_02",
+        "ellura_reviews_widget_03"
+      ],
+      "settings": {
+        "write_link": "/pages/contact"
+      }
+    },
+    "doctor": {
+      "type": "ellura-doctor",
+      "settings": {
+        "style": "quote",
+        "eyebrow": "From healthcare professionals",
+        "heading": "Recommended <em>by urologists.</em>",
+        "quote": "As a physician, I value products grounded in solid scientific evidence. ellura is built on more than 20 years of cranberry research and uses a standardized extract rich in soluble proanthocyanidins (PACs). ellura is unique in that it uses only pure cranberry juice extract, to deliver soluble PACs, the compounds studied for their role in supporting urinary tract health. Having a formulation developed with a high level of scientific rigor provides confidence in its quality and consistency.",
+        "name": "Bilal Chughtai, MD",
+        "role": "Urogynecology & Reconstructive Pelvic Surgery",
+        "org": "Chief of Urology, Plainview Hospital, NY",
+        "disclosure": "Compensated Medical Advisor for ellura®"
+      }
+    },
+    "policy": {
+      "type": "ellura-icon-cards",
+      "blocks": {
+        "ellura_icon_cards_01": {
+          "type": "card",
+          "settings": {
+            "icon": "shield",
+            "title": "Verified buyers only",
+            "text": "Reviews are linked to a real order before they’re published."
+          }
+        },
+        "ellura_icon_cards_02": {
+          "type": "card",
+          "settings": {
+            "icon": "check",
+            "title": "Unfiltered ratings",
+            "text": "We don’t remove reviews for being negative — only for abuse, personal data or medical claims."
+          }
+        },
+        "ellura_icon_cards_03": {
+          "type": "card",
+          "settings": {
+            "icon": "info",
+            "title": "Experiences vary",
+            "text": "Reviews are personal experiences, not medical advice. Talk to your doctor about your health."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_icon_cards_01",
+        "ellura_icon_cards_02",
+        "ellura_icon_cards_03"
+      ],
+      "settings": {
+        "style": "compact",
+        "eyebrow": "",
+        "heading": "How we handle reviews"
+      }
+    },
+    "cta": {
+      "type": "ellura-cta-band",
+      "settings": {
+        "btn_link": "/collections/all",
+        "btn2_link": "/pages/subscribe"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "widget",
+    "doctor",
+    "policy",
+    "cta"
+  ]
+}

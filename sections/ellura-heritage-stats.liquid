@@ -12,7 +12,7 @@
   {{ section.shopify_attributes }}
 >
   <div class="wrap" style="max-width: var(--max); width: 100%;">
-    <div class="usin__grid" style="align-items: start; min-width: 0; max-width: 100%;">
+    <div class="usin__grid" style="min-width: 0; max-width: 100%;">
       <!-- Story Card with US to India Vector Map -->
       <div class="usin__story" style="background: {{ section.settings.story_bg }}; min-width: 0; max-width: 100%;">
         {% if section.settings.story_eyebrow != blank %}
@@ -33,21 +33,30 @@
       </div>
 
       <!-- 2x2 Stats Grid -->
-      <div class="usin__stats" data-stagger style="min-width: 0; max-width: 100%;">
+      <dl class="usin__stats" data-stagger style="min-width: 0; max-width: 100%;">
         {% for block in section.blocks %}
           {% if block.type == 'stat' %}
             <div class="stat stat--{{ block.settings.color_theme }}" {{ block.shopify_attributes }}>
-              <dt>{{ block.settings.label | escape }}</dt>
-              <dd>
-                <span class="stat__val"><span data-count="{{ block.settings.value | escape }}">{{ block.settings.value | escape }}</span>{{ block.settings.suffix | escape }}</span>
+              <dt>
+                {{ block.settings.label | escape }}
                 {% if block.settings.subnote != blank %}
-                  <small>{{ block.settings.subnote | escape }}</small>
+                  <span class="stat__subnote">{{ block.settings.subnote | escape }}</span>
                 {% endif %}
+              </dt>
+              <dd>
+                <span data-count="{{ block.settings.value | escape }}">{{ block.settings.value | escape }}</span>
+                {%- if block.settings.suffix != blank -%}
+                  {%- if block.settings.suffix_size == 'small' -%}
+                    <small>{{ block.settings.suffix | strip | escape }}</small>
+                  {%- else -%}
+                    {{ block.settings.suffix | escape }}
+                  {%- endif -%}
+                {%- endif -%}
               </dd>
             </div>
           {% endif %}
         {% endfor %}
-      </div>
+      </dl>
     </div>
 
     <!-- Doctor Endorsement Card -->
@@ -204,6 +213,14 @@
   })();
 </script>
 
+{% stylesheet %}
+  .stat__subnote {
+    display: block;
+    margin-top: 4px;
+    opacity: 0.7;
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Brand Story & Doctor",
@@ -343,6 +360,16 @@
           "default": "+"
         },
         {
+          "type": "select",
+          "id": "suffix_size",
+          "label": "Suffix size",
+          "options": [
+            { "value": "large", "label": "Same as number (e.g. +)" },
+            { "value": "small", "label": "Small unit (e.g. mg)" }
+          ],
+          "default": "large"
+        },
+        {
           "type": "text",
           "id": "subnote",
           "label": "Small sub-text",
@@ -376,7 +403,7 @@
         { "type": "stat", "settings": { "value": "20", "suffix": "+", "subnote": "years", "label": "Cranberry Research", "color_theme": "butter" } },
         { "type": "stat", "settings": { "value": "17", "suffix": "", "subnote": "", "label": "Clinical Studies", "color_theme": "blush" } },
         { "type": "stat", "settings": { "value": "22", "suffix": "", "subnote": "", "label": "Herbal Medicine Approvals", "color_theme": "peri" } },
-        { "type": "stat", "settings": { "value": "36", "suffix": " mg", "subnote": "", "label": "Soluble A-Type PACs", "color_theme": "sage" } }
+        { "type": "stat", "settings": { "value": "36", "suffix": "mg", "suffix_size": "small", "subnote": "", "label": "Soluble A-type PACs per capsule", "color_theme": "sage" } }
       ]
     }
   ]

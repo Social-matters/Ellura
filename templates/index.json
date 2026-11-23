@@ -285,7 +285,7 @@
             "value": "20",
             "suffix": "+",
             "subnote": "",
-            "label": "Years of Cranberry Research",
+            "label": "Years of cranberry research",
             "color_theme": "butter"
           }
         },
@@ -295,7 +295,7 @@
             "value": "17",
             "suffix": "",
             "subnote": "",
-            "label": "Clinical Studies",
+            "label": "Clinical & scientific studies",
             "color_theme": "blush"
           }
         },
@@ -305,7 +305,7 @@
             "value": "22",
             "suffix": "",
             "subnote": "",
-            "label": "Herbal Medicine Approvals",
+            "label": "International herbal-medicine approvals**",
             "color_theme": "peri"
           }
         },
@@ -314,8 +314,9 @@
           "settings": {
             "value": "36",
             "suffix": "mg",
+            "suffix_size": "small",
             "subnote": "",
-            "label": "Soluble A-Type PACs",
+            "label": "Soluble A-type PACs per capsule",
             "color_theme": "sage"
           }
         }

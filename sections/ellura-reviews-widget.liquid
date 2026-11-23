@@ -1,0 +1,153 @@
+{% comment %}
+  Section contract.
+  ellura-reviews-widget renders the reviews panel (reference ReviewsWidget): average score,
+  rating breakdown bars, US / India tabs and verbatim reviews. "Write a review" links to the
+  URL in settings, such as a review app or the contact page.
+  @example
+  <!-- Reviews page and product page -->
+{% endcomment %}
+{%- liquid
+  assign c5 = section.settings.count_5 | default: 0
+  assign c4 = section.settings.count_4 | default: 0
+  assign c3 = section.settings.count_3 | default: 0
+  assign c2 = section.settings.count_2 | default: 0
+  assign c1 = section.settings.count_1 | default: 0
+  assign total = c5 | plus: c4 | plus: c3 | plus: c2 | plus: c1
+  assign w5 = c5 | times: 5.0
+  assign w4 = c4 | times: 4
+  assign w3 = c3 | times: 3
+  assign w2 = c2 | times: 2
+  assign weighted = w5 | plus: w4 | plus: w3 | plus: w2 | plus: c1
+  assign average = 0
+  if total > 0
+    assign average = weighted | divided_by: total | round: 1
+  endif
+  assign counts = c5 | append: ',' | append: c4 | append: ',' | append: c3 | append: ',' | append: c2 | append: ',' | append: c1 | split: ','
+-%}
+<div class="{% if section.settings.wrap_section %}section{% else %}pdp-section{% endif %}" id="reviews-widget-{{ section.id }}" aria-label="Customer reviews">
+  <div class="wrap">
+    <div class="rv" id="reviews">
+      <div class="rv__top">
+        <div class="rv__score">
+          <p class="t-mono muted">{{ section.settings.heading | escape }}</p>
+          <strong>{{ average }}</strong>
+          {% render 'ellura-stars', value: average, px: 18 %}
+          <span class="t-xs muted">{{ total }} reviews · {{ section.settings.source | escape }}</span>
+        </div>
+        <div class="rv__bars" aria-label="Rating breakdown">
+          {%- for count in counts -%}
+            {%- assign stars = 6 | minus: forloop.index -%}
+            {%- assign pct = 0 -%}
+            {%- if total > 0 -%}{%- assign pct = count | times: 100.0 | divided_by: total -%}{%- endif -%}
+            <div class="rv__bar">
+              <span>{{ stars }} ★</span>
+              <i><b style="width: {{ pct }}%;"></b></i>
+              <span>{{ count }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+        <div class="rv__tools">
+          <div class="tabs" role="group" aria-label="Show reviews from">
+            <button type="button" aria-pressed="true" data-rv-tab="us">{{ section.settings.tab_1 | escape }}</button>
+            <button type="button" aria-pressed="false" data-rv-tab="india">{{ section.settings.tab_2 | escape }}</button>
+          </div>
+          {%- if section.settings.write_link != blank -%}
+            <a href="{{ section.settings.write_link }}" class="btn btn--sm">{% render 'ellura-icon', name: 'star', px: 16 %} Write a review</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div data-rv-panel="us">
+        <ul class="rv__list" role="list">
+          {%- for block in section.blocks -%}
+            <li class="rv__item" {{ block.shopify_attributes }}>
+              <div class="rv__who">
+                <span class="rv__avatar" aria-hidden="true">{{ block.settings.name | slice: 0 }}</span>
+                <div>
+                  <strong>{{ block.settings.name | escape }}</strong>
+                  <span>{{ block.settings.location | default: 'Verified buyer' | escape }}</span>
+                </div>
+              </div>
+              <div class="rv__body">
+                {%- if block.settings.title != blank -%}<h4>{{ block.settings.title | escape }}</h4>{%- endif -%}
+                <p>{{ block.settings.body | escape }}</p>
+                <p class="rv__src">{{ section.settings.verbatim_note | escape }}</p>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+        {%- if section.settings.footnote != blank -%}
+          <p class="t-xs muted" style="margin-top: 16px;">{{ section.settings.footnote }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="rv__empty" data-rv-panel="india" hidden>
+        {% render 'ellura-icon', name: 'chat', px: 28 %}
+        <p class="t-h4">{{ section.settings.empty_title | escape }}</p>
+        <p class="muted">{{ section.settings.empty_text | escape }}</p>
+        {%- if section.settings.write_link != blank -%}
+          <a href="{{ section.settings.write_link }}" class="btn">Write the first review</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('reviews-widget-{{ section.id }}');
+    if (!root) return;
+    root.querySelectorAll('[data-rv-tab]').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var name = tab.dataset.rvTab;
+        root.querySelectorAll('[data-rv-tab]').forEach(function (t) {
+          t.setAttribute('aria-pressed', String(t === tab));
+        });
+        root.querySelectorAll('[data-rv-panel]').forEach(function (panel) {
+          panel.hidden = panel.dataset.rvPanel !== name;
+        });
+        if (window.elluraMotion) window.elluraMotion.refresh();
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Reviews widget",
+  "tag": "section",
+  "class": "section-ellura-reviews-widget",
+  "settings": [
+    { "type": "checkbox", "id": "wrap_section", "label": "Full section spacing", "default": true },
+    { "type": "text", "id": "heading", "label": "Label", "default": "Customer reviews" },
+    { "type": "text", "id": "source", "label": "Source", "default": "ellurautihealth.com (US store)" },
+    { "type": "header", "content": "Rating breakdown" },
+    { "type": "number", "id": "count_5", "label": "5-star reviews", "default": 72 },
+    { "type": "number", "id": "count_4", "label": "4-star reviews", "default": 5 },
+    { "type": "number", "id": "count_3", "label": "3-star reviews", "default": 1 },
+    { "type": "number", "id": "count_2", "label": "2-star reviews", "default": 0 },
+    { "type": "number", "id": "count_1", "label": "1-star reviews", "default": 0 },
+    { "type": "header", "content": "Tabs" },
+    { "type": "text", "id": "tab_1", "label": "First tab", "default": "US store" },
+    { "type": "text", "id": "tab_2", "label": "Second tab", "default": "India" },
+    { "type": "text", "id": "verbatim_note", "label": "Note under each review", "default": "Reproduced verbatim from the US store. Individual experiences vary." },
+    { "type": "inline_richtext", "id": "footnote", "label": "Footnote", "default": "Totals as published on ellurautihealth.com, checked 30 September 2026. India reviews will appear here once verified buyers share them." },
+    { "type": "text", "id": "empty_title", "label": "Second tab title", "default": "No reviews from India yet." },
+    { "type": "text", "id": "empty_text", "label": "Second tab text", "default": "ellura has just arrived in India. Be one of the first to share your experience." },
+    { "type": "url", "id": "write_link", "label": "Write a review link", "info": "A review app page or the contact page." }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Janet S." },
+        { "type": "text", "id": "location", "label": "Location", "default": "United States" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Great product" },
+        { "type": "textarea", "id": "body", "label": "Review", "default": "Great product. I have used it for many years." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Reviews widget", "category": "ellura", "blocks": [{ "type": "review" }] }]
+}
+{% endschema %}

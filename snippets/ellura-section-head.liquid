@@ -1,0 +1,26 @@
+{% doc %}
+  Renders the ellura section header (reference `section-head`): optional eyebrow, a heading
+  that reveals line by line, and an optional lead. Heading accepts inline rich text so
+  merchants can wrap words in <em> for the serif accent.
+
+  @param {string} title - Heading HTML (inline rich text)
+  @param {string} [eyebrow] - Small label above the heading
+  @param {string} [lead] - Paragraph under the heading
+  @param {string} [scale] - Heading scale: 'd1', 'd2' (default) or 'd3'
+  @param {string} [title_id] - id for the heading, for aria-labelledby on the section
+  @param {string} [tag] - Heading tag, 'h2' (default) or 'h1'
+
+  @example
+  {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, lead: section.settings.lead, scale: 'd2', title_id: title_id %}
+{% enddoc %}
+{%- assign head_size = scale | default: 'd2' -%}
+{%- assign head_tag = tag | default: 'h2' -%}
+<header class="section-head section-head--left">
+  {%- if eyebrow != blank -%}
+    <p class="eyebrow" data-fade>{{ eyebrow | escape }}</p>
+  {%- endif -%}
+  <{{ head_tag }}{% if title_id != blank %} id="{{ title_id }}"{% endif %} class="t-{{ head_size }} accent-em" data-split>{{ title }}</{{ head_tag }}>
+  {%- if lead != blank -%}
+    <p class="t-lead" data-fade data-delay="0.1">{{ lead }}</p>
+  {%- endif -%}
+</header>

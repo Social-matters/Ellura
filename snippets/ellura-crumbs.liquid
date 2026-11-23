@@ -1,0 +1,19 @@
+{% doc %}
+  Renders the ellura breadcrumb trail: home, an optional parent, then the current page.
+
+  @param {string} current - Label of the current page
+  @param {string} [parent_label] - Label of the parent page
+  @param {string} [parent_url] - URL of the parent page
+
+  @example
+  {% render 'ellura-crumbs', parent_label: 'Shop', parent_url: routes.all_products_collection_url, current: product.title %}
+{% enddoc %}
+<nav aria-label="Breadcrumb">
+  <ol class="crumbs">
+    <li><a href="{{ routes.root_url }}">ellura</a></li>
+    {%- if parent_label != blank -%}
+      <li><a href="{{ parent_url }}">{{ parent_label | escape }}</a></li>
+    {%- endif -%}
+    <li><span aria-current="page">{{ current | escape }}</span></li>
+  </ol>
+</nav>

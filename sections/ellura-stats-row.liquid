@@ -1,0 +1,70 @@
+{% comment %}
+  Section contract.
+  ellura-stats-row renders a row of four colour stat tiles whose numbers count up on scroll
+  (reference Science "Key figures").
+  @example
+  <!-- Science page, below the hero -->
+{% endcomment %}
+<div class="section section--tight" id="stats-row-{{ section.id }}" aria-label="{{ section.settings.label | escape }}">
+  <div class="wrap">
+    <dl class="usin__stats usin__stats--row" data-stagger>
+      {%- for block in section.blocks -%}
+        <div class="stat stat--{{ block.settings.color_theme }}" {{ block.shopify_attributes }}>
+          <dt>{{ block.settings.label | escape }}</dt>
+          <dd>
+            <span data-count="{{ block.settings.value | escape }}">{{ block.settings.value | escape }}</span>
+            {%- if block.settings.suffix != blank -%}
+              {%- if block.settings.suffix_size == 'small' -%}<small>{{ block.settings.suffix | strip | escape }}</small>{%- else -%}{{ block.settings.suffix | escape }}{%- endif -%}
+            {%- endif -%}
+          </dd>
+        </div>
+      {%- endfor -%}
+    </dl>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stats row",
+  "tag": "section",
+  "class": "section-ellura-stats-row",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Accessible label", "default": "Key figures" }
+  ],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Number", "default": "36" },
+        { "type": "text", "id": "suffix", "label": "Suffix", "default": "mg" },
+        {
+          "type": "select",
+          "id": "suffix_size",
+          "label": "Suffix size",
+          "options": [
+            { "value": "large", "label": "Same as number (e.g. +)" },
+            { "value": "small", "label": "Small unit (e.g. mg)" }
+          ],
+          "default": "small"
+        },
+        { "type": "text", "id": "label", "label": "Label", "default": "Soluble A-type PACs per capsule" },
+        {
+          "type": "select",
+          "id": "color_theme",
+          "label": "Colour",
+          "options": [
+            { "value": "butter", "label": "Butter" },
+            { "value": "blush", "label": "Blush" },
+            { "value": "peri", "label": "Periwinkle" },
+            { "value": "sage", "label": "Sage" }
+          ],
+          "default": "butter"
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Stats row", "category": "ellura", "blocks": [{ "type": "stat" }, { "type": "stat" }, { "type": "stat" }, { "type": "stat" }] }]
+}
+{% endschema %}

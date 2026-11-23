@@ -1,0 +1,89 @@
+{% comment %}
+  Section contract.
+  ellura-compare-table renders the pack comparison table (reference Shop "which pack is right
+  for you?"). Columns are the first products of a collection; rows are blocks: a text row with
+  one value per product, or a price row filled from each product's price.
+  @example
+  <!-- collection template, below the shop grid -->
+{% endcomment %}
+{%- liquid
+  assign source = section.settings.collection
+  if source == blank and collection
+    assign source = collection
+  endif
+  assign title_id = 'compare-title-' | append: section.id
+-%}
+<div class="section section--tight" id="compare-{{ section.id }}" aria-labelledby="{{ title_id }}">
+  <div class="wrap wrap--narrow stack-lg">
+    {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, scale: 'd3', title_id: title_id %}
+    {%- if source != blank and source.products.size > 0 -%}
+      <div class="table-scroll" data-fade>
+        <table class="compare">
+          <caption class="sr-only">Comparison of {{ source.title | escape }}</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Feature</span></th>
+              {%- for product in source.products limit: section.settings.columns -%}
+                <th scope="col">{{ product.title | escape }}</th>
+              {%- endfor -%}
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in section.blocks -%}
+              <tr {{ block.shopify_attributes }}>
+                <th scope="row">{{ block.settings.label | escape }}</th>
+                {%- if block.type == 'price_row' -%}
+                  {%- for product in source.products limit: section.settings.columns -%}
+                    <td>{% if product.available %}{{ product.price | money_without_trailing_zeros }}{% else %}{{ block.settings.unavailable | escape }}{% endif %}</td>
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- assign values = block.settings.values | newline_to_br | split: '<br />' -%}
+                  {%- for product in source.products limit: section.settings.columns -%}
+                    <td>{{ values[forloop.index0] | strip | escape }}</td>
+                  {%- endfor -%}
+                {%- endif -%}
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    {%- endif -%}
+    {%- if section.settings.footnote != blank -%}
+      <p class="t-xs muted" data-fade>{{ section.settings.footnote }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Pack comparison",
+  "tag": "section",
+  "class": "section-ellura-compare-table",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Compare" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "which pack is <em>right for you?</em>" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "On a collection page, defaults to that collection." },
+    { "type": "range", "id": "columns", "label": "Products to compare", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "inline_richtext", "id": "footnote", "label": "Footnote", "default": "Prices are MRP-inclusive of all taxes." }
+  ],
+  "blocks": [
+    {
+      "type": "text_row",
+      "name": "Text row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Supply at 1 capsule a day" },
+        { "type": "textarea", "id": "values", "label": "Values", "info": "One line per product, in collection order.", "default": "1-month supply\n3-month supply\n6-month supply" }
+      ]
+    },
+    {
+      "type": "price_row",
+      "name": "Price row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "One-time price" },
+        { "type": "text", "id": "unavailable", "label": "Text when unavailable", "default": "India price at launch" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Pack comparison", "category": "ellura", "blocks": [{ "type": "text_row" }, { "type": "price_row" }] }]
+}
+{% endschema %}

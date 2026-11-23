@@ -1,474 +1,291 @@
 /*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */{
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
   "sections": {
     "main": {
-      "type": "product-information",
+      "type": "ellura-main-product",
       "blocks": {
-        "disclosures_g9mWze": {
-          "type": "disclosures",
-          "name": "t:names.disclosures",
+        "ellura_main_product_01": {
+          "type": "trust",
           "settings": {
-            "heading": "Disclosures",
-            "heading_preset": "h5",
-            "open_by_default": false,
-            "icon": "caret",
-            "disclosure_heading_preset": "h6",
-            "text_color": "",
-            "dividers": true,
-            "divider_color": "{{ settings.color_palette.color2 }}",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "icon": "capsule",
+            "text": "One capsule a day"
+          }
         },
-        "media-gallery": {
-          "type": "_product-media-gallery",
-          "static": true,
+        "ellura_main_product_02": {
+          "type": "trust",
           "settings": {
-            "media_presentation": "grid",
-            "media_columns": "two",
-            "image_gap": 4,
-            "large_first_image": false,
-            "slideshow_controls_style": "counter",
-            "slideshow_mobile_controls_style": "dots",
-            "thumbnail_position": "right",
-            "thumbnail_width": 44,
-            "thumbnail_radius": 0,
-            "aspect_ratio": "adapt",
-            "constrain_to_viewport": true,
-            "media_fit": "contain",
-            "media_radius": 0,
-            "extend_media": false,
-            "zoom": true,
-            "video_loop": false,
-            "hide_variants": true,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "icon": "leaf",
+            "text": "Vegan · gluten-free · non-GMO"
+          }
         },
-        "product-details": {
-          "type": "_product-details",
-          "static": true,
+        "ellura_main_product_03": {
+          "type": "trust",
           "settings": {
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "details_position": "flex-start",
-            "gap": 28,
-            "sticky_details_desktop": true,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 24,
-            "padding-block-end": 24,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "group_icgrde": {
-              "type": "group",
-              "name": "t:names.header",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "background_media": "none",
-                "background_color": "",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_color": "",
-                "border_radius": 0,
-                "open_in_new_tab": false,
-                "placeholder": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "text_xrnftG": {
-                  "type": "text",
-                  "name": "t:names.product_title",
-                  "settings": {
-                    "text": "<h1>{{ closest.product.title }}</h1>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h3",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "text_color": "",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "price_tVjtKg": {
-                  "type": "price",
-                  "settings": {
-                    "show_sale_price_first": true,
-                    "show_installments": false,
-                    "show_tax_info": false,
-                    "type_preset": "paragraph",
-                    "width": "100%",
-                    "alignment": "left",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "text_color": "",
-                    "padding-block-start": 4,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_xrnftG",
-                "price_tVjtKg"
-              ]
-            },
-            "divider_VJhene": {
-              "type": "_divider",
-              "name": "t:names.divider",
-              "settings": {
-                "thickness": 1,
-                "corner_radius": "square",
-                "divider_color": "{{ settings.color_palette.color2 }}",
-                "width_percent": 100,
-                "padding-block-start": 0,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            },
-            "variant_picker_R3rGDr": {
-              "type": "variant-picker",
-              "settings": {
-                "variant_style": "buttons",
-                "show_swatches": false,
-                "option_label_text_color": "",
-                "variant_style_class": "default",
-                "custom_variant_background": "{{ settings.color_palette.background }}",
-                "custom_variant_text": "{{ settings.color_palette.foreground }}",
-                "custom_variant_border": "{{ settings.color_palette.foreground }}",
-                "selected_variant_style_class": "default",
-                "custom_selected_variant_background": "{{ settings.color_palette.foreground }}",
-                "custom_selected_variant_text": "{{ settings.color_palette.background }}",
-                "custom_selected_variant_border": "{{ settings.color_palette.foreground }}",
-                "alignment": "left",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "buy_buttons_eYQEYi": {
-              "type": "buy-buttons",
-              "settings": {
-                "stacking": true,
-                "text_color": "",
-                "show_pickup_availability": false,
-                "gift_card_form": true,
-                "recipient_button_style": "default",
-                "recipient_button_background": "{{ settings.color_palette.background }}",
-                "recipient_button_text": "{{ settings.color_palette.foreground }}",
-                "recipient_button_border": "{{ settings.color_palette.foreground }}",
-                "selected_recipient_button_style": "default",
-                "selected_recipient_button_background": "{{ settings.color_palette.foreground }}",
-                "selected_recipient_button_text": "{{ settings.color_palette.background }}",
-                "selected_recipient_button_border": "{{ settings.color_palette.foreground }}",
-                "input_style": "default",
-                "input_background_color": "{{ settings.color_palette.background }}",
-                "input_text_color": "{{ settings.color_palette.foreground }}",
-                "input_border_color": "{{ settings.color_palette.foreground }}",
-                "border_width": 1,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "quantity": {
-                  "type": "quantity",
-                  "static": true,
-                  "settings": {
-                    "input_style": "default",
-                    "input_background_color": "{{ settings.color_palette.background }}",
-                    "input_text_color": "{{ settings.color_palette.foreground }}",
-                    "input_border_color": "{{ settings.color_palette.foreground }}",
-                    "border_width": 1,
-                    "border_radius": 0
-                  },
-                  "blocks": {}
-                },
-                "add-to-cart": {
-                  "type": "add-to-cart",
-                  "static": true,
-                  "settings": {
-                    "style_class": "button",
-                    "custom_button_background": "{{ settings.color_palette.foreground }}",
-                    "custom_button_text": "{{ settings.color_palette.background }}",
-                    "custom_button_border": "{{ settings.color_palette.background }}"
-                  },
-                  "blocks": {}
-                },
-                "accelerated-checkout": {
-                  "type": "accelerated-checkout",
-                  "static": true,
-                  "settings": {},
-                  "blocks": {}
-                }
-              },
-              "block_order": []
-            },
-            "text_aEtTtq": {
-              "type": "text",
-              "name": "t:names.product_description",
-              "settings": {
-                "text": "{{ closest.product.description }}",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "group_icgrde",
-            "divider_VJhene",
-            "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi",
-            "text_aEtTtq"
-          ]
+            "icon": "flask",
+            "text": "PACs measured by DMAC/A2"
+          }
+        },
+        "ellura_main_product_04": {
+          "type": "highlight",
+          "settings": {
+            "title": "Once-daily",
+            "body": "Just one capsule a day. ellura may help reduce bacterial adhesion within hours.*"
+          }
+        },
+        "ellura_main_product_05": {
+          "type": "highlight",
+          "settings": {
+            "title": "Free from artificial ingredients",
+            "body": "100% vegan, gluten-free, non-GMO, and made without added sugars, sweeteners, or dyes."
+          }
+        },
+        "ellura_main_product_06": {
+          "type": "highlight",
+          "settings": {
+            "title": "From field to capsule",
+            "body": "Pharmatoka controls every step of production — from selecting cranberry fruit naturally rich in PACs to crafting its proprietary Gikacran® cranberry extract — so every capsule delivers 36 mg of soluble, bioactive A-type PACs."
+          }
+        },
+        "ellura_main_product_07": {
+          "type": "highlight",
+          "settings": {
+            "title": "Quality you can trust",
+            "body": "Created by Pharmatoka, pioneers in 36 mg PACs research with 20+ years of scientific expertise. Recommended by healthcare professionals and trusted by thousands of women."
+          }
         }
       },
       "block_order": [
-        "disclosures_g9mWze"
+        "ellura_main_product_01",
+        "ellura_main_product_02",
+        "ellura_main_product_03",
+        "ellura_main_product_04",
+        "ellura_main_product_05",
+        "ellura_main_product_06",
+        "ellura_main_product_07"
       ],
       "settings": {
-        "content_width": "content-center-aligned",
-        "desktop_media_position": "left",
-        "equal_columns": false,
-        "limit_details_width": false,
-        "gap": 48,
-        "enable_sticky_add_to_cart": true,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "title_override": "<span class=\"brand-word\">ellura®</span> cranberry extract, <em>36 mg PACs</em>",
+        "description": "<p>A clinically backed supplement that helps reduce the ability of certain bacteria to adhere to the urinary tract, promoting urinary tract health.* Each capsule delivers 36 mg of soluble, bioactive A-type PACs from 100% concentrated cranberry fruit juice extract.</p>"
       }
     },
-    "product_recommendations_qggXJq": {
-      "type": "product-recommendations",
+    "details": {
+      "type": "ellura-product-details",
       "blocks": {
-        "text_cbcgyb": {
-          "type": "text",
-          "name": "t:names.header",
+        "ellura_product_details_01": {
+          "type": "panel",
           "settings": {
-            "text": "<h3>You may also like </h3>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h4",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "title": "Overview",
+            "open": true,
+            "content": "<p>ellura® is a clinically backed supplement that helps reduce the ability of certain bacteria to adhere to the urinary tract, promoting urinary tract health.* Each capsule delivers 36 mg of soluble, bioactive A-type PACs from 100% concentrated cranberry fruit juice extract.</p><ul><li><strong>Once-daily.</strong> Just one capsule a day. ellura may help reduce bacterial adhesion within hours.*</li><li><strong>Free from artificial ingredients.</strong> 100% vegan, gluten-free, non-GMO, and made without added sugars, sweeteners, or dyes.</li><li><strong>From field to capsule.</strong> Pharmatoka controls every step of production — from selecting cranberry fruit naturally rich in PACs to crafting its proprietary Gikacran® cranberry extract — so every capsule delivers 36 mg of soluble, bioactive A-type PACs.</li><li><strong>Quality you can trust.</strong> Created by Pharmatoka, pioneers in 36 mg PACs research with 20+ years of scientific expertise. Recommended by healthcare professionals and trusted by thousands of women.</li></ul>"
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "ellura_product_details_02": {
+          "type": "panel",
           "settings": {
-            "product_card_gap": 8,
-            "background_color": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_DNizbJ": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_color": "",
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_M7MJkb": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_gLWgA6": {
-              "type": "price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "text_color": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_DNizbJ",
-            "product_title_M7MJkb",
-            "price_gLWgA6"
-          ]
+            "title": "Ingredients",
+            "open": false,
+            "content": "<p><strong>Active:</strong> 36 mg proanthocyanidins (PACs) from 206 mg concentrated cranberry (<em>Vaccinium macrocarpon</em>) fruit juice extract powder (Gikacran®)⁶˒³˒⁷.</p><p><strong>Other ingredients:</strong> Hypromellose (vegetable capsule), Mannitol, Magnesium stearate, Silicon dioxide. These keep the ingredients from sticking together during manufacturing, improve stability and help keep the active PACs bioavailable.</p><p><strong>Free from:</strong> GMOs, dyes, artificial preservatives, added sugars, soy, wheat, gluten, lactose. 100% plant-based capsule.</p>"
+          }
+        },
+        "ellura_product_details_03": {
+          "type": "panel",
+          "settings": {
+            "title": "How it works",
+            "open": false,
+            "content": "<p>Bacteria migrate to the urinary tract and attach to the bladder wall¹⁷˒⁶˒³˒⁴. The 36 mg of soluble PACs in ellura may reduce certain bacteria from adhering to the bladder wall¹⁷˒³˒⁴. Without attachment, bacteria are naturally eliminated through urine.</p><p>Many products claim to have PACs, but if sourced from insoluble cranberry pomace they remain trapped in fibre and cannot be absorbed⁶˒⁷.</p>"
+          }
+        },
+        "ellura_product_details_04": {
+          "type": "panel",
+          "settings": {
+            "title": "Directions to use",
+            "open": false,
+            "content": "<p>Take 1 capsule daily with water. Occasional or repeated use according to your needs or as recommended by your health care provider.</p><p>Take one capsule daily with water at the same time each day. When additional support is desired (e.g. travel, stress), take two capsules as needed, then return to one. If swallowing is difficult, open the capsule into soft food or a sweet drink.</p><p>ellura is not intended to treat or cure urinary tract infections. Always follow your healthcare professional’s recommendation.</p>"
+          }
+        },
+        "ellura_product_details_05": {
+          "type": "panel",
+          "settings": {
+            "title": "Safety & storage",
+            "open": false,
+            "content": "<p><strong>Precaution:</strong> Consult your healthcare provider before use if you are taking any anticoagulant medicine.</p><p>Keep bottle tightly closed at room temperature (15–30 °C), away from heat and moisture, and keep out of reach of children.</p><p>If you are pregnant, nursing, have a red-fruit allergy, diabetes, kidney stones or another medical condition, consult your healthcare provider first.</p>"
+          }
+        },
+        "ellura_product_details_06": {
+          "type": "panel",
+          "settings": {
+            "title": "References",
+            "open": false,
+            "content": "<ol><li>Xiong Z, Gao Y, Yuan C, Jian Z, Wei X. (2024). Preventive effect of cranberries with high dose of proanthocyanidins on urinary tract infections: a meta-analysis and systematic review. <em>Frontiers in Nutrition</em>, 2024 Nov 28;11:1422121.</li><li>Williams G, Hahn D, Stephens JH, Craig JC, Hodson EM. (2023). Cranberries for preventing urinary tract infections. <em>Cochrane Database of Systematic Reviews</em>, 2023, Issue 4. Art. No.: CD001321.</li><li>Howell AB, Botto H, Combescure C, Blanc-Potard AB, Gausa L, Matsumoto T, Tenke P, Sotto A, Lavigne JP. (2010). Dosage effect on uropathogenic Escherichia coli anti-adhesion activity in urine following consumption of cranberry powder standardized for proanthocyanidin content: a multicentric randomized double blind study. <em>BMC Infectious Diseases</em>, 10, 94.</li><li>Lavigne JP, Bourg G, Combescure C, et al. (2008). In vitro and in vivo evidence of dose-dependent decrease of uropathogenic Escherichia coli virulence after consumption of commercial Vaccinium macrocarpon (cranberry) capsules. <em>Clinical Microbiology and Infection</em>, 14(4), 350–355.</li><li>Howell AB, Dreyfus JF, Chughtai B. (2022). Differences in urinary bacterial anti-adhesion activity after intake of cranberry dietary supplements with soluble versus insoluble proanthocyanidins. <em>Journal of Dietary Supplements</em>, 19(5), 621–639.</li><li>Chughtai B, Thomas D, Howell A. (2016). Variability of commercial cranberry dietary supplements for the prevention of uropathogenic bacterial adhesion. <em>American Journal of Obstetrics &amp; Gynecology</em>, 215(1), 122–123.</li><li>Sintara M, Li L, Cunningham DG, Prior RL, Wu X, Chang T. (2018). Single-laboratory validation for determination of total soluble proanthocyanidins in cranberry using 4-dimethylaminocinnamaldehyde. <em>Journal of AOAC International</em>, 101(3), 805–809.</li><li>Bosley S, Krueger CG, Birmingham A, Howell AB, Reed JD. (2024). Improved in vitro hemagglutination assays utilizing P-type and type 1 uropathogenic Escherichia coli to evaluate bacterial anti-adhesion activity of cranberry products. <em>Journal of Dietary Supplements</em>, 21(3), 327–343.</li><li>Howell AB, Vorsa N, Der Marderosian A, Foo LY. (1998). Inhibition of the adherence of P-fimbriated Escherichia coli to uroepithelial-cell surfaces by proanthocyanidin extracts from cranberries. <em>The New England Journal of Medicine</em>, 339(15), 1085–1086.</li></ol>"
+          }
         }
       },
       "block_order": [
-        "text_cbcgyb"
+        "ellura_product_details_01",
+        "ellura_product_details_02",
+        "ellura_product_details_03",
+        "ellura_product_details_04",
+        "ellura_product_details_05",
+        "ellura_product_details_06"
       ],
-      "name": "t:names.product_recommendations",
       "settings": {
-        "product": "{{ closest.product }}",
-        "recommendation_type": "related",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 4,
-        "columns": 4,
-        "mobile_columns": "2",
-        "columns_gap": 12,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 28,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "serving_size": "1 capsule",
+        "active_name": "Proanthocyanidins (PACs)",
+        "active_source": "from 206 mg concentrated Cranberry (Vaccinium macrocarpon) fruit juice extract powder (Gikacran®)",
+        "active_amount": "36 mg",
+        "active_dv": "Daily Value not established",
+        "other_ingredients": "Hypromellose (vegetable capsule), Mannitol, Magnesium stearate, Silicon dioxide.",
+        "method": "PACs measured by the scientifically validated DMAC/A2 method."
+      }
+    },
+    "mechanism": {
+      "type": "ellura-how-it-works",
+      "blocks": {
+        "ellura_how_it_works_block_1": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Bacteria enter, attach, and multiply",
+            "description": "Bacteria migrate to the urinary tract, leading to disruption of urinary tract balance."
+          }
+        },
+        "ellura_how_it_works_block_2": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "ellura may help reduce bacterial adhesion",
+            "description": "36 mg PACs in ellura may reduce certain bacteria from adhering to the bladder wall."
+          }
+        },
+        "ellura_how_it_works_block_3": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "Bacteria are flushed out",
+            "description": "Without attachment, bacteria are naturally eliminated through urine."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_how_it_works_block_1",
+        "ellura_how_it_works_block_2",
+        "ellura_how_it_works_block_3"
+      ],
+      "settings": {
+        "eyebrow": "The mechanism",
+        "heading": "how <span class=\"brand-word\">ellura</span> <em>works</em>",
+        "legend_bacteria": "Bacteria",
+        "legend_pac": "Soluble A-type PACs",
+        "bg_color": "#5a2e58",
+        "padding_top": 80,
+        "padding_bottom": 100
+      }
+    },
+    "reviews": {
+      "type": "ellura-reviews-widget",
+      "blocks": {
+        "ellura_reviews_widget_01": {
+          "type": "review",
+          "settings": {
+            "name": "Janet S.",
+            "location": "United States",
+            "title": "Great product",
+            "body": "Great product. I have used it for many years."
+          }
+        },
+        "ellura_reviews_widget_02": {
+          "type": "review",
+          "settings": {
+            "name": "Savannah",
+            "location": "Verified buyer",
+            "title": "",
+            "body": "I’ve been really happy with Ellura! It’s easy to take, and I’ve noticed a positive difference since starting it. Definitely something I’ll continue using!"
+          }
+        },
+        "ellura_reviews_widget_03": {
+          "type": "review",
+          "settings": {
+            "name": "Anonymous",
+            "location": "United States",
+            "title": "Good product",
+            "body": "Good product"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_reviews_widget_01",
+        "ellura_reviews_widget_02",
+        "ellura_reviews_widget_03"
+      ],
+      "settings": {
+        "wrap_section": false,
+        "write_link": "/pages/contact"
+      }
+    },
+    "faq": {
+      "type": "ellura-faq",
+      "blocks": {
+        "ellura_faq_01": {
+          "type": "question",
+          "settings": {
+            "question": "What is ellura?",
+            "answer": "<p>ellura is a clinically backed supplement that supports urinary tract health* and may help reduce the ability of certain bacteria to adhere to the urinary tract, allowing them to be flushed out naturally¹⁷˒⁶˒¹².</p>"
+          }
+        },
+        "ellura_faq_02": {
+          "type": "question",
+          "settings": {
+            "question": "What are the ingredients in ellura?",
+            "answer": "<p>Each capsule delivers 36 mg of proanthocyanidins (PACs) from 206 mg of concentrated cranberry fruit juice extract (Gikacran®), the key ingredient clinically backed to support urinary tract health*⁶˒³˒⁷.</p><p>Inactive ingredients: mannitol, magnesium stearate, silicon dioxide and the vegetable shell (hydroxypropylmethylcellulose). They keep the ingredients from sticking together during manufacturing, improve stability and help keep the active PACs bioavailable.</p>"
+          }
+        },
+        "ellura_faq_03": {
+          "type": "question",
+          "settings": {
+            "question": "Why does ellura have a new design?",
+            "answer": "<p>ellura is the same high-quality supplement — only the packaging has changed. It is now delivered directly from Pharmatoka, its original creators.</p>"
+          }
+        },
+        "ellura_faq_04": {
+          "type": "question",
+          "settings": {
+            "question": "Can I open the ellura capsules if I have trouble swallowing them?",
+            "answer": "<p>Yes. We recommend mixing the powder into soft food (such as yoghurt or a fruit purée) or a sweet drink such as juice rather than taking it directly, as it has a naturally bitter, astringent taste.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_faq_01",
+        "ellura_faq_02",
+        "ellura_faq_03",
+        "ellura_faq_04"
+      ],
+      "settings": {
+        "heading": "FAQs",
+        "lead": "We’re here to help! Below you’ll find answers to some of our most frequently asked questions. If you need further assistance, feel free to reach out — our team will be in touch shortly.",
+        "contact_btn_url": "/pages/contact",
+        "group_title": "About <span class=\"brand-word\">ellura</span>",
+        "first_open": false,
+        "see_all_url": "/pages/faq"
+      }
+    },
+    "others": {
+      "type": "ellura-product-grid",
+      "settings": {
+        "limit": 2,
+        "columns": "2"
       }
     }
   },
   "order": [
     "main",
-    "product_recommendations_qggXJq"
+    "details",
+    "mechanism",
+    "reviews",
+    "faq",
+    "others"
   ]
 }

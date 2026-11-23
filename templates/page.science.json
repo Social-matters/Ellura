@@ -1,0 +1,480 @@
+/*
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "ellura-page-hero",
+      "settings": {
+        "tone": "dark",
+        "crumb_label": "The Science",
+        "eyebrow": "The Science",
+        "heading": "Twenty years of research, <em>in one capsule.</em>",
+        "lead": "ellura is the result of more than 20+ years of scientific research, backed by 17 clinical and scientific studies and international herbal-medicine approvals in 22 countries.**",
+        "visual": "photo",
+        "preset": "lab-pipette"
+      }
+    },
+    "stats": {
+      "type": "ellura-stats-row",
+      "blocks": {
+        "ellura_stats_row_01": {
+          "type": "stat",
+          "settings": {
+            "value": "36",
+            "suffix": "mg",
+            "suffix_size": "small",
+            "label": "Soluble A-type PACs per capsule",
+            "color_theme": "butter"
+          }
+        },
+        "ellura_stats_row_02": {
+          "type": "stat",
+          "settings": {
+            "value": "206",
+            "suffix": "mg",
+            "suffix_size": "small",
+            "label": "Concentrated cranberry juice extract",
+            "color_theme": "blush"
+          }
+        },
+        "ellura_stats_row_03": {
+          "type": "stat",
+          "settings": {
+            "value": "17",
+            "suffix": "",
+            "suffix_size": "large",
+            "label": "Clinical & scientific studies",
+            "color_theme": "peri"
+          }
+        },
+        "ellura_stats_row_04": {
+          "type": "stat",
+          "settings": {
+            "value": "22",
+            "suffix": "",
+            "suffix_size": "large",
+            "label": "Countries with herbal-medicine approvals**",
+            "color_theme": "sage"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_stats_row_01",
+        "ellura_stats_row_02",
+        "ellura_stats_row_03",
+        "ellura_stats_row_04"
+      ],
+      "settings": {
+        "label": "Key figures"
+      }
+    },
+    "studies": {
+      "type": "ellura-studies",
+      "blocks": {
+        "ellura_studies_01": {
+          "type": "study",
+          "settings": {
+            "ref": "17",
+            "year": "1998",
+            "journal": "The New England Journal of Medicine",
+            "title": "Cranberry PACs and bacterial adherence",
+            "body": "A laboratory study showing that proanthocyanidin extracts from cranberries inhibited the adherence of P-fimbriated E. coli to uroepithelial cell surfaces — the foundation of the anti-adhesion research that followed.",
+            "tag": "In vitro"
+          }
+        },
+        "ellura_studies_02": {
+          "type": "study",
+          "settings": {
+            "ref": "3",
+            "year": "2010",
+            "journal": "BMC Infectious Diseases",
+            "title": "PAC dose and urinary anti-adhesion activity",
+            "body": "A multicentre, randomised, double-blind study measuring anti-adhesion activity in urine after consumption of cranberry powder standardised for PAC content, at different doses. It reported a dose-dependent effect.",
+            "tag": "Human study"
+          }
+        },
+        "ellura_studies_03": {
+          "type": "study",
+          "settings": {
+            "ref": "6",
+            "year": "2022",
+            "journal": "Journal of Dietary Supplements",
+            "title": "Soluble vs insoluble PACs",
+            "body": "A controlled human study comparing cranberry supplements. Those made from juice-derived, soluble PACs produced significantly higher urinary anti-adhesion activity than supplements made mainly from whole fruit or pomace with mostly insoluble PACs.",
+            "tag": "Human study"
+          }
+        },
+        "ellura_studies_04": {
+          "type": "study",
+          "settings": {
+            "ref": "7",
+            "year": "2016",
+            "journal": "American Journal of Obstetrics & Gynecology",
+            "title": "Not all supplements are the same",
+            "body": "An analysis of commercial cranberry dietary supplements that found wide variability in their ability to prevent uropathogenic bacterial adhesion.",
+            "tag": "Product analysis"
+          }
+        },
+        "ellura_studies_05": {
+          "type": "study",
+          "settings": {
+            "ref": "1",
+            "year": "2024",
+            "journal": "Frontiers in Nutrition",
+            "title": "High-dose PAC cranberry products",
+            "body": "A meta-analysis and systematic review pooling clinical studies of cranberry products with high doses of proanthocyanidins and urinary tract outcomes.",
+            "tag": "Meta-analysis"
+          }
+        },
+        "ellura_studies_06": {
+          "type": "study",
+          "settings": {
+            "ref": "2",
+            "year": "2023",
+            "journal": "Cochrane Database of Systematic Reviews",
+            "title": "The Cochrane review of cranberries",
+            "body": "An independent systematic review of randomised trials of cranberry products and urinary tract infections across different groups of people.",
+            "tag": "Systematic review"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_studies_01",
+        "ellura_studies_02",
+        "ellura_studies_03",
+        "ellura_studies_04",
+        "ellura_studies_05",
+        "ellura_studies_06"
+      ],
+      "settings": {}
+    },
+    "method": {
+      "type": "ellura-split",
+      "settings": {
+        "layout": "media_right",
+        "visual": "chart",
+        "eyebrow": "Measured, not estimated",
+        "heading": "Why the DMAC/A2 <em>method matters.</em>",
+        "body": "<p>PAC numbers on cranberry labels can’t always be compared, because different laboratory methods give different results. ellura’s 36 mg is quantified using the scientifically validated DMAC/A2 method⁹, and the Gikacran® extract complies with USP standards for cranberry fruit juice dry extract⁸˒¹⁴.</p><p>Manufactured under Good Manufacturing Practices (GMP), each batch is tested for purity and potency.</p>"
+      }
+    },
+    "doctor": {
+      "type": "ellura-doctor",
+      "settings": {
+        "style": "card",
+        "eyebrow": "Recommended by urologists",
+        "quote": "As a physician, I value products grounded in solid scientific evidence. ellura is built on more than 20 years of cranberry research and uses a standardized extract rich in soluble proanthocyanidins (PACs). ellura is unique in that it uses only pure cranberry juice extract, to deliver soluble PACs, the compounds studied for their role in supporting urinary tract health. Having a formulation developed with a high level of scientific rigor provides confidence in its quality and consistency.",
+        "name": "Bilal Chughtai, MD",
+        "role": "Urogynecology & Reconstructive Pelvic Surgery",
+        "org": "Chief of Urology, Plainview Hospital, NY",
+        "disclosure": "Compensated Medical Advisor for ellura®"
+      }
+    },
+    "glossary": {
+      "type": "ellura-glossary",
+      "blocks": {
+        "ellura_glossary_01": {
+          "type": "term",
+          "settings": {
+            "term": "Proanthocyanidins (PACs)",
+            "definition": "Naturally occurring polyphenol compounds in cranberry fruit. A-type PACs are the form studied for urinary anti-adhesion activity."
+          }
+        },
+        "ellura_glossary_02": {
+          "type": "term",
+          "settings": {
+            "term": "A-type PACs",
+            "definition": "PACs with a particular double linkage between units, characteristic of North American cranberries (Vaccinium macrocarpon)."
+          }
+        },
+        "ellura_glossary_03": {
+          "type": "term",
+          "settings": {
+            "term": "Soluble PACs",
+            "definition": "PACs found in the juice portion of the cranberry, free to be absorbed. ellura uses only concentrated cranberry fruit juice extract."
+          }
+        },
+        "ellura_glossary_04": {
+          "type": "term",
+          "settings": {
+            "term": "Insoluble PACs / pomace",
+            "definition": "PACs that stay bound to the fibre in pomace (press cake) — the seeds, stems, skin and pulp left after juicing."
+          }
+        },
+        "ellura_glossary_05": {
+          "type": "term",
+          "settings": {
+            "term": "Anti-adhesion activity (AAA)",
+            "definition": "A laboratory measure of how well urine samples reduce the ability of bacteria to stick to cells."
+          }
+        },
+        "ellura_glossary_06": {
+          "type": "term",
+          "settings": {
+            "term": "DMAC/A2 method",
+            "definition": "A validated laboratory method (4-dimethylaminocinnamaldehyde with an A2 reference standard) used to measure soluble PAC content."
+          }
+        },
+        "ellura_glossary_07": {
+          "type": "term",
+          "settings": {
+            "term": "Gikacran®",
+            "definition": "Pharmatoka’s proprietary concentrated cranberry fruit juice extract. Each ellura capsule contains 206 mg, delivering 36 mg PACs."
+          }
+        },
+        "ellura_glossary_08": {
+          "type": "term",
+          "settings": {
+            "term": "Pili (fimbriae)",
+            "definition": "Tiny hair-like structures — Type 1 and P-type — that E. coli use to attach to the urinary tract lining."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_glossary_01",
+        "ellura_glossary_02",
+        "ellura_glossary_03",
+        "ellura_glossary_04",
+        "ellura_glossary_05",
+        "ellura_glossary_06",
+        "ellura_glossary_07",
+        "ellura_glossary_08"
+      ],
+      "settings": {}
+    },
+    "references": {
+      "type": "ellura-references",
+      "blocks": {
+        "ellura_references_01": {
+          "type": "citation",
+          "settings": {
+            "authors": "Xiong Z, Gao Y, Yuan C, Jian Z, Wei X.",
+            "year": "2024",
+            "title": "Preventive effect of cranberries with high dose of proanthocyanidins on urinary tract infections: a meta-analysis and systematic review.",
+            "source": "Frontiers in Nutrition",
+            "detail": "2024 Nov 28;11:1422121.",
+            "url": "https://doi.org/10.3389/fnut.2024.1422121"
+          }
+        },
+        "ellura_references_02": {
+          "type": "citation",
+          "settings": {
+            "authors": "Williams G, Hahn D, Stephens JH, Craig JC, Hodson EM.",
+            "year": "2023",
+            "title": "Cranberries for preventing urinary tract infections.",
+            "source": "Cochrane Database of Systematic Reviews",
+            "detail": "2023, Issue 4. Art. No.: CD001321.",
+            "url": "https://doi.org/10.1002/14651858.CD001321.pub6"
+          }
+        },
+        "ellura_references_03": {
+          "type": "citation",
+          "settings": {
+            "authors": "Howell AB, Botto H, Combescure C, Blanc-Potard AB, Gausa L, Matsumoto T, Tenke P, Sotto A, Lavigne JP.",
+            "year": "2010",
+            "title": "Dosage effect on uropathogenic Escherichia coli anti-adhesion activity in urine following consumption of cranberry powder standardized for proanthocyanidin content: a multicentric randomized double blind study.",
+            "source": "BMC Infectious Diseases",
+            "detail": "10, 94.",
+            "url": "https://doi.org/10.1186/1471-2334-10-94"
+          }
+        },
+        "ellura_references_04": {
+          "type": "citation",
+          "settings": {
+            "authors": "Lavigne JP, Bourg G, Combescure C, et al.",
+            "year": "2008",
+            "title": "In vitro and in vivo evidence of dose-dependent decrease of uropathogenic Escherichia coli virulence after consumption of commercial Vaccinium macrocarpon (cranberry) capsules.",
+            "source": "Clinical Microbiology and Infection",
+            "detail": "14(4), 350–355.",
+            "url": ""
+          }
+        },
+        "ellura_references_05": {
+          "type": "citation",
+          "settings": {
+            "authors": "World Health Organization.",
+            "year": "2023",
+            "title": "Antimicrobial resistance — fact sheet (21 November 2023).",
+            "source": "who.int",
+            "detail": "",
+            "url": "https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance"
+          }
+        },
+        "ellura_references_06": {
+          "type": "citation",
+          "settings": {
+            "authors": "Howell AB, Dreyfus JF, Chughtai B.",
+            "year": "2022",
+            "title": "Differences in urinary bacterial anti-adhesion activity after intake of cranberry dietary supplements with soluble versus insoluble proanthocyanidins.",
+            "source": "Journal of Dietary Supplements",
+            "detail": "19(5), 621–639.",
+            "url": "https://doi.org/10.1080/19390211.2021.1908480"
+          }
+        },
+        "ellura_references_07": {
+          "type": "citation",
+          "settings": {
+            "authors": "Chughtai B, Thomas D, Howell A.",
+            "year": "2016",
+            "title": "Variability of commercial cranberry dietary supplements for the prevention of uropathogenic bacterial adhesion.",
+            "source": "American Journal of Obstetrics & Gynecology",
+            "detail": "215(1), 122–123.",
+            "url": ""
+          }
+        },
+        "ellura_references_08": {
+          "type": "citation",
+          "settings": {
+            "authors": "United States Pharmacopeia.",
+            "year": "2023",
+            "title": "Cranberry Fruit Juice Dry Extract.",
+            "source": "United States Pharmacopeia–National Formulary (USP–NF)",
+            "detail": "",
+            "url": ""
+          }
+        },
+        "ellura_references_09": {
+          "type": "citation",
+          "settings": {
+            "authors": "Sintara M, Li L, Cunningham DG, Prior RL, Wu X, Chang T.",
+            "year": "2018",
+            "title": "Single-laboratory validation for determination of total soluble proanthocyanidins in cranberry using 4-dimethylaminocinnamaldehyde.",
+            "source": "Journal of AOAC International",
+            "detail": "101(3), 805–809.",
+            "url": ""
+          }
+        },
+        "ellura_references_10": {
+          "type": "citation",
+          "settings": {
+            "authors": "Uberos J, et al.",
+            "year": "2012",
+            "title": "Cranberry syrup vs trimethoprim in the prophylaxis of recurrent urinary tract infections among children: a controlled trial.",
+            "source": "Open Access Journal of Clinical Trials",
+            "detail": "4, 31–38.",
+            "url": ""
+          }
+        },
+        "ellura_references_11": {
+          "type": "citation",
+          "settings": {
+            "authors": "Botto H, Neuzillet Y.",
+            "year": "2010",
+            "title": "Effectiveness of a cranberry (Vaccinium macrocarpon) preparation in reducing asymptomatic bacteriuria in patients with an ileal enterocystoplasty.",
+            "source": "Scandinavian Journal of Urology and Nephrology",
+            "detail": "44(3), 165–168.",
+            "url": ""
+          }
+        },
+        "ellura_references_12": {
+          "type": "citation",
+          "settings": {
+            "authors": "Bosley S, Krueger CG, Birmingham A, Howell AB, Reed JD.",
+            "year": "2024",
+            "title": "Improved in vitro hemagglutination assays utilizing P-type and type 1 uropathogenic Escherichia coli to evaluate bacterial anti-adhesion activity of cranberry products.",
+            "source": "Journal of Dietary Supplements",
+            "detail": "21(3), 327–343.",
+            "url": ""
+          }
+        },
+        "ellura_references_13": {
+          "type": "citation",
+          "settings": {
+            "authors": "Anger JT, Bixler BR, Holmes RS, Lee UJ, Santiago-Lastra Y, Selph SS.",
+            "year": "2022",
+            "title": "Updates to recurrent uncomplicated urinary tract infections in women: AUA/CUA/SUFU guideline.",
+            "source": "The Journal of Urology",
+            "detail": "",
+            "url": ""
+          }
+        },
+        "ellura_references_14": {
+          "type": "citation",
+          "settings": {
+            "authors": "Upton R, Brendler T.",
+            "year": "2016",
+            "title": "Cranberry fruit Vaccinium macrocarpon Aiton — standards of analysis, quality control, and therapeutics.",
+            "source": "American Herbal Pharmacopoeia and Therapeutic Compendium",
+            "detail": "",
+            "url": ""
+          }
+        },
+        "ellura_references_15": {
+          "type": "citation",
+          "settings": {
+            "authors": "Storme O, Tirán Saucedo J, Garcia-Mora A, Dehesa-Dávila M, Naber KG.",
+            "year": "2019",
+            "title": "Risk factors and predisposing conditions for urinary tract infection.",
+            "source": "Therapeutic Advances in Urology",
+            "detail": "11, 1756287218814382.",
+            "url": ""
+          }
+        },
+        "ellura_references_16": {
+          "type": "citation",
+          "settings": {
+            "authors": "Thomas D, et al.",
+            "year": "2017",
+            "title": "Does cranberry have a role in catheter-associated urinary tract infections?",
+            "source": "Canadian Urological Association Journal",
+            "detail": "11(11), E421–E424.",
+            "url": ""
+          }
+        },
+        "ellura_references_17": {
+          "type": "citation",
+          "settings": {
+            "authors": "Howell AB, Vorsa N, Der Marderosian A, Foo LY.",
+            "year": "1998",
+            "title": "Inhibition of the adherence of P-fimbriated Escherichia coli to uroepithelial-cell surfaces by proanthocyanidin extracts from cranberries.",
+            "source": "The New England Journal of Medicine",
+            "detail": "339(15), 1085–1086.",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "ellura_references_01",
+        "ellura_references_02",
+        "ellura_references_03",
+        "ellura_references_04",
+        "ellura_references_05",
+        "ellura_references_06",
+        "ellura_references_07",
+        "ellura_references_08",
+        "ellura_references_09",
+        "ellura_references_10",
+        "ellura_references_11",
+        "ellura_references_12",
+        "ellura_references_13",
+        "ellura_references_14",
+        "ellura_references_15",
+        "ellura_references_16",
+        "ellura_references_17"
+      ],
+      "settings": {
+        "title": "References",
+        "initially_open": true
+      }
+    },
+    "cta": {
+      "type": "ellura-cta-band",
+      "settings": {
+        "btn_link": "/collections/all",
+        "btn2_link": "/pages/subscribe"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "stats",
+    "studies",
+    "method",
+    "doctor",
+    "glossary",
+    "references",
+    "cta"
+  ]
+}

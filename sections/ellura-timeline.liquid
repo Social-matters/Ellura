@@ -1,0 +1,92 @@
+{% comment %}
+  Section contract.
+  ellura-timeline renders the brand timeline as a horizontal rail (reference Our Story). On
+  desktop the rail pins and scrolls sideways, with a progress bar, image drift and years that
+  brighten as each item enters. On narrow screens it is a vertical list.
+  @example
+  <!-- Our story page -->
+{% endcomment %}
+{%- assign title_id = 'tl-title-' | append: section.id -%}
+<div class="tl tone-bone" id="tl-{{ section.id }}" aria-labelledby="{{ title_id }}">
+  <div class="tl__pin">
+    <div class="wrap tl__head">
+      <h2 id="{{ title_id }}" class="t-d2 accent-em" data-split>{{ section.settings.heading }}</h2>
+      <div class="tl__bar" aria-hidden="true"><i></i></div>
+    </div>
+    <ol class="tl__track" role="list">
+      {%- for block in section.blocks -%}
+        <li class="tl__item" {{ block.shopify_attributes }}>
+          <div class="tl__img">
+            {% render 'ellura-photo', image: block.settings.image, preset: block.settings.preset, sizes: '(max-width: 900px) 80vw, 34vw', alt: '', width: 800, height: 1000 %}
+          </div>
+          <div class="tl__text">
+            <span class="tl__year">{{ block.settings.year | escape }}</span>
+            <h3 class="t-h4">{{ block.settings.title | escape }}</h3>
+            <p class="muted">{{ block.settings.body }}</p>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initTimeline() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      var root = document.getElementById('tl-{{ section.id }}');
+      if (!root) return;
+      if (root._tlMM) root._tlMM.revert();
+      var mm = gsap.matchMedia();
+      root._tlMM = mm;
+      mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', function () {
+        var track = root.querySelector('.tl__track');
+        var pin = root.querySelector('.tl__pin');
+        var distance = function () { return track.scrollWidth - window.innerWidth + 60; };
+        var rail = gsap.to(track, {
+          x: function () { return -distance(); },
+          ease: 'none',
+          scrollTrigger: { trigger: pin, start: 'top top', end: function () { return '+=' + distance(); }, pin: true, scrub: 0.8, invalidateOnRefresh: true }
+        });
+        root.querySelectorAll('.tl__item').forEach(function (item) {
+          var img = item.querySelector('img');
+          if (img) {
+            gsap.fromTo(img, { scale: 1.25, xPercent: 8 }, { scale: 1, xPercent: -4, ease: 'none', scrollTrigger: { trigger: item, containerAnimation: rail, start: 'left right', end: 'right left', scrub: true } });
+          }
+          gsap.fromTo(item.querySelector('.tl__year'), { yPercent: 40, opacity: 0.2 }, { yPercent: 0, opacity: 1, ease: 'none', scrollTrigger: { trigger: item, containerAnimation: rail, start: 'left 90%', end: 'left 45%', scrub: true } });
+        });
+        gsap.to(root.querySelector('.tl__bar i'), { scaleX: 1, ease: 'none', scrollTrigger: { trigger: pin, start: 'top top', end: function () { return '+=' + distance(); }, scrub: true } });
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initTimeline);
+    else initTimeline();
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}') initTimeline();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Timeline",
+  "tag": "section",
+  "class": "section-ellura-timeline",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The ellura <em>timeline</em>" }
+  ],
+  "blocks": [
+    {
+      "type": "moment",
+      "name": "Moment",
+      "settings": [
+        { "type": "text", "id": "year", "label": "Year or label", "default": "2004" },
+        { "type": "text", "id": "title", "label": "Title", "default": "The extract begins" },
+        { "type": "inline_richtext", "id": "body", "label": "Text", "default": "Pharmatoka begins developing a concentrated cranberry fruit-juice extract." },
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "select", "id": "preset", "label": "Bundled photo", "options": [{"value": "", "label": "None"}, {"value": "cranberry-cut", "label": "Cranberry cut"}, {"value": "berries-frost", "label": "Berries frost"}, {"value": "berries-dark", "label": "Berries dark"}, {"value": "berry-branch", "label": "Berry branch"}, {"value": "cranberry-bog", "label": "Cranberry bog"}, {"value": "cranberry-plant", "label": "Cranberry plant"}, {"value": "lab-pipette", "label": "Lab pipette"}, {"value": "lab-scientist", "label": "Lab scientist"}, {"value": "lab-wells", "label": "Lab wells"}, {"value": "leaf-shadow", "label": "Leaf shadow"}, {"value": "leaf-shadow-2", "label": "Leaf shadow 2"}, {"value": "france", "label": "France"}, {"value": "india", "label": "India"}, {"value": "atlanta", "label": "Atlanta"}, {"value": "life-calm", "label": "Calm"}, {"value": "life-editorial", "label": "Editorial"}, {"value": "life-elder", "label": "Elder"}, {"value": "life-friends", "label": "Friends"}, {"value": "life-glass", "label": "Glass"}, {"value": "life-glass-2", "label": "Glass 2"}, {"value": "life-morning", "label": "Morning"}, {"value": "life-ritual", "label": "Ritual"}, {"value": "life-sari-golden", "label": "Sari golden"}, {"value": "life-sari-red", "label": "Sari red"}, {"value": "life-smile", "label": "Smile"}, {"value": "life-street", "label": "Street"}, {"value": "life-sunlight", "label": "Sunlight"}, {"value": "life-water-sprig", "label": "Water sprig"}], "default": "cranberry-bog" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Timeline", "category": "ellura", "blocks": [{ "type": "moment" }, { "type": "moment" }, { "type": "moment" }] }]
+}
+{% endschema %}

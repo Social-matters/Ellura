@@ -1,0 +1,31 @@
+{% comment %}
+  Section contract.
+  ellura-404 renders the not-found page (reference NotFound): plum card with a spinning clover,
+  "This page has been flushed out." and links home and to the shop.
+  @example
+  <!-- 404 template -->
+{% endcomment %}
+<div class="notfound" id="notfound-{{ section.id }}">
+  <div class="wrap notfound__inner">
+    {% render 'ellura-clover', class: 'notfound__clover' %}
+    <p class="t-mono">Error 404</p>
+    <h1 class="t-d1">{{ section.settings.heading }}</h1>
+    <p class="t-lead">{{ section.settings.lead | escape }}</p>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+      <a href="{{ routes.root_url }}" class="btn btn--lilac">Go to homepage</a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--ghost">Shop ellura</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page not found",
+  "tag": "section",
+  "class": "section-ellura-404",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "This page has been <em>flushed out.</em>" },
+    { "type": "text", "id": "lead", "label": "Text", "default": "The link may be old or mistyped. Let’s get you back on track." }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,75 @@
+{% comment %}
+  Section contract.
+  ellura-product-details renders "Everything on the label" (reference product details): a
+  supplement facts panel beside accordion blocks such as overview, ingredients, directions,
+  safety and references.
+  @example
+  <!-- product template, below the product information -->
+{% endcomment %}
+{%- assign title_id = 'details-title-' | append: section.id -%}
+<div class="pdp-section tone-bone" id="details-{{ section.id }}" aria-labelledby="{{ title_id }}">
+  <div class="wrap pdp-details">
+    <aside class="pdp-details__aside">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow" data-fade>{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+      <h2 id="{{ title_id }}" class="t-d3 accent-em" data-split>{{ section.settings.heading }}</h2>
+      <div class="facts" role="table" aria-label="Supplement Facts">
+        <h4 role="caption">Supplement Facts</h4>
+        <div class="facts__row facts__row--thick" role="row">
+          <span role="cell">Serving size</span>
+          <span role="cell">{{ section.settings.serving_size | escape }}</span>
+        </div>
+        <div class="facts__row" role="row">
+          <strong role="columnheader">Amount per capsule</strong>
+          <span role="columnheader"></span>
+        </div>
+        <div class="facts__row facts__row--thick" role="row">
+          <span role="cell">{{ section.settings.active_name | escape }} <small>{{ section.settings.active_source | escape }}</small></span>
+          <strong role="cell">{{ section.settings.active_amount | escape }}†</strong>
+        </div>
+        <small>† {{ section.settings.active_dv | escape }}</small>
+        <small><strong>Other ingredients:</strong> {{ section.settings.other_ingredients | escape }}</small>
+      </div>
+      {%- if section.settings.method != blank -%}<p class="t-xs muted">{{ section.settings.method | escape }}</p>{%- endif -%}
+    </aside>
+    <div>
+      <div class="accordion" data-acc>
+        {%- for block in section.blocks -%}
+          {%- assign acc_id = 'detail-' | append: block.id -%}
+          {% render 'ellura-acc-item', id: acc_id, title: block.settings.title, body: block.settings.content, open: block.settings.open, attributes: block.shopify_attributes %}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product details",
+  "tag": "section",
+  "class": "section-ellura-product-details",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Product details" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Everything on <em>the label.</em>" },
+    { "type": "header", "content": "Supplement facts" },
+    { "type": "text", "id": "serving_size", "label": "Serving size", "default": "1 capsule" },
+    { "type": "text", "id": "active_name", "label": "Active ingredient", "default": "Proanthocyanidins (PACs)" },
+    { "type": "text", "id": "active_source", "label": "Source", "default": "from 206 mg concentrated Cranberry (Vaccinium macrocarpon) fruit juice extract powder (Gikacran®)" },
+    { "type": "text", "id": "active_amount", "label": "Amount", "default": "36 mg" },
+    { "type": "text", "id": "active_dv", "label": "Daily value note", "default": "Daily Value not established" },
+    { "type": "text", "id": "other_ingredients", "label": "Other ingredients", "default": "Hypromellose (vegetable capsule), Mannitol, Magnesium stearate, Silicon dioxide." },
+    { "type": "text", "id": "method", "label": "Method note", "default": "PACs measured by the scientifically validated DMAC/A2 method." }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Panel",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Overview" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>ellura® is a clinically backed supplement.</p>" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Product details", "category": "ellura", "blocks": [{ "type": "panel", "settings": { "open": true } }] }]
+}
+{% endschema %}

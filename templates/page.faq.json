@@ -1,0 +1,387 @@
+/*
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
+  "sections": {
+    "faq": {
+      "type": "ellura-faq-page",
+      "blocks": {
+        "ellura_faq_page_01": {
+          "type": "category",
+          "settings": {
+            "title": "About ellura"
+          }
+        },
+        "ellura_faq_page_02": {
+          "type": "question",
+          "settings": {
+            "question": "What is ellura?",
+            "answer": "<p>ellura is a clinically backed supplement that supports urinary tract health* and may help reduce the ability of certain bacteria to adhere to the urinary tract, allowing them to be flushed out naturally¹⁷˒⁶˒¹².</p>"
+          }
+        },
+        "ellura_faq_page_03": {
+          "type": "question",
+          "settings": {
+            "question": "What are the ingredients in ellura?",
+            "answer": "<p>Each capsule delivers 36 mg of proanthocyanidins (PACs) from 206 mg of concentrated cranberry fruit juice extract (Gikacran®), the key ingredient clinically backed to support urinary tract health*⁶˒³˒⁷.</p><p>Inactive ingredients: mannitol, magnesium stearate, silicon dioxide and the vegetable shell (hydroxypropylmethylcellulose). They keep the ingredients from sticking together during manufacturing, improve stability and help keep the active PACs bioavailable.</p>"
+          }
+        },
+        "ellura_faq_page_04": {
+          "type": "question",
+          "settings": {
+            "question": "Why does ellura have a new design?",
+            "answer": "<p>ellura is the same high-quality supplement — only the packaging has changed. It is now delivered directly from Pharmatoka, its original creators.</p>"
+          }
+        },
+        "ellura_faq_page_05": {
+          "type": "question",
+          "settings": {
+            "question": "Can I open the ellura capsules if I have trouble swallowing them?",
+            "answer": "<p>Yes. We recommend mixing the powder into soft food (such as yoghurt or a fruit purée) or a sweet drink such as juice rather than taking it directly, as it has a naturally bitter, astringent taste.</p>"
+          }
+        },
+        "ellura_faq_page_06": {
+          "type": "category",
+          "settings": {
+            "title": "How ellura works"
+          }
+        },
+        "ellura_faq_page_07": {
+          "type": "question",
+          "settings": {
+            "question": "How does ellura work?",
+            "answer": "<p>ellura harnesses 36 mg of PACs from 100% pure concentrated cranberry fruit juice extract³˒⁴. These soluble, bioactive PACs interact with certain bacteria in a way that may help reduce their ability to adhere to the bladder wall¹⁷˒⁶˒¹². Without the ability to adhere, bacteria are naturally washed out, helping to keep your urinary tract clean*.</p>"
+          }
+        },
+        "ellura_faq_page_08": {
+          "type": "question",
+          "settings": {
+            "question": "What are proanthocyanidins (PACs)?",
+            "answer": "<p>PACs are naturally occurring compounds found in cranberry fruit. Research has identified that the A-type PACs in cranberries play a key role in helping support urinary tract health*¹˒².</p><p>ellura is made with a standardised cranberry juice extract produced through an extraction process that preserves these soluble, bioactive PACs, so each capsule delivers 36 mg — the research-based amount to support urinary tract health*.</p>"
+          }
+        },
+        "ellura_faq_page_09": {
+          "type": "question",
+          "settings": {
+            "question": "Why is ellura different from other cranberry supplements?",
+            "answer": "<p>Not all cranberry supplements are created equal. Many lack the clinically studied 36 mg of soluble, bioactive PACs.</p><p>ellura is made from 100% pure concentrated cranberry fruit juice extract — a high-purity source of soluble A-type PACs shown in research to help reduce the ability of certain bacteria to adhere to the bladder¹⁷˒⁶˒¹². It is standardised using the validated DMAC/A2 method⁹ and backed by 20+ years of research and 22 international herbal-medicine approvals**.</p>"
+          }
+        },
+        "ellura_faq_page_10": {
+          "type": "category",
+          "settings": {
+            "title": "How to take ellura"
+          }
+        },
+        "ellura_faq_page_11": {
+          "type": "question",
+          "settings": {
+            "question": "Who can benefit from taking ellura?",
+            "answer": "<p>ellura provides clinically backed urinary tract support, which may help reduce bacterial adhesion within hours*. Daily use helps maintain urinary tract balance*. Urinary tract health is especially important for women, but men can also benefit. If you have an underlying medical condition, consult your healthcare provider before use.</p>"
+          }
+        },
+        "ellura_faq_page_12": {
+          "type": "question",
+          "settings": {
+            "question": "How often should I take ellura?",
+            "answer": "<p>Take one capsule daily with water, at the same time each day. When you want additional support (for example during travel or stress), take two capsules as needed, then return to one capsule daily.</p><p>ellura is not intended to treat or cure urinary tract infections; it is clinically backed to support urinary tract health*. Always follow your healthcare professional’s recommendation.</p>"
+          }
+        },
+        "ellura_faq_page_13": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need a prescription?",
+            "answer": "<p>No prescription is needed to buy ellura. It has been researched for its role in supporting urinary tract health*³˒² and is recommended by many healthcare professionals. In the US it is marketed as a dietary supplement. <em>[India regulatory category and licence number — to be confirmed]</em></p>"
+          }
+        },
+        "ellura_faq_page_14": {
+          "type": "question",
+          "settings": {
+            "question": "Can I take ellura with a prescribed antibiotic?",
+            "answer": "<p>Yes, you can take ellura alongside a prescribed antibiotic to help maintain urinary tract health*¹⁷˒⁶˒³˒¹². ellura is not a substitute for antibiotics, which are necessary to treat an active urinary tract infection.</p><p>Once an infection clears, you can continue taking ellura daily to support urinary tract health. Because long-term antibiotic use for prevention may lead to resistance and unwanted side effects¹³˒⁵, work with your healthcare provider on the best ongoing strategy for you.</p>"
+          }
+        },
+        "ellura_faq_page_15": {
+          "type": "question",
+          "settings": {
+            "question": "Can ellura replace an antibiotic?",
+            "answer": "<p>No. If you have a confirmed UTI you will likely need an antibiotic to treat it. See a doctor promptly if you have fever, chills, back or side pain, or blood in your urine.</p>"
+          }
+        },
+        "ellura_faq_page_16": {
+          "type": "category",
+          "settings": {
+            "title": "Quality"
+          }
+        },
+        "ellura_faq_page_17": {
+          "type": "question",
+          "settings": {
+            "question": "Is ellura suitable for vegans?",
+            "answer": "<p>Yes — ellura is encapsulated in a 100% plant-based capsule.</p>"
+          }
+        },
+        "ellura_faq_page_18": {
+          "type": "question",
+          "settings": {
+            "question": "How is ellura tested for quality?",
+            "answer": "<p>ellura is tested at every stage. It is manufactured under Good Manufacturing Practices (GMP) so each batch meets strict standards for purity and potency. The Gikacran® extract complies with USP standards and is free from harmful contaminants¹⁴˒⁸.</p>"
+          }
+        },
+        "ellura_faq_page_19": {
+          "type": "category",
+          "settings": {
+            "title": "Safety information"
+          }
+        },
+        "ellura_faq_page_20": {
+          "type": "question",
+          "settings": {
+            "question": "Is ellura acidic?",
+            "answer": "<p>ellura has a pH of about 4.44 — mildly acidic, similar to coffee (about 5), soda or tomatoes (4–5). Water is neutral at pH 7; cranberry juice is much more acidic at pH 2.7. ellura contains no caffeine.</p>"
+          }
+        },
+        "ellura_faq_page_21": {
+          "type": "question",
+          "settings": {
+            "question": "Can I be allergic to ellura?",
+            "answer": "<p>ellura is well tolerated, but if you have a red-fruit allergy check with your healthcare provider first — the active PACs come from cranberry, a red fruit.</p>"
+          }
+        },
+        "ellura_faq_page_22": {
+          "type": "question",
+          "settings": {
+            "question": "Does ellura contain GMOs, artificial ingredients or common allergens?",
+            "answer": "<p>No. ellura contains no GMOs, dyes, artificial preservatives, sweeteners, gluten, lactose, corn, dairy, soy, wheat, yeast or added sugars.</p>"
+          }
+        },
+        "ellura_faq_page_23": {
+          "type": "question",
+          "settings": {
+            "question": "Is ellura suitable for children?",
+            "answer": "<p>ellura has been used in children for years with no reported side effects. Children under 50 lb (about 23 kg) can take half a capsule daily; 50 lb or more, one capsule daily. The capsule can be opened and mixed into a sweet drink or soft food⁷.</p><p>Please consult your child’s paediatrician before starting ellura.</p>"
+          }
+        },
+        "ellura_faq_page_24": {
+          "type": "question",
+          "settings": {
+            "question": "Is ellura safe during pregnancy or breastfeeding?",
+            "answer": "<p>There are no studies on ellura in pregnant or nursing women. Cranberry is generally considered safe, but please consult your healthcare provider before use.</p>"
+          }
+        },
+        "ellura_faq_page_25": {
+          "type": "question",
+          "settings": {
+            "question": "Can I take ellura if I have diabetes?",
+            "answer": "<p>Please consult your healthcare provider before starting ellura.</p>"
+          }
+        },
+        "ellura_faq_page_26": {
+          "type": "question",
+          "settings": {
+            "question": "Can I take ellura if I’m on blood thinners?",
+            "answer": "<p>A potential interaction cannot be ruled out. If you take anticoagulant medication, consult your healthcare provider before using ellura.</p>"
+          }
+        },
+        "ellura_faq_page_27": {
+          "type": "question",
+          "settings": {
+            "question": "Are there any side effects?",
+            "answer": "<p>ellura is generally very well tolerated and not expected to cause side effects. If you experience any, stop and consult your healthcare provider, and let us know via <a href=\"/pages/contact\">Help &amp; Support</a>.</p>"
+          }
+        },
+        "ellura_faq_page_28": {
+          "type": "question",
+          "settings": {
+            "question": "Can ellura cause kidney stones or worsen existing ones?",
+            "answer": "<p>ellura contains low levels of oxalates — only 0.108 mg per capsule, much lower than cranberry juice or whole fruit — which makes it unlikely to cause or worsen kidney stones. If you have a history of kidney stones or severe kidney disease, consult your healthcare provider first.</p>"
+          }
+        },
+        "ellura_faq_page_29": {
+          "type": "question",
+          "settings": {
+            "question": "Does ellura help with interstitial cystitis (IC)?",
+            "answer": "<p>ellura is not a treatment for interstitial cystitis. If UTIs tend to trigger your IC flares, ellura may help support urinary tract health*. If acidity is a concern, ellura has a pH of about 4.4 and can be taken with an acid reducer. Always consult your healthcare provider for IC management.</p>"
+          }
+        },
+        "ellura_faq_page_30": {
+          "type": "category",
+          "settings": {
+            "title": "Orders & payments"
+          }
+        },
+        "ellura_faq_page_31": {
+          "type": "question",
+          "settings": {
+            "question": "How do I place an order?",
+            "answer": "<p>Choose a pack on the <a href=\"/collections/all\">Shop</a> page, add it to your cart and go to checkout. You can also buy from our <a href=\"/pages/where-to-buy\">authorised retailers</a>.</p>"
+          }
+        },
+        "ellura_faq_page_32": {
+          "type": "question",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>Accepted payment methods will be shown at checkout. <em>[payment gateway and methods for India — to be confirmed]</em></p>"
+          }
+        },
+        "ellura_faq_page_33": {
+          "type": "question",
+          "settings": {
+            "question": "Where do I enter a promo code?",
+            "answer": "<p>In your cart or at checkout, before you pay. Offer terms are on the <a href=\"/pages/offer-terms\">Offers &amp; Promotions Terms</a> page.</p>"
+          }
+        },
+        "ellura_faq_page_34": {
+          "type": "question",
+          "settings": {
+            "question": "Can I change or cancel my order?",
+            "answer": "<p>Please see our <a href=\"/policies/refund-policy\">Returns, Refunds &amp; Cancellation</a> policy. <em>[India cancellation window — to be confirmed]</em></p>"
+          }
+        },
+        "ellura_faq_page_35": {
+          "type": "category",
+          "settings": {
+            "title": "Shipping & delivery"
+          }
+        },
+        "ellura_faq_page_36": {
+          "type": "question",
+          "settings": {
+            "question": "Where do you deliver?",
+            "answer": "<p>Delivery areas are listed in our <a href=\"/policies/shipping-policy\">Shipping Policy</a>. <em>[serviceable PIN codes — to be confirmed]</em></p>"
+          }
+        },
+        "ellura_faq_page_37": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p><em>[India dispatch and delivery timelines — to be confirmed]</em> You will receive tracking details by email once your order ships.</p>"
+          }
+        },
+        "ellura_faq_page_38": {
+          "type": "question",
+          "settings": {
+            "question": "How much does shipping cost?",
+            "answer": "<p>Subscribe &amp; Save orders ship free. For one-time orders, shipping is calculated at checkout. <em>[one-time shipping rates — to be confirmed]</em></p>"
+          }
+        },
+        "ellura_faq_page_39": {
+          "type": "question",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "<p>Use the tracking link in your shipping email, or enter your order number on <a href=\"/pages/track-order\">Track Your Order</a>.</p>"
+          }
+        },
+        "ellura_faq_page_40": {
+          "type": "category",
+          "settings": {
+            "title": "Subscribe & Save"
+          }
+        },
+        "ellura_faq_page_41": {
+          "type": "question",
+          "settings": {
+            "question": "What is Subscribe & Save?",
+            "answer": "<p>Subscribe &amp; Save delivers ellura automatically on a schedule that matches your pack, so you never run out. You save 10% on every delivery and shipping is free. <a href=\"/pages/subscribe\">See how it works</a>.</p>"
+          }
+        },
+        "ellura_faq_page_42": {
+          "type": "question",
+          "settings": {
+            "question": "How do I manage or cancel my subscription?",
+            "answer": "<p>Sign in to <a href=\"/account\">My Account</a> and open Subscriptions to change the schedule, skip a delivery, pause or cancel at any time — or contact <a href=\"/pages/contact\">customer care</a>.</p>"
+          }
+        },
+        "ellura_faq_page_43": {
+          "type": "question",
+          "settings": {
+            "question": "Can I pause or skip a delivery?",
+            "answer": "<p>Yes. You can skip or pause from your account before your next billing date.</p>"
+          }
+        },
+        "ellura_faq_page_44": {
+          "type": "category",
+          "settings": {
+            "title": "Returns & refunds"
+          }
+        },
+        "ellura_faq_page_45": {
+          "type": "question",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>Unopened, sealed bottles can be returned under our <a href=\"/policies/refund-policy\">Returns, Refunds &amp; Cancellation</a> policy. Opened or expired products cannot be returned. <em>[India return window — to be confirmed]</em></p>"
+          }
+        },
+        "ellura_faq_page_46": {
+          "type": "category",
+          "settings": {
+            "title": "Support"
+          }
+        },
+        "ellura_faq_page_47": {
+          "type": "question",
+          "settings": {
+            "question": "How can I contact customer care?",
+            "answer": "<p>Email hello@ellurautihealth.com or use the form on <a href=\"/pages/contact\">Help &amp; Support</a>. <em>[India phone, WhatsApp and hours — to be confirmed]</em></p>"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_faq_page_01",
+        "ellura_faq_page_02",
+        "ellura_faq_page_03",
+        "ellura_faq_page_04",
+        "ellura_faq_page_05",
+        "ellura_faq_page_06",
+        "ellura_faq_page_07",
+        "ellura_faq_page_08",
+        "ellura_faq_page_09",
+        "ellura_faq_page_10",
+        "ellura_faq_page_11",
+        "ellura_faq_page_12",
+        "ellura_faq_page_13",
+        "ellura_faq_page_14",
+        "ellura_faq_page_15",
+        "ellura_faq_page_16",
+        "ellura_faq_page_17",
+        "ellura_faq_page_18",
+        "ellura_faq_page_19",
+        "ellura_faq_page_20",
+        "ellura_faq_page_21",
+        "ellura_faq_page_22",
+        "ellura_faq_page_23",
+        "ellura_faq_page_24",
+        "ellura_faq_page_25",
+        "ellura_faq_page_26",
+        "ellura_faq_page_27",
+        "ellura_faq_page_28",
+        "ellura_faq_page_29",
+        "ellura_faq_page_30",
+        "ellura_faq_page_31",
+        "ellura_faq_page_32",
+        "ellura_faq_page_33",
+        "ellura_faq_page_34",
+        "ellura_faq_page_35",
+        "ellura_faq_page_36",
+        "ellura_faq_page_37",
+        "ellura_faq_page_38",
+        "ellura_faq_page_39",
+        "ellura_faq_page_40",
+        "ellura_faq_page_41",
+        "ellura_faq_page_42",
+        "ellura_faq_page_43",
+        "ellura_faq_page_44",
+        "ellura_faq_page_45",
+        "ellura_faq_page_46",
+        "ellura_faq_page_47"
+      ],
+      "settings": {
+        "contact_link": "/pages/contact"
+      }
+    }
+  },
+  "order": [
+    "faq"
+  ]
+}

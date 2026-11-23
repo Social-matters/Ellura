@@ -1,0 +1,22 @@
+{% doc %}
+  Renders a five-star rating with partial fills (reference `stars`).
+
+  @param {number} value - Rating from 0 to 5, decimals allowed
+  @param {number} [px] - Star size in px (default 16)
+  @param {string} [label] - Accessible label (default "<value> out of 5 stars")
+
+  @example
+  {% render 'ellura-stars', value: 4.9, px: 18 %}
+{% enddoc %}
+{%- assign star_size = px | default: 16 -%}
+{%- assign star_label = label -%}
+{%- if star_label == blank -%}{%- assign star_label = value | append: ' out of 5 stars' -%}{%- endif -%}
+<span class="stars" role="img" aria-label="{{ star_label | escape }}">
+  {%- for i in (1..5) -%}
+    {%- assign fill = value | minus: i | plus: 1 | at_least: 0 | at_most: 1 | times: 100 -%}
+    <span class="stars__star" style="width: {{ star_size }}px; height: {{ star_size }}px;">
+      {% render 'ellura-icon', name: 'star', px: star_size, class: 'stars__bg' %}
+      <span class="stars__fill" style="width: {{ fill }}%;">{% render 'ellura-icon', name: 'star', px: star_size %}</span>
+    </span>
+  {%- endfor -%}
+</span>

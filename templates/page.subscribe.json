@@ -1,0 +1,142 @@
+/*
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "ellura-page-hero",
+      "settings": {
+        "tone": "dark",
+        "crumb_label": "Subscribe & Save",
+        "eyebrow": "Subscribe & Save",
+        "heading": "Never run out. <em>Save 10% every time.</em>",
+        "lead": "Urinary tract support works best as a daily habit. A subscription keeps ellura arriving on your schedule — with 10% off and free shipping on every delivery.",
+        "btn_label": "See plans",
+        "btn_link": "#plans",
+        "visual": "photo",
+        "preset": "life-morning"
+      }
+    },
+    "steps": {
+      "type": "ellura-icon-cards",
+      "blocks": {
+        "ellura_icon_cards_01": {
+          "type": "card",
+          "settings": {
+            "icon": "capsule",
+            "title": "Choose your pack",
+            "text": "Pick 30 or 90 capsules and select Subscribe & Save on the product page."
+          }
+        },
+        "ellura_icon_cards_02": {
+          "type": "card",
+          "settings": {
+            "icon": "truck",
+            "title": "We deliver on schedule",
+            "text": "Your next bottle arrives as the last one runs out — every month for 30 capsules, every three months for 90."
+          }
+        },
+        "ellura_icon_cards_03": {
+          "type": "card",
+          "settings": {
+            "icon": "repeat",
+            "title": "Save on every delivery",
+            "text": "10% off every shipment and free shipping, for as long as you stay subscribed."
+          }
+        },
+        "ellura_icon_cards_04": {
+          "type": "card",
+          "settings": {
+            "icon": "pause",
+            "title": "Stay in control",
+            "text": "Skip a delivery, pause, change your schedule or cancel anytime from your account."
+          }
+        }
+      },
+      "block_order": [
+        "ellura_icon_cards_01",
+        "ellura_icon_cards_02",
+        "ellura_icon_cards_03",
+        "ellura_icon_cards_04"
+      ],
+      "settings": {
+        "style": "steps",
+        "eyebrow": "How it works",
+        "heading": "Four steps. <em>Zero effort.</em>"
+      }
+    },
+    "plans": {
+      "type": "ellura-plans",
+      "settings": {}
+    },
+    "manage": {
+      "type": "ellura-split",
+      "settings": {
+        "layout": "media_right",
+        "visual": "card",
+        "size": "d3",
+        "eyebrow": "Manage or cancel",
+        "heading": "You’re always <em>in control.</em>",
+        "body": "<p>Sign in to <a href=\"/account\">My Account</a> and open <strong>Subscriptions</strong> to change your delivery schedule, skip a shipment, pause or cancel. Prefer to talk to someone? <a href=\"/pages/contact\">Contact customer care</a> and we’ll do it for you.</p>",
+        "card_heading": "Subscription terms in brief",
+        "card_body": "<ul><li>Your subscription renews automatically at the delivery frequency you choose, until you modify or cancel it before the next billing date.</li><li>The discount applies to each automatic shipment of eligible 30- and 90-capsule packs.</li><li>You can manage, skip or cancel anytime through your account or by contacting customer care.</li><li>Subscription offers can’t be combined with other discounts or promotions unless stated.</li><li>Pharmatoka reserves the right to modify or cancel this offer at any time.</li></ul>",
+        "card_note": "Full terms: <a href=\"/pages/offer-terms\">Offers & Promotions Terms</a>."
+      }
+    },
+    "faq": {
+      "type": "ellura-faq",
+      "blocks": {
+        "ellura_faq_01": {
+          "type": "question",
+          "settings": {
+            "question": "What is Subscribe & Save?",
+            "answer": "<p>Subscribe &amp; Save delivers ellura automatically on a schedule that matches your pack, so you never run out. You save 10% on every delivery and shipping is free. <a href=\"/pages/subscribe\">See how it works</a>.</p>"
+          }
+        },
+        "ellura_faq_02": {
+          "type": "question",
+          "settings": {
+            "question": "How do I manage or cancel my subscription?",
+            "answer": "<p>Sign in to <a href=\"/account\">My Account</a> and open Subscriptions to change the schedule, skip a delivery, pause or cancel at any time — or contact <a href=\"/pages/contact\">customer care</a>.</p>"
+          }
+        },
+        "ellura_faq_03": {
+          "type": "question",
+          "settings": {
+            "question": "Can I pause or skip a delivery?",
+            "answer": "<p>Yes. You can skip or pause from your account before your next billing date.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_faq_01",
+        "ellura_faq_02",
+        "ellura_faq_03"
+      ],
+      "settings": {
+        "heading": "Subscription FAQs",
+        "lead": "",
+        "contact_btn_url": "/pages/contact",
+        "group_title": "Subscribe & Save",
+        "first_open": false,
+        "see_all_url": "/pages/faq"
+      }
+    },
+    "cta": {
+      "type": "ellura-cta-band",
+      "settings": {
+        "btn_link": "/collections/all",
+        "btn2_link": "/pages/subscribe"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "steps",
+    "plans",
+    "manage",
+    "faq",
+    "cta"
+  ]
+}

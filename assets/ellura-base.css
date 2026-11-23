@@ -85,3 +85,14 @@ body,
 .usin__story {
   min-width: 0 !important;
 }
+
+/*
+  Horizon's base.css turns .section into a full-width three-column grid. ellura markup reuses
+  the class name with the reference meaning: a block with vertical padding. Without this reset,
+  inset cards (.section.on-dark, .sec-card) overflow by their side margins and wide children
+  such as tables stretch the grid track on narrow screens.
+*/
+[class*='section-ellura-'] .section {
+  display: block;
+  width: auto;
+}

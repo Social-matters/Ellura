@@ -1,0 +1,44 @@
+{% comment %}
+  Section contract.
+  ellura-glossary renders a grid of term and definition pairs (reference Science "A glossary
+  of cranberry science").
+  @example
+  <!-- Science page -->
+{% endcomment %}
+{%- assign title_id = 'glossary-title-' | append: section.id -%}
+<div class="section" id="glossary-{{ section.id }}" aria-labelledby="{{ title_id }}">
+  <div class="wrap">
+    {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, title_id: title_id %}
+    <dl class="glossary glossary--grid" data-stagger>
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          <dt>{{ block.settings.term | escape }}</dt>
+          <dd>{{ block.settings.definition }}</dd>
+        </div>
+      {%- endfor -%}
+    </dl>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Glossary",
+  "tag": "section",
+  "class": "section-ellura-glossary",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Scientific guide" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "A glossary of <em>cranberry science.</em>" }
+  ],
+  "blocks": [
+    {
+      "type": "term",
+      "name": "Term",
+      "settings": [
+        { "type": "text", "id": "term", "label": "Term", "default": "Proanthocyanidins (PACs)" },
+        { "type": "inline_richtext", "id": "definition", "label": "Definition", "default": "Naturally occurring polyphenol compounds in cranberry fruit." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Glossary", "category": "ellura", "blocks": [{ "type": "term" }, { "type": "term" }] }]
+}
+{% endschema %}

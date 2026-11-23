@@ -1,0 +1,83 @@
+{% comment %}
+  Section contract.
+  ellura-studies renders plain-language study summary cards (reference Science "What the
+  research examined"). On desktop the cards rise and straighten in a staggered entrance.
+  @example
+  <!-- Science page -->
+{% endcomment %}
+{%- assign title_id = 'studies-title-' | append: section.id -%}
+<div class="section tone-bone sec-card" id="studies-{{ section.id }}" aria-labelledby="{{ title_id }}">
+  <div class="wrap">
+    {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, lead: section.settings.lead, title_id: title_id %}
+    <ul class="studies" role="list">
+      {%- for block in section.blocks -%}
+        <li class="study" {{ block.shopify_attributes }}>
+          <div class="study__top">
+            <span class="chip chip--lilac">{{ block.settings.tag | escape }}</span>
+            <span class="t-mono muted">{{ block.settings.year | escape }}</span>
+          </div>
+          <h3 class="t-h4">{{ block.settings.title | escape }}</h3>
+          <p class="muted">{{ block.settings.body }}</p>
+          <p class="study__src t-xs">
+            <i>{{ block.settings.journal | escape }}</i>
+            {%- if block.settings.ref != blank -%}
+              <sup class="ref"><a href="#ref-{{ block.settings.ref }}">{{ block.settings.ref }}</a></sup>
+            {%- endif -%}
+          </p>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+<script>
+  (function () {
+    function initStudies() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      var root = document.getElementById('studies-{{ section.id }}');
+      if (!root) return;
+      if (root._studiesMM) root._studiesMM.revert();
+      var mm = gsap.matchMedia();
+      root._studiesMM = mm;
+      mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', function () {
+        gsap.fromTo(root.querySelectorAll('.study'),
+          { y: function (i) { return 60 + i * 10; }, rotate: function (i) { return i % 2 ? 2 : -2; }, opacity: 0 },
+          { y: 0, rotate: 0, opacity: 1, stagger: 0.08, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: root.querySelector('.studies'), start: 'top 80%', once: true } }
+        );
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initStudies);
+    else initStudies();
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}') initStudies();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Study summaries",
+  "tag": "section",
+  "class": "section-ellura-studies",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Study summaries" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What the research <em>examined.</em>" },
+    { "type": "inline_richtext", "id": "lead", "label": "Lead text", "default": "Short, plain-language summaries of key published studies on cranberry PACs. They describe the research itself — they are not claims about ellura." }
+  ],
+  "blocks": [
+    {
+      "type": "study",
+      "name": "Study",
+      "settings": [
+        { "type": "text", "id": "tag", "label": "Study type", "default": "Human study" },
+        { "type": "text", "id": "year", "label": "Year", "default": "2010" },
+        { "type": "text", "id": "title", "label": "Title", "default": "PAC dose and urinary anti-adhesion activity" },
+        { "type": "inline_richtext", "id": "body", "label": "Summary", "default": "A multicentre, randomised, double-blind study measuring anti-adhesion activity in urine." },
+        { "type": "text", "id": "journal", "label": "Journal", "default": "BMC Infectious Diseases" },
+        { "type": "text", "id": "ref", "label": "Reference number", "info": "Links to the matching entry in the References section." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Study summaries", "category": "ellura", "blocks": [{ "type": "study" }, { "type": "study" }, { "type": "study" }] }]
+}
+{% endschema %}

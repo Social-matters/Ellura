@@ -1,0 +1,180 @@
+{% comment %}
+  Section contract.
+  ellura-icon-cards renders a list of icon cards in one of the reference patterns: "how to take"
+  cards, compact policy cards, contact channels, numbered subscription steps with a progress line,
+  or the numbered everyday-habits grid. Cards stagger in on scroll.
+  @example
+  <!-- How it works "How to take ellura", Subscribe "Four steps", Support channels, Learn habits -->
+{% endcomment %}
+{%- liquid
+  case section.settings.tone
+    when 'bone'
+      assign tone_class = 'tone-bone'
+    when 'lilac'
+      assign tone_class = 'tone-lilac'
+    when 'dark'
+      assign tone_class = 'on-dark'
+    else
+      assign tone_class = ''
+  endcase
+  assign style = section.settings.style
+  assign title_id = 'cards-title-' | append: section.id
+-%}
+<div class="section{% if style == 'compact' or style == 'channels' %} section--tight{% endif %} {{ tone_class }}" id="cards-{{ section.id }}"{% if section.settings.heading != blank %} aria-labelledby="{{ title_id }}"{% endif %}>
+  <div class="wrap">
+    {%- if section.settings.heading != blank -%}
+      {%- if style == 'compact' -%}
+        <h2 id="{{ title_id }}" class="t-h4" style="margin-bottom: 20px;">{{ section.settings.heading }}</h2>
+      {%- else -%}
+        {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, lead: section.settings.lead, title_id: title_id %}
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- case style -%}
+      {%- when 'steps' -%}
+        <div class="sub-steps" style="margin-top: 48px;">
+          <div class="sub-steps__line" aria-hidden="true"><i></i></div>
+          <ol role="list" class="sub-steps__list" data-stagger>
+            {%- for block in section.blocks -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="sub-steps__icon">{% render 'ellura-icon', name: block.settings.icon, px: 26 %}</span>
+                <span class="t-mono muted">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                <h3 class="t-h4">{{ block.settings.title | escape }}</h3>
+                <p class="muted">{{ block.settings.text }}</p>
+              </li>
+            {%- endfor -%}
+          </ol>
+        </div>
+      {%- when 'habits' -%}
+        <ol class="habit-grid" role="list" data-stagger>
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="t-mono">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              <strong>{{ block.settings.title | escape }}</strong>
+              <span class="muted t-sm">{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ol>
+      {%- when 'channels' -%}
+        <ul class="channels" role="list" data-stagger>
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              {% render 'ellura-icon', name: block.settings.icon, px: 28 %}
+              <h2 class="t-h4">{{ block.settings.title | escape }}</h2>
+              {%- if block.settings.link_label != blank -%}
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}" class="link">{{ block.settings.link_label | escape }}</a>
+                {%- else -%}
+                  <span>{{ block.settings.link_label | escape }}</span>
+                {%- endif -%}
+              {%- endif -%}
+              <span class="t-xs muted">{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- when 'compact' -%}
+        <ul class="howto howto--compact" role="list" data-stagger>
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              {% render 'ellura-icon', name: block.settings.icon, px: 24 %}
+              <strong>{{ block.settings.title | escape }}</strong>
+              <p class="muted t-sm">{{ block.settings.text }}</p>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <ol class="howto" role="list" data-stagger>
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              {% render 'ellura-icon', name: block.settings.icon, px: 28 %}
+              <h3 class="t-h4">{{ block.settings.title | escape }}</h3>
+              <p class="muted">{{ block.settings.text }}</p>
+            </li>
+          {%- endfor -%}
+        </ol>
+    {%- endcase -%}
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="t-xs muted" style="margin-top: 20px;">{{ section.settings.footnote }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if style == 'steps' -%}
+  <script>
+    (function () {
+      function initSteps() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+        var root = document.getElementById('cards-{{ section.id }}');
+        if (!root) return;
+        if (root._stepsMM) root._stepsMM.revert();
+        var mm = gsap.matchMedia();
+        root._stepsMM = mm;
+        mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', function () {
+          gsap.fromTo(root.querySelector('.sub-steps__line i'), { scaleX: 0 }, {
+            scaleX: 1,
+            ease: 'none',
+            scrollTrigger: { trigger: root.querySelector('.sub-steps'), start: 'top 75%', end: 'bottom 55%', scrub: true }
+          });
+        });
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSteps);
+      else initSteps();
+      document.addEventListener('shopify:section:load', function (e) {
+        if (e.target.id === 'shopify-section-{{ section.id }}') initSteps();
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Icon cards",
+  "tag": "section",
+  "class": "section-ellura-icon-cards",
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        { "value": "howto", "label": "Cards" },
+        { "value": "compact", "label": "Compact cards" },
+        { "value": "channels", "label": "Contact channels" },
+        { "value": "steps", "label": "Numbered steps with line" },
+        { "value": "habits", "label": "Numbered habit grid" }
+      ],
+      "default": "howto"
+    },
+    { "type": "select", "id": "tone", "label": "Background", "options": [{"value": "none", "label": "Page background"}, {"value": "bone", "label": "Bone"}, {"value": "lilac", "label": "Lilac"}, {"value": "dark", "label": "Plum (dark)"}], "default": "none" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Daily use" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "How to take <em>ellura</em>" },
+    { "type": "inline_richtext", "id": "lead", "label": "Lead text" },
+    { "type": "inline_richtext", "id": "footnote", "label": "Footnote" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{"value": "capsule", "label": "Capsule"}, {"value": "drop", "label": "Drop"}, {"value": "leaf", "label": "Leaf"}, {"value": "wheat", "label": "Wheat"}, {"value": "dna", "label": "Dna"}, {"value": "cube", "label": "Cube"}, {"value": "flask", "label": "Flask"}, {"value": "shield", "label": "Shield"}, {"value": "check", "label": "Check"}, {"value": "info", "label": "Info"}, {"value": "bolt", "label": "Bolt"}, {"value": "repeat", "label": "Repeat"}, {"value": "pause", "label": "Pause"}, {"value": "truck", "label": "Truck"}, {"value": "box", "label": "Box"}, {"value": "bag", "label": "Bag"}, {"value": "store", "label": "Store"}, {"value": "gift", "label": "Gift"}, {"value": "pin", "label": "Pin"}, {"value": "mail", "label": "Mail"}, {"value": "phone", "label": "Phone"}, {"value": "chat", "label": "Chat"}, {"value": "lock", "label": "Lock"}, {"value": "user", "label": "User"}, {"value": "star", "label": "Star"}, {"value": "search", "label": "Search"}, {"value": "arrow", "label": "Arrow"}], "default": "capsule" },
+        { "type": "text", "id": "title", "label": "Title", "default": "One capsule, daily" },
+        { "type": "inline_richtext", "id": "text", "label": "Text", "default": "Take one capsule with water at the same time each day." },
+        { "type": "text", "id": "link_label", "label": "Contact value or link label", "info": "Contact channels only, e.g. an email address." },
+        { "type": "url", "id": "link", "label": "Link", "info": "Contact channels only." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon cards",
+      "category": "ellura",
+      "blocks": [
+        { "type": "card", "settings": { "icon": "capsule", "title": "One capsule, daily", "text": "Take one capsule with water at the same time each day." } },
+        { "type": "card", "settings": { "icon": "bolt", "title": "Extra support when needed", "text": "During travel or stress, take two capsules as needed, then return to one daily." } },
+        { "type": "card", "settings": { "icon": "drop", "title": "Trouble swallowing?", "text": "Open the capsule into yoghurt, a fruit purée or a sweet drink — the powder is naturally bitter." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

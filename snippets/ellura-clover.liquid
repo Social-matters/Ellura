@@ -1,0 +1,16 @@
+{% doc %}
+  Renders the decorative ellura four-leaf clover mark (reference `clover`).
+
+  @param {string} [class] - Extra class names, e.g. 'phero__clover'
+  @param {boolean} [outline] - Stroke instead of fill
+
+  @example
+  {% render 'ellura-clover', class: 'phero__clover' %}
+{% enddoc %}
+{%- assign leaf = 'M50 49.5C45.5 43 32 36.5 31.2 24.5 30.6 15.6 36.6 9 43.2 9c3.6 0 5.8 2 6.8 4.2C51 11 53.2 9 56.8 9c6.6 0 12.6 6.6 12 15.5C68 36.5 54.5 43 50 49.5Z' -%}
+<svg viewBox="0 0 100 100" class="clover {{ class }}" aria-hidden="true" focusable="false">
+  {%- for angle in (0..3) -%}
+    {%- assign deg = angle | times: 90 -%}
+    <path d="{{ leaf }}" transform="rotate({{ deg }} 50 50)"{% if outline %} fill="none" stroke="currentColor" stroke-width="2"{% else %} fill="currentColor"{% endif %}/>
+  {%- endfor -%}
+</svg>

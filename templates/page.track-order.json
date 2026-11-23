@@ -1,0 +1,26 @@
+/*
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "ellura-page-hero",
+      "settings": {
+        "crumb_label": "Track your order",
+        "eyebrow": "Order status",
+        "heading": "Where’s my <em>ellura?</em>",
+        "lead": "Enter your order number and the email you used at checkout.",
+        "visual": "none"
+      }
+    },
+    "track": {
+      "type": "ellura-track-order",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "track"
+  ]
+}

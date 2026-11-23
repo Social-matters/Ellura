@@ -1,0 +1,135 @@
+/*
+ * ellura page template generated from the reference site (ellura-v2).
+ * Edit content in the theme editor; IDs are stable for saved settings.
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "ellura-page-hero",
+      "settings": {
+        "crumb_label": "Our Story",
+        "eyebrow": "Our story",
+        "heading": "Born from a berry. <em>Built on two decades of science.</em>",
+        "lead": "ellura began with a simple conviction at Pharmatoka: if cranberry was going to help women, it had to be measured, consistent and backed by research. Twenty years on, that conviction arrives in India.",
+        "visual": "photo",
+        "preset": "berries-frost"
+      }
+    },
+    "heritage": {
+      "type": "ellura-split",
+      "settings": {
+        "layout": "columns",
+        "eyebrow": "Heritage",
+        "heading": "French roots. <em>American trust.</em>",
+        "body": "<p>Pharmatoka is a French company that researches, develops and produces botanical supplements for urogenital health. In 2004 it began developing a concentrated cranberry fruit-juice extract — the work that became ellura two years later.</p><p>Since then ellura has been studied in clinical and scientific research, recognised with herbal-medicine approvals in 22 countries**, and recommended by healthcare professionals in the United States, where it has supported women’s urinary tract health for more than 20 years.</p>"
+      }
+    },
+    "timeline": {
+      "type": "ellura-timeline",
+      "blocks": {
+        "ellura_timeline_01": {
+          "type": "moment",
+          "settings": {
+            "year": "2004",
+            "title": "The extract begins",
+            "body": "Pharmatoka, a French company focused on botanical urogenital health, begins developing a concentrated cranberry fruit-juice extract.",
+            "preset": "cranberry-bog"
+          }
+        },
+        "ellura_timeline_02": {
+          "type": "moment",
+          "settings": {
+            "year": "2006",
+            "title": "ellura is born",
+            "body": "Two years later the extract becomes ellura — built around a measured dose of soluble, bioactive A-type PACs. In Europe it is known as urell®.",
+            "preset": "berries-frost"
+          }
+        },
+        "ellura_timeline_03": {
+          "type": "moment",
+          "settings": {
+            "year": "2018",
+            "title": "Recognised for research",
+            "body": "Pharmatoka receives the American Botanical Council’s Varro E. Tyler Commercial Investment in Phytomedicinal Research Award (2017 award, presented March 2018).",
+            "preset": "lab-pipette"
+          }
+        },
+        "ellura_timeline_04": {
+          "type": "moment",
+          "settings": {
+            "year": "US",
+            "title": "Two decades of trust",
+            "body": "Sold in the United States by Pharmatoka Inc. (Atlanta, GA), ellura is recommended by healthcare professionals and trusted by thousands of women.",
+            "preset": "atlanta"
+          }
+        },
+        "ellura_timeline_05": {
+          "type": "moment",
+          "settings": {
+            "year": "2026",
+            "title": "Now in India",
+            "body": "ellura arrives in India, bringing more than 20 years of cranberry research to women here.",
+            "preset": "india"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_timeline_01",
+        "ellura_timeline_02",
+        "ellura_timeline_03",
+        "ellura_timeline_04",
+        "ellura_timeline_05"
+      ],
+      "settings": {}
+    },
+    "field": {
+      "type": "ellura-split",
+      "blocks": {
+        "ellura_split_01": {
+          "type": "steps",
+          "settings": {
+            "steps": "Cranberry fruit rich in PACs\nJuice concentrated — not pomace\nGikacran® extract, standardised by DMAC/A2\nOne 36 mg PAC capsule, made under GMP"
+          }
+        }
+      },
+      "block_order": [
+        "ellura_split_01"
+      ],
+      "settings": {
+        "layout": "media_left",
+        "visual": "arch",
+        "preset": "cranberry-plant",
+        "eyebrow": "From field to capsule",
+        "heading": "We control <em>every step.</em>",
+        "body": "<p>At Pharmatoka, we control every step of production — from selecting the finest cranberry fruit, naturally rich in PACs, to crafting our proprietary Gikacran® cranberry extract. This rigorous process ensures that every capsule of ellura delivers the clinically backed 36 mg of soluble, bioactive A-type PACs that makes it unique in quality and composition.</p>"
+      }
+    },
+    "india": {
+      "type": "ellura-split",
+      "settings": {
+        "tone": "dark",
+        "layout": "media_right",
+        "visual": "wide",
+        "preset": "life-sari-golden",
+        "eyebrow": "Now in India",
+        "heading": "The same science, <em>closer to home.</em>",
+        "body": "<p>Urinary tract health is a conversation many women in India still have quietly. ellura arrives to make it easier — with honest information, a simple daily routine and a formula grounded in more than 20 years of cranberry research.</p>"
+      }
+    },
+    "cta": {
+      "type": "ellura-cta-band",
+      "settings": {
+        "btn_link": "/collections/all",
+        "btn2_link": "/pages/subscribe"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "heritage",
+    "timeline",
+    "field",
+    "india",
+    "cta"
+  ]
+}

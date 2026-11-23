@@ -1,0 +1,103 @@
+{% comment %}
+  Section contract.
+  ellura-doctor renders the urologist endorsement either as the full plum card with portrait
+  (reference Science) or as a narrow quote figure (reference Reviews "Recommended by urologists").
+  @example
+  <!-- Science and Reviews pages -->
+{% endcomment %}
+{%- assign title_id = 'doctor-title-' | append: section.id -%}
+{%- if section.settings.style == 'quote' -%}
+  <div class="section tone-bone" id="doctor-{{ section.id }}" aria-labelledby="{{ title_id }}">
+    <div class="wrap wrap--narrow stack-lg">
+      {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, title_id: title_id %}
+      <figure class="pro-quote" data-fade>
+        <blockquote><p>“{{ section.settings.quote }}”</p></blockquote>
+        <figcaption>
+          <strong>{{ section.settings.name | escape }}</strong> — {{ section.settings.role | escape }}, {{ section.settings.org | escape }}.
+          <span class="t-mono">{{ section.settings.disclosure | escape }}</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+{%- else -%}
+  <div class="section section--tight" id="doctor-{{ section.id }}">
+    <div class="wrap">
+      <div class="doctor">
+        <div class="doctor__body">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          <blockquote class="doctor__quote"><p id="{{ title_id }}">“{{ section.settings.quote }}”</p></blockquote>
+        </div>
+        <figure class="doctor__portrait">
+          {%- if section.settings.image != blank -%}
+            {{ section.settings.image | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', sizes: '(max-width: 900px) 90vw, 36vw', alt: section.settings.name, loading: 'lazy' }}
+          {%- else -%}
+            <img src="{{ 'dr-chughtai-700.webp' | asset_url }}" alt="{{ section.settings.name | escape }}" width="700" height="570" loading="lazy">
+          {%- endif -%}
+          <figcaption class="doctor__plate">
+            <strong>{{ section.settings.name | escape }}</strong>
+            <span>{{ section.settings.role | escape }}<br>{{ section.settings.org | escape }}</span>
+            <em>{{ section.settings.disclosure | escape }}</em>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      function initDoctor() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+        var root = document.getElementById('doctor-{{ section.id }}');
+        if (!root) return;
+        if (root._doctorMM) root._doctorMM.revert();
+        var mm = gsap.matchMedia();
+        root._doctorMM = mm;
+        mm.add('(prefers-reduced-motion: no-preference)', function () {
+          var quote = root.querySelector('.doctor__quote');
+          if (quote && typeof SplitText !== 'undefined') {
+            var split = SplitText.create(quote, { type: 'words' });
+            gsap.fromTo(split.words, { opacity: 0.2 }, { opacity: 1, stagger: 0.04, ease: 'none', scrollTrigger: { trigger: quote, start: 'top 80%', end: 'bottom 55%', scrub: 0.5 } });
+          }
+          gsap.fromTo(root.querySelector('.doctor__portrait img'), { yPercent: -4, scale: 1.08 }, { yPercent: 4, ease: 'none', scrollTrigger: { trigger: root.querySelector('.doctor'), start: 'top bottom', end: 'bottom top', scrub: true } });
+          gsap.fromTo(root.querySelector('.doctor__plate'), { y: 30, rotate: 4, opacity: 0 }, { y: 0, rotate: -2, opacity: 1, duration: 1, ease: 'back.out(1.6)', scrollTrigger: { trigger: root.querySelector('.doctor'), start: 'top 60%', once: true } });
+        });
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDoctor);
+      else initDoctor();
+      document.addEventListener('shopify:section:load', function (e) {
+        if (e.target.id === 'shopify-section-{{ section.id }}') initDoctor();
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Doctor endorsement",
+  "tag": "section",
+  "class": "section-ellura-doctor",
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        { "value": "card", "label": "Portrait card" },
+        { "value": "quote", "label": "Quote" }
+      ],
+      "default": "card"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Recommended by urologists" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Recommended <em>by urologists.</em>", "visible_if": "{{ section.settings.style == 'quote' }}" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "As a physician, I value products grounded in solid scientific evidence. ellura is built on more than 20 years of cranberry research and uses a standardized extract rich in soluble proanthocyanidins (PACs). ellura is unique in that it uses only pure cranberry juice extract, to deliver soluble PACs, the compounds studied for their role in supporting urinary tract health. Having a formulation developed with a high level of scientific rigor provides confidence in its quality and consistency." },
+    { "type": "text", "id": "name", "label": "Name", "default": "Bilal Chughtai, MD" },
+    { "type": "text", "id": "role", "label": "Role", "default": "Urogynecology & Reconstructive Pelvic Surgery" },
+    { "type": "text", "id": "org", "label": "Organisation", "default": "Chief of Urology, Plainview Hospital, NY" },
+    { "type": "text", "id": "disclosure", "label": "Disclosure", "default": "Compensated Medical Advisor for ellura®" },
+    { "type": "image_picker", "id": "image", "label": "Portrait", "visible_if": "{{ section.settings.style == 'card' }}" }
+  ],
+  "presets": [{ "name": "Doctor endorsement", "category": "ellura" }]
+}
+{% endschema %}

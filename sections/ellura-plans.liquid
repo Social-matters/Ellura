@@ -1,0 +1,89 @@
+{% comment %}
+  Section contract.
+  ellura-plans renders subscription plan cards (reference Subscribe "Pick your delivery rhythm").
+  Each selected product shows its first selling plan: delivery frequency, subscription price
+  against the one-time price, perks and a Subscribe button that adds it with that plan.
+  Products without a selling plan link to their product page instead.
+  @example
+  <!-- page.subscribe template -->
+{% endcomment %}
+{%- liquid
+  assign perks = section.settings.perks | newline_to_br | split: '<br />'
+  assign title_id = 'plans-title-' | append: section.id
+-%}
+<div id="plans" class="section tone-bone" aria-labelledby="{{ title_id }}">
+  <div class="wrap">
+    {% render 'ellura-section-head', eyebrow: section.settings.eyebrow, title: section.settings.heading, title_id: title_id %}
+    <ul class="plans" role="list" data-stagger>
+      {%- for product in section.settings.products -%}
+        {%- liquid
+          assign variant = product.selected_or_first_available_variant
+          assign allocation = variant.selling_plan_allocations.first
+        -%}
+        <li class="plan">
+          {%- if product.featured_image -%}
+            {{ product.featured_image | image_url: width: 700 | image_tag: alt: '', width: 700, height: 700, loading: 'lazy' }}
+          {%- endif -%}
+          <div class="plan__body">
+            {%- if allocation -%}
+              <p class="t-mono muted">{{ allocation.selling_plan.name | escape }}</p>
+            {%- endif -%}
+            <h3 class="t-d3">{{ product.title | escape }}</h3>
+            {%- if allocation -%}
+              {%- assign saving = allocation.compare_at_price | minus: allocation.price -%}
+              <p class="price price--md">
+                <span class="price__now">{{ allocation.price | money_without_trailing_zeros }}</span>
+                {%- if saving > 0 -%}
+                  <s class="price__was">{{ allocation.compare_at_price | money_without_trailing_zeros }}</s>
+                  <span class="chip chip--save">Save {{ saving | money_without_trailing_zeros }} per delivery</span>
+                {%- endif -%}
+              </p>
+            {%- elsif product.available -%}
+              <p class="price price--md"><span class="price__now">{{ variant.price | money_without_trailing_zeros }}</span></p>
+            {%- else -%}
+              <p class="price price--md price--tba"><span class="price__now">Price at launch</span></p>
+            {%- endif -%}
+            <ul role="list" class="plan__perks">
+              {%- for perk in perks -%}
+                {%- assign perk_text = perk | strip -%}
+                {%- if perk_text != blank -%}
+                  <li>{% render 'ellura-icon', name: 'check', px: 16 %} {{ perk_text | escape }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+            {%- if allocation and product.available -%}
+              {%- form 'product', product -%}
+                <input type="hidden" name="id" value="{{ variant.id }}">
+                <input type="hidden" name="selling_plan" value="{{ allocation.selling_plan.id }}">
+                <button type="submit" class="btn">{% render 'ellura-icon', name: 'repeat' %} Subscribe</button>
+              {%- endform -%}
+            {%- else -%}
+              <a href="{{ product.url }}" class="btn btn--ghost">{% if product.available %}View product{% else %}Notify me at launch{% endif %}</a>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- else -%}
+        <li class="plan"><div class="plan__body"><p class="muted">Choose subscription products in the theme editor.</p></div></li>
+      {%- endfor -%}
+    </ul>
+    {%- if section.settings.footnote != blank -%}
+      <p class="t-xs muted" style="margin-top: 18px;" data-fade>{{ section.settings.footnote }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Subscription plans",
+  "tag": "section",
+  "class": "section-ellura-plans",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Plans" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Pick your <em>delivery rhythm.</em>" },
+    { "type": "product_list", "id": "products", "label": "Subscription products", "limit": 4 },
+    { "type": "textarea", "id": "perks", "label": "Perks", "info": "One per line.", "default": "10% off every delivery\nFree shipping\nPause, skip or cancel anytime" },
+    { "type": "inline_richtext", "id": "footnote", "label": "Footnote", "default": "The 180-capsule bundle is a one-time purchase and is not available on subscription." }
+  ],
+  "presets": [{ "name": "Subscription plans", "category": "ellura" }]
+}
+{% endschema %}

@@ -2,18 +2,29 @@ const PAGE_WRAPPER_SELECTOR = '.page-wrapper';
 const SQUEEZE_QUERY = window.matchMedia('(min-width: 990px)');
 
 /**
- * Returns the current page scroll container.
- * In the squeeze layout (desktop ≥990px), `.page-wrapper` is the scroll container instead of
- * `document.scrollingElement`. On mobile, the document root scrolls natively so the address bar
- * can hide/show.
+ * Whether `.page-wrapper` is the page's scroll container.
+ * Horizon's squeeze layout (desktop ≥990px) scrolled `.page-wrapper`; this theme's base.css lets
+ * the document scroll at every width so window-based smooth scroll and ScrollTrigger work.
+ * Checking the computed overflow keeps this module correct for either layout.
+ *
+ * @returns {Element | null} The page wrapper when it scrolls, otherwise null
+ */
+function getScrollingPageWrapper() {
+  if (!SQUEEZE_QUERY.matches) return null;
+  const wrapper = document.querySelector(PAGE_WRAPPER_SELECTOR);
+  if (!wrapper) return null;
+  const { overflowY } = getComputedStyle(wrapper);
+  return overflowY === 'auto' || overflowY === 'scroll' ? wrapper : null;
+}
+
+/**
+ * Returns the current page scroll container: `.page-wrapper` when it scrolls (squeeze layout),
+ * otherwise the document root.
  *
  * @returns {Element} The scroll container element
  */
 function getScrollContainer() {
-  if (SQUEEZE_QUERY.matches) {
-    return document.querySelector(PAGE_WRAPPER_SELECTOR) ?? document.scrollingElement ?? document.documentElement;
-  }
-  return document.scrollingElement ?? document.documentElement;
+  return getScrollingPageWrapper() ?? document.scrollingElement ?? document.documentElement;
 }
 
 /**
@@ -52,13 +63,12 @@ function scrollTo(options) {
  * `pageshow` fires on every navigation (both bfcache and fresh loads). `popstate` is not
  * used because it doesn't fire for cross-document back navigation.
  */
-if (SQUEEZE_QUERY.matches) {
-  history.scrollRestoration = 'manual';
+function updateScrollRestoration() {
+  history.scrollRestoration = getScrollingPageWrapper() ? 'manual' : 'auto';
 }
 
-SQUEEZE_QUERY.addEventListener('change', () => {
-  history.scrollRestoration = SQUEEZE_QUERY.matches ? 'manual' : 'auto';
-});
+updateScrollRestoration();
+SQUEEZE_QUERY.addEventListener('change', updateScrollRestoration);
 
 /**
  * Saves the current scroll position into the current history entry.
@@ -129,10 +139,7 @@ window.addEventListener('popstate', () => {
  * @returns {EventTarget} The target to call addEventListener('scroll', ...) on
  */
 function getScrollEventTarget() {
-  if (SQUEEZE_QUERY.matches) {
-    return document.querySelector(PAGE_WRAPPER_SELECTOR) ?? document;
-  }
-  return document;
+  return getScrollingPageWrapper() ?? document;
 }
 
 /**
@@ -143,10 +150,7 @@ function getScrollEventTarget() {
  * @returns {Element | null} The root option for IntersectionObserver
  */
 function getIntersectionRoot() {
-  if (SQUEEZE_QUERY.matches) {
-    return document.querySelector(PAGE_WRAPPER_SELECTOR) ?? null;
-  }
-  return null;
+  return getScrollingPageWrapper();
 }
 
 export {

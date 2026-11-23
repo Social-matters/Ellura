@@ -183,6 +183,17 @@
   })();
 </script>
 
+{% stylesheet %}
+  /*
+    .packs__grid aligns items to the start, so the header column would only be as tall as its
+    text and .packs__sticky would have no room to stick. Stretching the column to the card
+    stack's height keeps the copy pinned while the cards scroll past.
+  */
+  .packs__head {
+    align-self: stretch;
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Product Pack Cards",

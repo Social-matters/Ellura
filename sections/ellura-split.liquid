@@ -94,7 +94,7 @@
             {% render 'ellura-photo', image: section.settings.image, preset: section.settings.preset, sizes: '(max-width: 900px) 100vw, 45vw', alt: '', width: 1200, height: 960 %}
           </div>
         {%- when 'chart' -%}
-          <div data-fade>{% render 'ellura-pac-chart' %}</div>
+          <div data-fade>{% render 'ellura-pac-chart', note: section.settings.chart_note %}</div>
         {%- when 'card' -%}
           <div class="card card--bone stack-sm" data-fade>
             {%- if section.settings.card_heading != blank -%}
@@ -169,6 +169,7 @@
     },
     { "type": "image_picker", "id": "image", "label": "Photo", "visible_if": "{{ section.settings.visual == 'arch' or section.settings.visual == 'wide' }}" },
     { "type": "select", "id": "preset", "label": "Bundled photo", "info": "Used when no photo is selected.", "options": [{"value": "", "label": "None"}, {"value": "cranberry-cut", "label": "Cranberry cut"}, {"value": "berries-frost", "label": "Berries frost"}, {"value": "berries-dark", "label": "Berries dark"}, {"value": "berry-branch", "label": "Berry branch"}, {"value": "cranberry-bog", "label": "Cranberry bog"}, {"value": "cranberry-plant", "label": "Cranberry plant"}, {"value": "lab-pipette", "label": "Lab pipette"}, {"value": "lab-scientist", "label": "Lab scientist"}, {"value": "lab-wells", "label": "Lab wells"}, {"value": "leaf-shadow", "label": "Leaf shadow"}, {"value": "leaf-shadow-2", "label": "Leaf shadow 2"}, {"value": "france", "label": "France"}, {"value": "india", "label": "India"}, {"value": "atlanta", "label": "Atlanta"}, {"value": "life-calm", "label": "Calm"}, {"value": "life-editorial", "label": "Editorial"}, {"value": "life-elder", "label": "Elder"}, {"value": "life-friends", "label": "Friends"}, {"value": "life-glass", "label": "Glass"}, {"value": "life-glass-2", "label": "Glass 2"}, {"value": "life-morning", "label": "Morning"}, {"value": "life-ritual", "label": "Ritual"}, {"value": "life-sari-golden", "label": "Sari golden"}, {"value": "life-sari-red", "label": "Sari red"}, {"value": "life-smile", "label": "Smile"}, {"value": "life-street", "label": "Street"}, {"value": "life-sunlight", "label": "Sunlight"}, {"value": "life-water-sprig", "label": "Water sprig"}], "default": "berries-frost", "visible_if": "{{ section.settings.visual == 'arch' or section.settings.visual == 'wide' }}" },
+    { "type": "inline_richtext", "id": "chart_note", "label": "Chart footnote", "info": "Leave empty for the default footnote.", "visible_if": "{{ section.settings.visual == 'chart' }}" },
     { "type": "text", "id": "card_heading", "label": "Card heading", "visible_if": "{{ section.settings.visual == 'card' }}" },
     { "type": "richtext", "id": "card_body", "label": "Card text", "visible_if": "{{ section.settings.visual == 'card' }}" },
     { "type": "inline_richtext", "id": "card_note", "label": "Card footnote", "visible_if": "{{ section.settings.visual == 'card' }}" }

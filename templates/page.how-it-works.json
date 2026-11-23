@@ -61,7 +61,7 @@
           "type": "step",
           "settings": {
             "step_number": "01",
-            "title": "Bacteria enter, attach, and multiply",
+            "title": "Bacteria enter, attach, and multiply¹⁷˒⁶˒³˒⁴",
             "description": "Bacteria migrate to the urinary tract, leading to disruption of urinary tract balance."
           }
         },
@@ -70,7 +70,7 @@
           "settings": {
             "step_number": "02",
             "title": "ellura may help reduce bacterial adhesion",
-            "description": "36 mg PACs in ellura may reduce certain bacteria from adhering to the bladder wall."
+            "description": "36 mg PACs in ellura may reduce certain bacteria from adhering to the bladder wall¹⁷˒³˒⁴."
           }
         },
         "ellura_how_it_works_block_3": {
@@ -105,7 +105,8 @@
         "visual": "chart",
         "eyebrow": "Soluble vs insoluble",
         "heading": "Not all cranberry <em>is equal.</em>",
-        "body": "<p>Many products claim to have PACs, but if sourced from insoluble cranberry pomace (seeds, stems, skin, pulp), they remain trapped in fibre and cannot be absorbed by the body⁶˒⁷.</p><p>A controlled human study found that supplements made from juice-derived, soluble PACs produced significantly higher urinary anti-adhesion activity than supplements made mainly from whole fruit or pomace⁶.</p>"
+        "body": "<p>Many products claim to have PACs, but if sourced from insoluble cranberry pomace (seeds, stems, skin, pulp), they remain trapped in fibre and cannot be absorbed by the body⁶˒⁷.</p><p>A controlled human study found that supplements made from juice-derived, soluble PACs produced significantly higher urinary anti-adhesion activity than supplements made mainly from whole fruit or pomace⁶.</p>",
+        "chart_note": "*Pomace is the pulp, seeds and skin of the berry. Source: Howell AB, et al. J Diet Suppl. 2022⁶."
       }
     },
     "how_to_take": {

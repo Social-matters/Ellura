@@ -98,13 +98,13 @@
   <div class="wrap reels__head">
     <div class="section-head">
       {% if section.settings.eyebrow != blank %}
-        <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        <p class="eyebrow" data-fade>{{ section.settings.eyebrow | escape }}</p>
       {% endif %}
-      <h2 id="reels-title-{{ section.id }}" class="t-d2 accent-em">
+      <h2 id="reels-title-{{ section.id }}" class="t-d2 accent-em" data-split>
         {{ section.settings.heading }}
       </h2>
       {% if section.settings.lead != blank %}
-        <p class="t-lead">{{ section.settings.lead | escape }}</p>
+        <p class="t-lead" data-fade data-delay="0.1">{{ section.settings.lead | escape }}</p>
       {% endif %}
     </div>
   </div>
@@ -214,17 +214,17 @@
       root.querySelectorAll('.reel__media img').forEach(function (img, idx) {
         gsap.fromTo(img,
           { scale: 1.02 },
-          { scale: 1.12, duration: 8 + (idx % 3), ease: 'sine.inOut', yoyo: true, repeat: -1 }
+          { scale: 1.14, duration: 9 + (idx % 3), ease: 'sine.inOut', yoyo: true, repeat: -1 }
         );
       });
 
       // Pause on hover, resume on leave
       function pauseReels() {
-        gsap.to(tween, { timeScale: 0, duration: 0.35, overwrite: 'auto' });
+        gsap.to(root._reelsTween, { timeScale: 0, duration: 0.6, ease: 'power2.out', overwrite: 'auto' });
       }
 
       function resumeReels() {
-        gsap.to(tween, { timeScale: 1, duration: 0.35, overwrite: 'auto' });
+        gsap.to(root._reelsTween, { timeScale: 1, duration: 0.6, ease: 'power2.out', overwrite: 'auto' });
       }
 
       viewport.addEventListener('mouseenter', pauseReels);
@@ -266,7 +266,8 @@
           start: 'top bottom',
           end: 'bottom top',
           onToggle: function (self) {
-            self.isActive ? tween.play() : tween.pause();
+            if (!root._reelsTween) return;
+            self.isActive ? root._reelsTween.play() : root._reelsTween.pause();
           }
         });
         root._reelsTrigger = trigger;

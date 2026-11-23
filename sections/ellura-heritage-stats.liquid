@@ -16,37 +16,30 @@
       <!-- Story Card with US to India Vector Map -->
       <div class="usin__story" style="background: {{ section.settings.story_bg }}; min-width: 0; max-width: 100%;">
         {% if section.settings.story_eyebrow != blank %}
-          <p class="eyebrow" data-gsap="fade-up">{{ section.settings.story_eyebrow | escape }}</p>
+          <p class="eyebrow" data-fade>{{ section.settings.story_eyebrow | escape }}</p>
         {% endif %}
 
-        <h2 id="usin-title-{{ section.id }}" class="t-d1" data-gsap="fade-up">
+        <h2 id="usin-title-{{ section.id }}" class="t-d1" data-split>
           {{ section.settings.story_heading }}
         </h2>
 
         {% if section.settings.story_lead != blank %}
-          <p class="t-lead" data-gsap="fade-up">{{ section.settings.story_lead }}</p>
+          <p class="t-lead" data-fade>{{ section.settings.story_lead }}</p>
         {% endif %}
 
-        <div class="usroute" data-gsap="fade-in" style="overflow: hidden; max-width: 100%;">
+        <div class="usroute" data-fade style="overflow: hidden; max-width: 100%;">
           {% render 'ellura-world-map' %}
         </div>
       </div>
 
       <!-- 2x2 Stats Grid -->
-      <div class="usin__stats" data-gsap="stagger" style="min-width: 0; max-width: 100%;">
+      <div class="usin__stats" data-stagger style="min-width: 0; max-width: 100%;">
         {% for block in section.blocks %}
           {% if block.type == 'stat' %}
             <div class="stat stat--{{ block.settings.color_theme }}" {{ block.shopify_attributes }}>
               <dt>{{ block.settings.label | escape }}</dt>
               <dd>
-                <span
-                  class="stat__val"
-                  data-gsap="counter"
-                  data-gsap-target="{{ block.settings.value }}"
-                  data-gsap-suffix="{{ block.settings.suffix | escape }}"
-                >
-                  {{ block.settings.value }}{{ block.settings.suffix }}
-                </span>
+                <span class="stat__val"><span data-count="{{ block.settings.value | escape }}">{{ block.settings.value | escape }}</span>{{ block.settings.suffix | escape }}</span>
                 {% if block.settings.subnote != blank %}
                   <small>{{ block.settings.subnote | escape }}</small>
                 {% endif %}
@@ -62,7 +55,7 @@
       <div class="doctor" style="background: {{ section.settings.doctor_bg }};">
         <div class="doctor__body">
           {% if section.settings.doctor_eyebrow != blank %}
-            <p class="eyebrow" data-gsap="fade-up">{{ section.settings.doctor_eyebrow | escape }}</p>
+            <p class="eyebrow" data-fade>{{ section.settings.doctor_eyebrow | escape }}</p>
           {% endif %}
 
           <div class="doctor__quote">
@@ -113,7 +106,9 @@
       var root = document.getElementById('usin-{{ section.id }}');
       if (!root) return;
 
+      if (root._heritageMM) root._heritageMM.revert();
       var mm = gsap.matchMedia();
+      root._heritageMM = mm;
       mm.add('(prefers-reduced-motion: no-preference)', function () {
         var routePath = root.querySelector('.usroute__path');
         var marker = root.querySelector('.usroute__marker');
@@ -151,17 +146,17 @@
           .fromTo(root.querySelector('.usroute__label--in'), { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.1 }, 0.88);
         }
 
-        // Doctor animations
+        // Doctor quote lights up word by word while scrolling
         var docQuote = root.querySelector('.doctor__quote');
-        if (docQuote) {
-          gsap.fromTo(docQuote,
-            { opacity: 0.3, y: 20 },
+        if (docQuote && typeof SplitText !== 'undefined') {
+          var quoteSplit = SplitText.create(docQuote, { type: 'words' });
+          gsap.fromTo(quoteSplit.words,
+            { opacity: 0.2 },
             {
               opacity: 1,
-              y: 0,
-              duration: 1,
-              ease: 'power2.out',
-              scrollTrigger: { trigger: docQuote, start: 'top 85%', once: true }
+              stagger: 0.04,
+              ease: 'none',
+              scrollTrigger: { trigger: docQuote, start: 'top 80%', end: 'bottom 55%', scrub: 0.5 }
             }
           );
         }
@@ -188,7 +183,7 @@
               opacity: 1,
               duration: 1,
               ease: 'back.out(1.6)',
-              scrollTrigger: { trigger: root.querySelector('.doctor'), start: 'top 65%', once: true }
+              scrollTrigger: { trigger: root.querySelector('.doctor'), start: 'top 60%', once: true }
             }
           );
         }

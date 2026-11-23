@@ -57,6 +57,9 @@
 
       var track = root.querySelector('.marquee__track');
       if (!track) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (root._marqueeTween) root._marqueeTween.kill();
+      if (root._marqueeTrigger) root._marqueeTrigger.kill();
 
       var halfWidth = track.scrollWidth / 2;
       var speed = {{ section.settings.speed | default: 60 }};
@@ -71,6 +74,7 @@
           repeat: -1
         }
       );
+      root._marqueeTween = tween;
 
       {% if section.settings.pause_on_hover %}
         root.addEventListener('mouseenter', function () {
@@ -83,14 +87,14 @@
 
       if (typeof ScrollTrigger !== 'undefined') {
         var dir = 1;
-        ScrollTrigger.create({
+        root._marqueeTrigger = ScrollTrigger.create({
           trigger: root,
           start: 'top bottom',
           end: 'bottom top',
           onUpdate: function (self) {
             if (self.direction !== dir) dir = self.direction;
-            var velocityFactor = Math.min(3.5, 1 + Math.abs(self.getVelocity()) / 900);
-            gsap.to(tween, { timeScale: velocityFactor * dir, duration: 0.3, overwrite: 'auto' });
+            var velocityFactor = Math.min(4, 1 + Math.abs(self.getVelocity()) / 900);
+            gsap.to(tween, { timeScale: velocityFactor * dir, duration: 0.3, overwrite: true });
             gsap.to(tween, { timeScale: dir, duration: 1.2, delay: 0.3, overwrite: false });
           }
         });

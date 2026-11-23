@@ -15,18 +15,18 @@
       <!-- Copy Column -->
       <div class="rewards__copy">
         {% if section.settings.eyebrow != blank %}
-          <p class="eyebrow" data-gsap="fade-up">{{ section.settings.eyebrow | escape }}</p>
+          <p class="eyebrow" data-fade>{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
 
-        <h2 id="rewards-title-{{ section.id }}" class="t-d2 accent-em" data-gsap="fade-up">
+        <h2 id="rewards-title-{{ section.id }}" class="t-d2 accent-em" data-split>
           {{ section.settings.heading }}
         </h2>
 
         {% if section.settings.lead != blank %}
-          <p class="t-lead" data-gsap="fade-up">{{ section.settings.lead }}</p>
+          <p class="t-lead" data-fade>{{ section.settings.lead }}</p>
         {% endif %}
 
-        <ul class="rewards__list" role="list" data-gsap="stagger">
+        <ul class="rewards__list" role="list" data-stagger>
           <li>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             <span>{{ section.settings.perk_1 | default: 'Earn points on every purchase' }}</span>
@@ -42,13 +42,13 @@
         </ul>
 
         {% if section.settings.member_note != blank %}
-          <p class="rewards__member" data-gsap="fade-up">
+          <p class="rewards__member" data-fade>
             <strong>{{ section.settings.member_bold | default: 'Already a member?' }}</strong>
             {{ section.settings.member_note | escape }}
           </p>
         {% endif %}
 
-        <div class="rewards__ctas" data-gsap="fade-up">
+        <div class="rewards__ctas" data-fade>
           <a href="{{ section.settings.register_link | default: routes.account_register_url }}" class="btn btn--ghost">
             {{ section.settings.register_label | default: 'Create account' }}
           </a>
@@ -62,7 +62,7 @@
       <div class="rewards__visual">
         <div class="rewards__orb" aria-hidden="true"></div>
 
-        <div class="rewards__arch" data-arch="true">
+        <div class="rewards__arch" data-arch>
           {% if section.settings.arch_image != blank %}
             <img src="{{ section.settings.arch_image | image_url: width: 800 }}" alt="Nature" width="400" height="500" loading="lazy">
           {% else %}
@@ -87,7 +87,9 @@
       var root = document.getElementById('rewards-{{ section.id }}');
       if (!root) return;
 
+      if (root._rewardsMM) root._rewardsMM.revert();
       var mm = gsap.matchMedia();
+      root._rewardsMM = mm;
       mm.add('(prefers-reduced-motion: no-preference)', function () {
         var prod = root.querySelector('.rewards__product');
         if (prod) {

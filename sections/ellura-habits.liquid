@@ -14,9 +14,9 @@
     <div class="wrap habits__head">
       <div>
         {% if section.settings.eyebrow != blank %}
-          <p class="eyebrow" data-gsap="fade-up">{{ section.settings.eyebrow | escape }}</p>
+          <p class="eyebrow" data-fade>{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
-        <h2 id="habits-title-{{ section.id }}" class="t-d2 accent-em" data-gsap="fade-up">
+        <h2 id="habits-title-{{ section.id }}" class="t-d2 accent-em" data-split>
           {{ section.settings.heading }}
         </h2>
       </div>
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="habits__viewport">
+    <div class="habits__viewport" data-lenis-prevent-touch>
       <ol class="habits__track" role="list">
         <!-- Card 0: Intro / Dosage Card -->
         <li class="habit habit--intro">
@@ -92,8 +92,10 @@
       var root = document.getElementById('habits-{{ section.id }}');
       if (!root) return;
 
+      if (root._habitsMM) root._habitsMM.revert();
       var mm = gsap.matchMedia();
-      mm.add('(min-width: 960px)', function () {
+      root._habitsMM = mm;
+      mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', function () {
         var track = root.querySelector('.habits__track');
         var pinEl = root.querySelector('.habits__pin');
         var progressEl = root.querySelector('.habits__progress i');
@@ -128,6 +130,25 @@
             }
           });
         }
+
+        // Each card settles from a slight tilt as it enters the horizontal rail
+        root.querySelectorAll('.habit').forEach(function (card) {
+          gsap.fromTo(card,
+            { rotate: 4, y: 40 },
+            {
+              rotate: 0,
+              y: 0,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: card,
+                containerAnimation: anim,
+                start: 'left right',
+                end: 'left 60%',
+                scrub: true
+              }
+            }
+          );
+        });
       });
     }
 

@@ -213,7 +213,27 @@
       });
       tl.addLabel('s3');
 
+      if (root._hiwMM) root._hiwMM.revert();
       var mm = gsap.matchMedia();
+      root._hiwMM = mm;
+      mm.add('(prefers-reduced-motion: reduce)', function () {
+        // Without scrubbing, jump the diagram to each step's resting frame.
+        steps.forEach(function (stepEl, idx) {
+          ScrollTrigger.create({
+            trigger: stepEl,
+            start: 'top 62%',
+            end: 'bottom 62%',
+            onToggle: function (self) {
+              if (!self.isActive) return;
+              setActiveStep(idx);
+              var label = tl.labels['s' + (idx + 1)];
+              if (label !== undefined) tl.progress(label / tl.duration());
+            }
+          });
+        });
+        tl.progress(tl.labels.s1 / tl.duration());
+        setActiveStep(0);
+      });
       mm.add('(prefers-reduced-motion: no-preference)', function () {
         ScrollTrigger.create({
           trigger: root.querySelector('.hiw__steps'),

@@ -108,7 +108,14 @@
         <span>{{ section.settings.origin | default: 'Formulated in France · Distributed in India' }}</span>
       </span>
     </div>
+  </div>
 
+  <!-- Giant wordmark: rises into place as the footer scrolls in -->
+  <div class="footer__word" aria-hidden="true">
+    <img src="{{ 'ellura-logo-plum.png' | asset_url }}" alt="" width="1200" height="233" loading="lazy" decoding="async">
+  </div>
+
+  <div class="wrap">
     <!-- Legal Disclaimer -->
     {% if section.settings.disclaimer != blank %}
       <div class="footer__legal">
@@ -122,6 +129,54 @@
     </div>
   </div>
 </footer>
+
+<script>
+  (function () {
+    function initFooterMotion() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      var root = document.getElementById('ellura-footer-{{ section.id }}');
+      if (!root) return;
+
+      if (root._footerMM) root._footerMM.revert();
+      var mm = gsap.matchMedia();
+      root._footerMM = mm;
+      mm.add('(prefers-reduced-motion: no-preference)', function () {
+        var word = root.querySelector('.footer__word');
+        var wordImg = root.querySelector('.footer__word img');
+        if (word && wordImg) {
+          gsap.fromTo(wordImg,
+            { yPercent: 40, opacity: 0.3 },
+            {
+              yPercent: 0,
+              opacity: 1,
+              ease: 'none',
+              scrollTrigger: { trigger: word, start: 'top bottom', end: 'bottom bottom', scrub: 0.6 }
+            }
+          );
+        }
+
+        var clover = root.querySelector('.footer__clover');
+        if (clover) {
+          gsap.to(clover, {
+            rotate: 120,
+            ease: 'none',
+            scrollTrigger: { trigger: root, start: 'top bottom', end: 'bottom bottom', scrub: 1 }
+          });
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFooterMotion);
+    } else {
+      initFooterMotion();
+    }
+
+    document.addEventListener('shopify:section:load', function (e) {
+      if (e.target.id === 'shopify-section-{{ section.id }}') initFooterMotion();
+    });
+  })();
+</script>
 
 {% schema %}
 {

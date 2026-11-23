@@ -16,9 +16,9 @@
   <div class="wrap">
     <div class="section-head">
       {% if section.settings.eyebrow != blank %}
-        <p class="eyebrow" data-gsap="fade-up">{{ section.settings.eyebrow | escape }}</p>
+        <p class="eyebrow" data-fade>{{ section.settings.eyebrow | escape }}</p>
       {% endif %}
-      <h2 id="reviews-title-{{ section.id }}" class="t-d2 accent-em" data-gsap="fade-up">
+      <h2 id="reviews-title-{{ section.id }}" class="t-d2 accent-em" data-split>
         {{ section.settings.heading }}
       </h2>
     </div>

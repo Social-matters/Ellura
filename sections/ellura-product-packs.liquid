@@ -15,18 +15,18 @@
     <header class="packs__head">
       <div class="packs__sticky">
         {% if section.settings.eyebrow != blank %}
-          <p class="eyebrow" data-gsap="fade-up">{{ section.settings.eyebrow | escape }}</p>
+          <p class="eyebrow" data-fade>{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
 
-        <h2 id="packs-title-{{ section.id }}" class="t-d2 accent-em" data-gsap="fade-up">
+        <h2 id="packs-title-{{ section.id }}" class="t-d2 accent-em" data-split>
           {{ section.settings.heading }}
         </h2>
 
         {% if section.settings.lead != blank %}
-          <p class="t-lead" data-gsap="fade-up">{{ section.settings.lead }}</p>
+          <p class="t-lead" data-fade>{{ section.settings.lead }}</p>
         {% endif %}
 
-        <ul class="packs__perks" role="list" data-gsap="stagger">
+        <ul class="packs__perks" role="list" data-stagger>
           <li>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
             <span>{{ section.settings.perk_1 | default: 'Subscribe & Save 10%' }}</span>
@@ -42,7 +42,7 @@
         </ul>
 
         {% if section.settings.compare_link_text != blank %}
-          <a href="{{ section.settings.compare_link_url | default: '/collections/all' }}" class="text-link" data-gsap="fade-up">
+          <a href="{{ section.settings.compare_link_url | default: '/collections/all' }}" class="text-link" data-fade>
             {{ section.settings.compare_link_text | escape }}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
@@ -129,19 +129,21 @@
       var root = document.getElementById('packs-{{ section.id }}');
       if (!root) return;
 
+      if (root._packsMM) root._packsMM.revert();
       var mm = gsap.matchMedia();
-      mm.add('(min-width: 960px)', function () {
+      root._packsMM = mm;
+      mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', function () {
         var cards = root.querySelectorAll('.pack-card');
         cards.forEach(function (card, idx) {
           var nextCard = cards[idx + 1];
           if (nextCard) {
             gsap.to(card, {
-              scale: 0.92 + idx * 0.02,
+              scale: 0.9 + idx * 0.02,
               ease: 'none',
               scrollTrigger: {
                 trigger: nextCard,
                 start: 'top bottom',
-                end: 'top 24%',
+                end: 'top 22%',
                 scrub: true
               }
             });
@@ -150,10 +152,10 @@
 
         root.querySelectorAll('.pack-card__img img').forEach(function (img) {
           gsap.fromTo(img,
-            { yPercent: 6, rotate: -2 },
+            { yPercent: 8, rotate: -3 },
             {
               yPercent: -6,
-              rotate: 1,
+              rotate: 0,
               ease: 'none',
               scrollTrigger: {
                 trigger: img,

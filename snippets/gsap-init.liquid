@@ -1,170 +1,26 @@
 {% doc %}
-  GSAP animation loader snippet.
-  Loads GSAP core and ScrollTrigger plugin from CDN.
-  Initializes shared animation utilities used by ellura custom sections.
-  Renders once per page via the layout or first consuming section.
+  Loads the ellura motion stack: GSAP, ScrollTrigger, SplitText, Lenis and the shared
+  ellura-motion runtime (window.elluraMotion), in that order, all deferred.
+  Marks <html> as motion-pending until the runtime has set initial animation states,
+  so above-the-fold intros do not flash their final frame first. A timeout clears the
+  flag if the scripts fail to load.
 
   @example
   {% render 'gsap-init' %}
 {% enddoc %}
 
+<script>
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var root = document.documentElement;
+    root.classList.add('motion-pending');
+    setTimeout(function () {
+      root.classList.remove('motion-pending');
+    }, 3000);
+  })();
+</script>
 <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
 <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
-<script>
-  /* ellura GSAP animation helpers — shared by all ellura-* sections */
-  if (!window.elluraGSAPInit) {
-    window.elluraGSAPInit = true;
-    document.addEventListener('DOMContentLoaded', function () {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      /* ---- shared animation presets ---- */
-      window.elluraGSAP = {
-        /**
-         * Animate elements with [data-gsap] attribute.
-         * Recognised values: fade-up, fade-in, slide-left, slide-right, scale-in, stagger.
-         * Optional data-gsap-delay, data-gsap-duration, data-gsap-stagger.
-         */
-        initSection: function (sectionEl) {
-          if (!sectionEl) return;
-
-          /* fade-up */
-          sectionEl.querySelectorAll('[data-gsap="fade-up"]').forEach(function (el) {
-            gsap.fromTo(el,
-              { opacity: 0, y: 40 },
-              {
-                opacity: 1, y: 0,
-                duration: parseFloat(el.dataset.gsapDuration || '1'),
-                delay: parseFloat(el.dataset.gsapDelay || '0'),
-                ease: 'power3.out',
-                scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-              }
-            );
-          });
-
-          /* fade-in */
-          sectionEl.querySelectorAll('[data-gsap="fade-in"]').forEach(function (el) {
-            gsap.fromTo(el,
-              { opacity: 0 },
-              {
-                opacity: 1,
-                duration: parseFloat(el.dataset.gsapDuration || '1'),
-                delay: parseFloat(el.dataset.gsapDelay || '0'),
-                ease: 'power2.out',
-                scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-              }
-            );
-          });
-
-          /* slide-left */
-          sectionEl.querySelectorAll('[data-gsap="slide-left"]').forEach(function (el) {
-            gsap.fromTo(el,
-              { opacity: 0, x: 60 },
-              {
-                opacity: 1, x: 0,
-                duration: parseFloat(el.dataset.gsapDuration || '1'),
-                delay: parseFloat(el.dataset.gsapDelay || '0'),
-                ease: 'power3.out',
-                scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-              }
-            );
-          });
-
-          /* slide-right */
-          sectionEl.querySelectorAll('[data-gsap="slide-right"]').forEach(function (el) {
-            gsap.fromTo(el,
-              { opacity: 0, x: -60 },
-              {
-                opacity: 1, x: 0,
-                duration: parseFloat(el.dataset.gsapDuration || '1'),
-                delay: parseFloat(el.dataset.gsapDelay || '0'),
-                ease: 'power3.out',
-                scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-              }
-            );
-          });
-
-          /* scale-in */
-          sectionEl.querySelectorAll('[data-gsap="scale-in"]').forEach(function (el) {
-            gsap.fromTo(el,
-              { opacity: 0, scale: 0.9 },
-              {
-                opacity: 1, scale: 1,
-                duration: parseFloat(el.dataset.gsapDuration || '1'),
-                delay: parseFloat(el.dataset.gsapDelay || '0'),
-                ease: 'power3.out',
-                scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-              }
-            );
-          });
-
-          /* stagger children */
-          sectionEl.querySelectorAll('[data-gsap="stagger"]').forEach(function (el) {
-            gsap.fromTo(el.children,
-              { opacity: 0, y: 30 },
-              {
-                opacity: 1, y: 0,
-                duration: parseFloat(el.dataset.gsapDuration || '0.8'),
-                stagger: parseFloat(el.dataset.gsapStagger || '0.1'),
-                delay: parseFloat(el.dataset.gsapDelay || '0'),
-                ease: 'power3.out',
-                scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-              }
-            );
-          });
-
-          /* counter */
-          sectionEl.querySelectorAll('[data-gsap="counter"]').forEach(function (el) {
-            var target = parseFloat(el.dataset.gsapTarget || el.textContent);
-            var decimals = parseInt(el.dataset.gsapDecimals || '0', 10);
-            var suffix = el.dataset.gsapSuffix || '';
-            var prefix = el.dataset.gsapPrefix || '';
-            var obj = { val: 0 };
-            el.textContent = prefix + '0' + suffix;
-
-            gsap.to(obj, {
-              val: target,
-              duration: parseFloat(el.dataset.gsapDuration || '2'),
-              ease: 'power2.out',
-              scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-              onUpdate: function () {
-                el.textContent = prefix + obj.val.toFixed(decimals) + suffix;
-              }
-            });
-          });
-
-          /* parallax */
-          sectionEl.querySelectorAll('[data-gsap="parallax"]').forEach(function (el) {
-            var distance = parseFloat(el.dataset.gsapDistance || '10');
-            gsap.fromTo(el,
-              { yPercent: -distance },
-              {
-                yPercent: distance,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: el.parentElement || el,
-                  start: 'top bottom',
-                  end: 'bottom top',
-                  scrub: true
-                }
-              }
-            );
-          });
-        },
-
-        /** Refresh ScrollTrigger (call after DOM changes) */
-        refresh: function () {
-          if (typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.refresh();
-          }
-        }
-      };
-
-      /* auto-init all ellura sections already on page */
-      document.querySelectorAll('[data-ellura-section]').forEach(function (sec) {
-        window.elluraGSAP.initSection(sec);
-      });
-    });
-  }
-</script>
+<script src="{{ 'SplitText.min.js' | asset_url }}" defer></script>
+<script src="{{ 'lenis.min.js' | asset_url }}" defer></script>
+<script src="{{ 'ellura-motion.js' | asset_url }}" defer></script>

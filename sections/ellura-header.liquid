@@ -89,16 +89,36 @@
       <nav class="header__nav" aria-label="Main navigation">
         <ul role="list">
           {% if section.settings.menu != blank %}
+            {%- assign mega_title = section.settings.mega_label | downcase | strip -%}
             {% for link in linklists[section.settings.menu].links %}
+              {%- assign link_title = link.title | downcase | strip -%}
+              {% if section.settings.mega_enabled and link_title == mega_title %}
+              <li class="header__mega-item" data-mega-item>
+                <button type="button" class="header__link{% if template.name == 'collection' or template.name == 'product' %} is-active{% endif %}" aria-expanded="false" aria-controls="shop-panel-{{ section.id }}" data-mega-trigger>
+                  {{ section.settings.mega_label | escape }}
+                  {% render 'ellura-icon', name: 'chevron', px: 14 %}
+                </button>
+              </li>
+              {% else %}
               <li>
                 <a href="{{ link.url }}" class="header__link {% if link.active %}is-active{% endif %}">
                   {{ link.title | escape }}
                 </a>
               </li>
+              {% endif %}
             {% endfor %}
           {% else %}
             <!-- Default Ellura Navigation -->
-            <li><a href="{{ routes.all_products_collection_url }}" class="header__link">Shop</a></li>
+            {% if section.settings.mega_enabled %}
+              <li class="header__mega-item" data-mega-item>
+                <button type="button" class="header__link{% if template.name == 'collection' or template.name == 'product' %} is-active{% endif %}" aria-expanded="false" aria-controls="shop-panel-{{ section.id }}" data-mega-trigger>
+                  {{ section.settings.mega_label | escape }}
+                  {% render 'ellura-icon', name: 'chevron', px: 14 %}
+                </button>
+              </li>
+            {% else %}
+              <li><a href="{{ routes.all_products_collection_url }}" class="header__link">Shop</a></li>
+            {% endif %}
             <li><a href="/pages/how-it-works" class="header__link">How it works</a></li>
             <li><a href="/pages/science" class="header__link">The Science</a></li>
             <li><a href="/blogs/news" class="header__link">Learn</a></li>
@@ -147,7 +167,67 @@
         {% endif %}
       </div>
     </div>
+
+    {%- if section.settings.mega_enabled -%}
+      {%- liquid
+        assign mega_products = section.settings.mega_products
+        if mega_products == blank or mega_products.size == 0
+          assign mega_products = collections.all.products
+        endif
+        assign mega_badges = section.settings.mega_badges | newline_to_br | split: '<br />'
+        assign mega_tones = 'blush,lilac,butter' | split: ','
+      -%}
+      <div id="shop-panel-{{ section.id }}" class="mega" aria-hidden="true" inert data-mega-panel>
+        <div class="mega__inner wrap">
+          <ul role="list" class="mega__products">
+            {%- for product in mega_products limit: 3 -%}
+              {%- liquid
+                assign tone_index = forloop.index0 | modulo: 3
+                assign badge = product.metafields.custom.badge.value
+                if badge == blank
+                  assign badge = mega_badges[forloop.index0] | strip
+                endif
+              -%}
+              <li>
+                <a href="{{ product.url }}" class="mega__tile pcard--{{ mega_tones[tone_index] }}">
+                  <span class="mega__img">
+                    {%- if product.featured_image -%}
+                      {{ product.featured_image | image_url: width: 520 | image_tag: alt: '', width: 260, height: 260, loading: 'lazy' }}
+                    {%- endif -%}
+                  </span>
+                  {%- if badge != blank -%}<span class="chip chip--solid">{{ badge | escape }}</span>{%- endif -%}
+                  <strong>{{ product.title | escape }}</strong>
+                  <span class="mega__sub">{% if product.available %}{{ product.price | money_without_trailing_zeros }}{% else %}Price at launch{% endif %}</span>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+          <div class="mega__side">
+            {%- if section.settings.mega_link_1_label != blank -%}
+              <a href="{{ section.settings.mega_link_1_url | default: routes.all_products_collection_url }}" class="mega__link">{{ section.settings.mega_link_1_label | escape }} {% render 'ellura-icon', name: 'arrow', px: 18 %}</a>
+            {%- endif -%}
+            {%- if section.settings.mega_link_2_label != blank -%}
+              <a href="{{ section.settings.mega_link_2_url | default: '/pages/subscribe' }}" class="mega__link">{{ section.settings.mega_link_2_label | escape }} {% render 'ellura-icon', name: 'arrow', px: 18 %}</a>
+            {%- endif -%}
+            {%- if section.settings.mega_link_3_label != blank -%}
+              <a href="{{ section.settings.mega_link_3_url | default: '/pages/where-to-buy' }}" class="mega__link">{{ section.settings.mega_link_3_label | escape }} {% render 'ellura-icon', name: 'arrow', px: 18 %}</a>
+            {%- endif -%}
+            {%- if section.settings.mega_promo_heading != blank -%}
+              <a href="{{ section.settings.mega_promo_url | default: '/pages/subscribe' }}" class="mega__promo">
+                <span class="t-mono">{{ section.settings.mega_promo_eyebrow | escape }}</span>
+                <span class="t-d3">{{ section.settings.mega_promo_heading }}</span>
+                <span class="t-sm">{{ section.settings.mega_promo_text | escape }}</span>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
   </header>
+  {%- if section.settings.mega_enabled -%}
+    {%- comment -%} Below the header bar (z-index 10) but above the page. {%- endcomment -%}
+    <div class="mega-scrim" aria-hidden="true" style="z-index: 5;" data-mega-scrim></div>
+  {%- endif -%}
 
   <!-- Mobile menu: full-screen plum panel revealed with a circular clip from the burger -->
   <div id="mobile-menu-{{ section.id }}" class="mmenu" style="visibility: hidden;" aria-hidden="true" inert>
@@ -314,12 +394,65 @@
           header.classList.toggle('is-solid', y > 8 || menuOpen);
           if (y < 240) {
             header.classList.remove('is-hidden');
-          } else if (Math.abs(self.getVelocity()) > 40 && !menuOpen) {
+          } else if (Math.abs(self.getVelocity()) > 40 && !menuOpen && !megaIsOpen()) {
             header.classList.toggle('is-hidden', self.direction === 1);
           }
         }
       });
       header.classList.toggle('is-solid', window.scrollY > 8);
+    }
+
+    /* ---- Shop mega menu: hover or click opens; leave, Escape, scrim or focus out closes ---- */
+    var megaTrigger = wrapper.querySelector('[data-mega-trigger]');
+    var megaPanel = wrapper.querySelector('[data-mega-panel]');
+    var megaScrim = wrapper.querySelector('[data-mega-scrim]');
+    var megaTimer = null;
+
+    function megaIsOpen() {
+      return !!(megaPanel && megaPanel.classList.contains('is-open'));
+    }
+    function setMega(open) {
+      if (!megaTrigger || !megaPanel) return;
+      window.clearTimeout(megaTimer);
+      megaTrigger.setAttribute('aria-expanded', String(open));
+      megaPanel.classList.toggle('is-open', open);
+      megaPanel.setAttribute('aria-hidden', String(!open));
+      if (open) megaPanel.removeAttribute('inert');
+      else megaPanel.setAttribute('inert', '');
+      if (megaScrim) megaScrim.classList.toggle('is-open', open);
+      if (open && header) {
+        header.classList.remove('is-hidden');
+        header.classList.add('is-solid');
+      }
+    }
+    function closeMegaSoon() {
+      window.clearTimeout(megaTimer);
+      megaTimer = window.setTimeout(function () { setMega(false); }, 160);
+    }
+
+    if (megaTrigger && megaPanel && header) {
+      megaTrigger.addEventListener('click', function () {
+        setMega(!megaIsOpen());
+      });
+      if (window.matchMedia('(hover: hover)').matches) {
+        megaTrigger.closest('[data-mega-item]').addEventListener('mouseenter', function () { setMega(true); });
+        megaPanel.addEventListener('mouseenter', function () { window.clearTimeout(megaTimer); });
+        header.querySelectorAll('.header__nav li:not([data-mega-item])').forEach(function (li) {
+          li.addEventListener('mouseenter', closeMegaSoon);
+        });
+        header.addEventListener('mouseleave', closeMegaSoon);
+      }
+      header.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && megaIsOpen()) {
+          e.stopPropagation();
+          setMega(false);
+          megaTrigger.focus();
+        }
+      });
+      header.addEventListener('focusout', function (e) {
+        if (!header.contains(e.relatedTarget)) setMega(false);
+      });
+      if (megaScrim) megaScrim.addEventListener('click', function () { setMega(false); });
     }
 
     /* ---- Mobile menu: circular reveal, staggered links, focus trap ---- */
@@ -511,6 +644,47 @@
       "id": "menu",
       "label": "Navigation menu"
     },
+    {
+      "type": "header",
+      "content": "Shop mega menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "mega_enabled",
+      "label": "Show Shop mega menu",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mega_label",
+      "label": "Menu item that opens it",
+      "info": "With a navigation menu, the item with this exact title opens the mega menu.",
+      "default": "Shop"
+    },
+    {
+      "type": "product_list",
+      "id": "mega_products",
+      "label": "Pack products",
+      "info": "Shows up to three. Defaults to the first products in your store.",
+      "limit": 3
+    },
+    {
+      "type": "textarea",
+      "id": "mega_badges",
+      "label": "Pack badges",
+      "info": "One per line, in product order. A product's custom.badge metafield overrides its line.",
+      "default": "Start here\n3-month supply\n2 bottles · 6 months"
+    },
+    { "type": "text", "id": "mega_link_1_label", "label": "Link 1 label", "default": "Shop all" },
+    { "type": "url", "id": "mega_link_1_url", "label": "Link 1" },
+    { "type": "text", "id": "mega_link_2_label", "label": "Link 2 label", "default": "Subscribe & Save" },
+    { "type": "url", "id": "mega_link_2_url", "label": "Link 2" },
+    { "type": "text", "id": "mega_link_3_label", "label": "Link 3 label", "default": "Where to buy" },
+    { "type": "url", "id": "mega_link_3_url", "label": "Link 3" },
+    { "type": "text", "id": "mega_promo_eyebrow", "label": "Promo label", "default": "Subscribe & Save" },
+    { "type": "inline_richtext", "id": "mega_promo_heading", "label": "Promo heading", "default": "10% off, <em>every</em> delivery." },
+    { "type": "text", "id": "mega_promo_text", "label": "Promo text", "default": "Free shipping · pause or cancel anytime" },
+    { "type": "url", "id": "mega_promo_url", "label": "Promo link" },
     {
       "type": "checkbox",
       "id": "show_search",

@@ -97,7 +97,7 @@
             <p class="t-mono muted" style="margin-bottom: 10px;">{{ section.settings.eyebrow | escape }}</p>
           {%- endif -%}
           <h1 class="buy__title">
-            {%- if section.settings.title_override != blank -%}{{ section.settings.title_override }}{%- else -%}{{ product.title | escape }}{%- endif -%}
+            {%- if section.settings.title_override != blank -%}{{ section.settings.title_override | replace_first: 'ellura®', '<span class="brand-word">ellura®</span>' }}{%- else -%}{{ product.title | escape }}{%- endif -%}
           </h1>
         </div>
 

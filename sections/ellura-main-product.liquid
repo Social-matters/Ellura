@@ -33,10 +33,13 @@
     endif
   endfor
 -%}
+  {%- comment -%} Short pack label ("30 capsules") and supply ("1-month") like the reference. {%- endcomment -%}
+  {%- capture pack_label -%}{% render 'ellura-pack-label', product: product %}{%- endcapture -%}
+  {%- capture pack_supply -%}{% render 'ellura-pack-label', product: product, part: 'supply' %}{%- endcapture -%}
 <div class="pdp" id="pdp-{{ section.id }}" data-currency="{{ cart.currency.iso_code }}" data-locale="{{ request.locale.iso_code }}">
   <div class="wrap">
     <div class="pdp__crumbs">
-      {% render 'ellura-crumbs', parent_label: section.settings.crumb_parent, parent_url: routes.all_products_collection_url, current: product.title %}
+      {% render 'ellura-crumbs', parent_label: section.settings.crumb_parent, parent_url: routes.all_products_collection_url, current: pack_label %}
     </div>
     <div class="pdp__top">
       {%- comment -%} Gallery {%- endcomment -%}
@@ -55,7 +58,7 @@
         <div>
           <div class="gallery__stage" tabindex="0" aria-label="Image 1 of {{ images.size }}. Use arrow keys to browse." data-gallery-stage>
             {%- for media in images -%}
-              <div class="gallery__slide{% if forloop.first %} is-current{% endif %}" role="group" aria-roledescription="slide" aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}"{% unless forloop.first %} style="opacity: 0; visibility: hidden;"{% endunless %}>
+              <div class="gallery__slide{% if forloop.first %} is-current{% if section.settings.tint_first_image %} is-pack{% endif %}{% endif %}" role="group" aria-roledescription="slide" aria-hidden="{% unless forloop.first %}true{% else %}false{% endunless %}"{% unless forloop.first %} style="opacity: 0; visibility: hidden;"{% endunless %}>
                 {%- liquid
                   assign slide_loading = 'lazy'
                   assign slide_priority = 'auto'
@@ -116,21 +119,34 @@
             <span class="price__now" data-price-now>
               {%- if default_sub -%}{{ variant.selling_plan_allocations.first.price | money_without_trailing_zeros }}{%- else -%}{{ variant.price | money_without_trailing_zeros }}{%- endif -%}
             </span>
-            <s class="price__was" data-price-was{% unless variant.compare_at_price > variant.price or default_sub %} hidden{% endunless %}>
-              {%- if default_sub -%}{{ variant.price | money_without_trailing_zeros }}{%- else -%}{{ variant.compare_at_price | money_without_trailing_zeros }}{%- endif -%}
-            </s>
+            {%- liquid
+              assign mrp = variant.price
+              if variant.compare_at_price > variant.price
+                assign mrp = variant.compare_at_price
+              endif
+              assign now_price = variant.price
+              if default_sub
+                assign now_price = variant.selling_plan_allocations.first.price
+              endif
+              assign saving = mrp | minus: now_price
+            -%}
+            <span class="sr-only">, MRP</span>
+            <s class="price__was" data-price-was{% unless saving > 0 %} hidden{% endunless %}>{{ mrp | money_without_trailing_zeros }}</s>
+            <span class="chip chip--save price__save" data-price-save{% unless saving > 0 %} hidden{% endunless %}>Save {{ saving | money_without_trailing_zeros }}</span>
           </p>
-          <p class="buy__tax">{{ section.settings.tax_note | escape }}</p>
+          <p class="buy__tax">{{ section.settings.tax_note | escape }}<span data-tax-sub{% unless default_sub %} hidden{% endunless %}> · subscription price shown</span></p>
         </div>
 
         {%- if section.settings.pack_products.size > 1 -%}
           <div>
-            <p class="buy__label" id="pack-label-{{ section.id }}">Pack size</p>
+            <p class="buy__label" id="pack-label-{{ section.id }}">Pack size{% if pack_supply != blank %} <span>{{ pack_supply }} supply</span>{% endif %}</p>
             <div class="packs-select" role="list" aria-labelledby="pack-label-{{ section.id }}">
               {%- for pack in section.settings.pack_products -%}
                 <a href="{{ pack.url }}" class="pack-opt" role="listitem"{% if pack.id == product.id %} aria-current="page" aria-checked="true"{% else %} aria-checked="false"{% endif %}>
-                  <strong>{{ pack.title | escape }}</strong>
-                  {%- if pack.metafields.custom.supply != blank -%}<span>{{ pack.metafields.custom.supply.value | escape }}</span>{%- endif -%}
+                  {%- capture opt_label -%}{% render 'ellura-pack-label', product: pack %}{%- endcapture -%}
+                  {%- capture opt_supply -%}{% render 'ellura-pack-label', product: pack, part: 'supply' %}{%- endcapture -%}
+                  <strong>{{ opt_label }}</strong>
+                  {%- if opt_supply != blank -%}<span>{{ opt_supply }}</span>{%- endif -%}
                   <em>{% if pack.available %}{{ pack.price | money_without_trailing_zeros }}{% else %}At launch{% endif %}</em>
                 </a>
               {%- endfor -%}
@@ -286,13 +302,20 @@
       var planInput = form.querySelector('input[name="selling_plan"]:checked');
       var subscribing = !!(planInput && planInput.value);
       var unit = Number(subscribing ? v.dataset.subPrice : v.dataset.price);
-      var was = subscribing ? Number(v.dataset.price) : Number(v.dataset.compare);
+      var was = Math.max(Number(v.dataset.price), Number(v.dataset.compare) || 0);
       var qtyInput = form.querySelector('input[name="quantity"]');
       var qty = Math.max(1, parseInt(qtyInput && qtyInput.value, 10) || 1);
       root.querySelector('[data-price-now]').textContent = fmt(unit);
       var wasEl = root.querySelector('[data-price-was]');
       wasEl.hidden = !(was > unit);
       wasEl.textContent = fmt(was);
+      var saveEl = root.querySelector('[data-price-save]');
+      if (saveEl) {
+        saveEl.hidden = !(was > unit);
+        saveEl.textContent = 'Save ' + fmt(was - unit);
+      }
+      var taxSub = root.querySelector('[data-tax-sub]');
+      if (taxSub) taxSub.hidden = !subscribing;
       var total = root.querySelector('[data-add-total]');
       if (total) total.textContent = fmt(unit * qty);
       var once = root.querySelector('[data-popt-once]');
@@ -416,9 +439,16 @@
     (label:has(input[type="radio"]), specificity 0,1,1), which outranks the reference
     .popt / .pack-opt grid rules. Scope them to the buy box to restore the reference layout.
   */
-  .buy .popt,
+  .buy .popt {
+    display: grid;
+    gap: 4px 14px;
+    align-items: center;
+  }
+
   .buy .pack-opt {
     display: grid;
+    gap: 2px;
+    justify-items: start;
   }
 {% endstylesheet %}
 
@@ -439,7 +469,8 @@
     { "type": "text", "id": "sub_label", "label": "Subscription option label", "default": "Subscribe & Save 10%" },
     { "type": "checkbox", "id": "default_subscribe", "label": "Preselect Subscribe & Save", "default": true },
     { "type": "text", "id": "notify_text", "label": "Coming soon text", "default": "Its price will be announced at launch — leave your email and we’ll tell you first." },
-    { "type": "checkbox", "id": "show_buybar", "label": "Show sticky buy bar", "default": true }
+    { "type": "checkbox", "id": "show_buybar", "label": "Show sticky buy bar", "default": true },
+    { "type": "checkbox", "id": "tint_first_image", "label": "Tint first image into the tile", "info": "Blends the pack shot into the coloured gallery tile, like the reference.", "default": true }
   ],
   "blocks": [
     {

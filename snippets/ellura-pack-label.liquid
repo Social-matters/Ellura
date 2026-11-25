@@ -1,0 +1,43 @@
+{% doc %}
+  Outputs a pack's short label or its supply, as the reference shows them ("30 capsules",
+  "1-month"). Uses the product metafields custom.pack_label and custom.supply when set;
+  otherwise the label is the title without the "ellura®" prefix and the supply is worked
+  out from the capsule count (30 capsules = 1 month).
+
+  @param {product} product - Pack product
+  @param {string} [part] - 'label' (default) or 'supply'
+
+  @example
+  {% render 'ellura-pack-label', product: product, part: 'supply' %}
+{% enddoc %}
+{%- liquid
+  if part == 'supply'
+    if product.metafields.custom.supply != blank
+      echo product.metafields.custom.supply.value | escape
+    else
+      assign capsules = product.metafields.custom.capsules.value
+      if capsules == blank
+        assign words = product.title | split: ' '
+        for word in words
+          assign n = word | plus: 0
+          if n > 0
+            assign capsules = n
+            break
+          endif
+        endfor
+      endif
+      if capsules != blank
+        assign months = capsules | divided_by: 30
+        if months > 0
+          echo months | append: '-month'
+        endif
+      endif
+    endif
+  else
+    if product.metafields.custom.pack_label != blank
+      echo product.metafields.custom.pack_label.value | escape
+    else
+      echo product.title | remove_first: 'ellura® ' | remove_first: 'ellura ' | escape
+    endif
+  endif
+-%}

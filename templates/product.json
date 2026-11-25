@@ -181,7 +181,8 @@
         "legend_pac": "Soluble A-type PACs",
         "bg_color": "#5a2e58",
         "padding_top": 80,
-        "padding_bottom": 100
+        "padding_bottom": 100,
+        "compact": true
       }
     },
     "reviews": {

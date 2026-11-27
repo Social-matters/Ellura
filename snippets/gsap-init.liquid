@@ -1,5 +1,6 @@
 {% doc %}
-  Loads the ellura motion stack: GSAP, ScrollTrigger, SplitText, Lenis and the shared
+  Loads ellura-brand-case.js (keeps "ellura" lower-case in capitalised labels) and the
+  ellura motion stack: GSAP, ScrollTrigger, SplitText, Lenis and the shared
   ellura-motion runtime (window.elluraMotion), in that order, all deferred.
   Marks <html> as motion-pending until the runtime has set initial animation states,
   so above-the-fold intros do not flash their final frame first. A timeout clears the
@@ -19,6 +20,7 @@
     }, 3000);
   })();
 </script>
+<script src="{{ 'ellura-brand-case.js' | asset_url }}" defer></script>
 <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
 <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
 <script src="{{ 'SplitText.min.js' | asset_url }}" defer></script>

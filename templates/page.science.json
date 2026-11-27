@@ -20,7 +20,7 @@
         "crumb_label": "The Science",
         "eyebrow": "The Science",
         "heading": "Twenty years of research, <em>in one capsule.</em>",
-        "lead": "ellura is the result of more than 20+ years of scientific research, backed by 17 clinical and scientific studies and international herbal-medicine approvals in 22 countries.**",
+        "lead": "ellura is the result of more than 20 years of scientific research, backed by 17 clinical and scientific studies.",
         "visual": "photo",
         "preset": "lab-pipette"
       }
@@ -66,7 +66,8 @@
             "suffix_size": "large",
             "label": "Countries with herbal-medicine approvals**",
             "color_theme": "sage"
-          }
+          },
+          "disabled": true
         }
       },
       "block_order": [

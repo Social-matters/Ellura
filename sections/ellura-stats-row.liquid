@@ -23,6 +23,21 @@
   </div>
 </div>
 
+{% stylesheet %}
+  /* Three stats fill the row; on two-column mobile the odd last tile spans the row. */
+  @media (min-width: 901px) {
+    .usin__stats--row:has(> .stat:nth-child(3):last-child) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .usin__stats--row > .stat:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Stats row",

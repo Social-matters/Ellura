@@ -248,7 +248,7 @@
           "settings": {
             "preset_photo": "life-sunlight",
             "tag": "Travel",
-            "caption": "Two capsules on busy days, then back to one",
+            "caption": "One capsule, wherever you are",
             "product": "",
             "preset_pack": "pack-90",
             "pack_name": "90 Capsules · 3 Months",
@@ -307,7 +307,8 @@
             "subnote": "",
             "label": "International herbal-medicine approvals**",
             "color_theme": "peri"
-          }
+          },
+          "disabled": true
         },
         "ellura_heritage_stats_block_4": {
           "type": "stat",
@@ -626,7 +627,7 @@
         "heading": "one capsule, <em>plus a few good habits.</em>",
         "bg_color": "#e3cbe8",
         "intro_title": "How to take ellura",
-        "intro_desc": "Take one capsule daily with water, at the same time each day. When you want extra support — travel, stress — take two, then return to one.",
+        "intro_desc": "Take one capsule daily with water, at the same time each day.",
         "end_card_title": "Want the full picture?",
         "end_card_link": "Visit the Urinary Health Hub",
         "end_card_url": "",
@@ -785,7 +786,7 @@
           "type": "question",
           "settings": {
             "question": "How do I take ellura?",
-            "answer": "<p>Take 1 capsule once daily with water, at the same time each day. For extra support during travel or stress, you can take two capsules, then return to one.</p>"
+            "answer": "<p>Take 1 capsule once daily with water, at the same time each day.</p>"
           }
         },
         "ellura_faq_block_4": {

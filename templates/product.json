@@ -103,7 +103,7 @@
           "settings": {
             "title": "Directions to use",
             "open": false,
-            "content": "<p>Take 1 capsule daily with water. Occasional or repeated use according to your needs or as recommended by your health care provider.</p><p>Take one capsule daily with water at the same time each day. When additional support is desired (e.g. travel, stress), take two capsules as needed, then return to one. If swallowing is difficult, open the capsule into soft food or a sweet drink.</p><p>ellura is not intended to treat or cure urinary tract infections. Always follow your healthcare professional’s recommendation.</p>"
+            "content": "<p>Take 1 capsule daily with water. Occasional or repeated use according to your needs or as recommended by your health care provider.</p><p>Take it at the same time each day. If swallowing is difficult, open the capsule into soft food or a sweet drink.</p><p>ellura is not intended to treat or cure urinary tract infections. Always follow your healthcare professional’s recommendation.</p>"
           }
         },
         "ellura_product_details_05": {
@@ -121,6 +121,14 @@
             "open": false,
             "content": "<ol><li>Xiong Z, Gao Y, Yuan C, Jian Z, Wei X. (2024). Preventive effect of cranberries with high dose of proanthocyanidins on urinary tract infections: a meta-analysis and systematic review. <em>Frontiers in Nutrition</em>, 2024 Nov 28;11:1422121.</li><li>Williams G, Hahn D, Stephens JH, Craig JC, Hodson EM. (2023). Cranberries for preventing urinary tract infections. <em>Cochrane Database of Systematic Reviews</em>, 2023, Issue 4. Art. No.: CD001321.</li><li>Howell AB, Botto H, Combescure C, Blanc-Potard AB, Gausa L, Matsumoto T, Tenke P, Sotto A, Lavigne JP. (2010). Dosage effect on uropathogenic Escherichia coli anti-adhesion activity in urine following consumption of cranberry powder standardized for proanthocyanidin content: a multicentric randomized double blind study. <em>BMC Infectious Diseases</em>, 10, 94.</li><li>Lavigne JP, Bourg G, Combescure C, et al. (2008). In vitro and in vivo evidence of dose-dependent decrease of uropathogenic Escherichia coli virulence after consumption of commercial Vaccinium macrocarpon (cranberry) capsules. <em>Clinical Microbiology and Infection</em>, 14(4), 350–355.</li><li>Howell AB, Dreyfus JF, Chughtai B. (2022). Differences in urinary bacterial anti-adhesion activity after intake of cranberry dietary supplements with soluble versus insoluble proanthocyanidins. <em>Journal of Dietary Supplements</em>, 19(5), 621–639.</li><li>Chughtai B, Thomas D, Howell A. (2016). Variability of commercial cranberry dietary supplements for the prevention of uropathogenic bacterial adhesion. <em>American Journal of Obstetrics &amp; Gynecology</em>, 215(1), 122–123.</li><li>Sintara M, Li L, Cunningham DG, Prior RL, Wu X, Chang T. (2018). Single-laboratory validation for determination of total soluble proanthocyanidins in cranberry using 4-dimethylaminocinnamaldehyde. <em>Journal of AOAC International</em>, 101(3), 805–809.</li><li>Bosley S, Krueger CG, Birmingham A, Howell AB, Reed JD. (2024). Improved in vitro hemagglutination assays utilizing P-type and type 1 uropathogenic Escherichia coli to evaluate bacterial anti-adhesion activity of cranberry products. <em>Journal of Dietary Supplements</em>, 21(3), 327–343.</li><li>Howell AB, Vorsa N, Der Marderosian A, Foo LY. (1998). Inhibition of the adherence of P-fimbriated Escherichia coli to uroepithelial-cell surfaces by proanthocyanidin extracts from cranberries. <em>The New England Journal of Medicine</em>, 339(15), 1085–1086.</li></ol>"
           }
+        },
+        "ellura_product_details_legal": {
+          "type": "panel",
+          "settings": {
+            "title": "Legal information",
+            "open": false,
+            "content": "<p><strong>FSSAI licence no.:</strong> To be confirmed</p><p><strong>Imported &amp; marketed in India by:</strong> To be confirmed (company name and address)</p><p><strong>Customer care:</strong> To be confirmed (phone / WhatsApp)</p><p><strong>Manufactured by:</strong> Pharmatoka, France</p>"
+          }
         }
       },
       "block_order": [
@@ -129,6 +137,7 @@
         "ellura_product_details_03",
         "ellura_product_details_04",
         "ellura_product_details_05",
+        "ellura_product_details_legal",
         "ellura_product_details_06"
       ],
       "settings": {

@@ -132,9 +132,9 @@
         "ellura_icon_cards_02": {
           "type": "card",
           "settings": {
-            "icon": "bolt",
-            "title": "Extra support when needed",
-            "text": "During travel or stress, take two capsules as needed, then return to one daily."
+            "icon": "info",
+            "title": "Check with your doctor",
+            "text": "If you take anticoagulant medicine or have a medical condition, consult your healthcare provider before use."
           }
         },
         "ellura_icon_cards_03": {

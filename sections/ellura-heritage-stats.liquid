@@ -214,6 +214,11 @@
 </script>
 
 {% stylesheet %}
+  /* An odd stat count (e.g. a hidden stat) lets the last tile span the row. */
+  .usin__stats > .stat:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
   .stat__subnote {
     display: block;
     margin-top: 4px;
@@ -402,7 +407,6 @@
       "blocks": [
         { "type": "stat", "settings": { "value": "20", "suffix": "+", "subnote": "years", "label": "Cranberry Research", "color_theme": "butter" } },
         { "type": "stat", "settings": { "value": "17", "suffix": "", "subnote": "", "label": "Clinical Studies", "color_theme": "blush" } },
-        { "type": "stat", "settings": { "value": "22", "suffix": "", "subnote": "", "label": "Herbal Medicine Approvals", "color_theme": "peri" } },
         { "type": "stat", "settings": { "value": "36", "suffix": "mg", "suffix_size": "small", "subnote": "", "label": "Soluble A-type PACs per capsule", "color_theme": "sage" } }
       ]
     }

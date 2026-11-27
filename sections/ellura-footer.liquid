@@ -119,15 +119,16 @@
 
   <div class="wrap">
     <!-- Legal Disclaimer -->
-    {% if section.settings.disclaimer != blank %}
+    {% if section.settings.disclaimer != blank or section.settings.legal_details != blank %}
       <div class="footer__legal">
-        <p>{{ section.settings.disclaimer }}</p>
+        {%- if section.settings.disclaimer != blank -%}<p>{{ section.settings.disclaimer }}</p>{%- endif -%}
+        {%- if section.settings.legal_details != blank -%}<p>{{ section.settings.legal_details | escape }}</p>{%- endif -%}
       </div>
     {% endif %}
 
     <!-- Copyright -->
     <div class="footer__copy">
-      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | replace: 'Ellura', 'ellura' | replace: 'ELLURA', 'ellura' }}. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -182,7 +183,7 @@
 
 {% schema %}
 {
-  "name": "Ellura Luxury Footer",
+  "name": "ellura Luxury Footer",
   "tag": "section",
   "class": "section-ellura-footer",
   "settings": [
@@ -229,6 +230,13 @@
       "default": "*These statements have not been evaluated by the Food and Drug Administration or FSSAI. This product is a dietary supplement and is not intended to diagnose, treat, cure, or prevent any disease. Consult your physician before starting any dietary supplement."
     },
     {
+      "type": "textarea",
+      "id": "legal_details",
+      "label": "India legal details",
+      "info": "FSSAI licence, importer/marketer and customer care. Fill in before launch.",
+      "default": "FSSAI Lic. No.: To be confirmed · Imported & marketed in India by: To be confirmed · Customer care: To be confirmed"
+    },
+    {
       "type": "color",
       "id": "bg_color",
       "label": "Footer background color",
@@ -262,7 +270,7 @@
   ],
   "presets": [
     {
-      "name": "Ellura Luxury Footer",
+      "name": "ellura Luxury Footer",
       "blocks": [
         { "type": "link_column", "settings": { "title": "Shop" } },
         { "type": "link_column", "settings": { "title": "Science" } },
